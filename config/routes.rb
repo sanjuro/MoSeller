@@ -5,11 +5,12 @@ Moseller::Application.routes.draw do
   resources :locations
 
   resources :sales 
-  resources :products
   resources :sale_items
   
   resources :productsources 
-  match 'productsources/new_product/:id', :to => 'productsources#new_product' 
+  match 'productsources/order/', :to => 'productsources#order' 
+  
+  resources :products
    
   resources :suppliers 
 

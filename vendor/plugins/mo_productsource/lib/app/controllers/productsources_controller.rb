@@ -3,11 +3,11 @@ class ProductsourcesController < ActionController::Base
   respond_to :html, :xml, :json
 
   # Create new virtual product using relative product source
-  def new_product
-    productsource = Productsource.find(params[:id])
+  def order
+    # productsource = Productsource.find(params[:id])
       
     # Get product from product source
-    @product = NewOrder(productsource.source_name);
+    @product = NewOrder(params[:post]);
    
     # Respond with new created virtual product
     respond_with(@product)
