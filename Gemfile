@@ -20,6 +20,7 @@ gem 'mysql2'
 # gem 'ruby-debug19', :require => 'ruby-debug'
 
 # Bundle the extra gems:
+gem 'devise'
 # gem 'bj'
 # gem 'nokogiri'
 # gem 'sqlite3-ruby', :require => 'sqlite3'
