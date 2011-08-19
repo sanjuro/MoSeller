@@ -31,8 +31,18 @@ GEM
     akami (1.0.0)
       gyoku (>= 0.4.0)
     arel (2.0.10)
+    aws-s3 (0.6.2)
+      builder
+      mime-types
+      xml-simple
     bcrypt-ruby (2.1.4)
     builder (2.1.2)
+    capistrano (2.8.0)
+      highline
+      net-scp (>= 1.0.0)
+      net-sftp (>= 2.0.0)
+      net-ssh (>= 2.0.14)
+      net-ssh-gateway (>= 1.1.0)
     devise (1.4.2)
       bcrypt-ruby (~> 2.1.2)
       orm_adapter (~> 0.0.3)
@@ -41,6 +51,7 @@ GEM
       abstract (>= 1.0.0)
     gyoku (0.4.4)
       builder (>= 2.1.2)
+    highline (1.6.2)
     httpi (0.9.5)
       rack
     i18n (0.5.0)
@@ -51,6 +62,13 @@ GEM
       treetop (~> 1.4.8)
     mime-types (1.16)
     mysql2 (0.2.11)
+    net-scp (1.0.4)
+      net-ssh (>= 1.99.1)
+    net-sftp (2.0.5)
+      net-ssh (>= 2.0.9)
+    net-ssh (2.1.4)
+    net-ssh-gateway (1.1.0)
+      net-ssh (>= 1.99.1)
     nokogiri (1.5.0)
     nori (1.0.2)
     orm_adapter (0.0.5)
@@ -93,11 +111,14 @@ GEM
       rack (>= 1.0)
     wasabi (2.0.0)
       nokogiri (>= 1.4.0)
+    xml-simple (1.1.0)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
+  aws-s3
+  capistrano
   devise
   mysql2
   rails (= 3.0.9)

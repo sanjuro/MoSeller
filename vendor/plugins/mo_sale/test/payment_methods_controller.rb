@@ -1,17 +1,17 @@
 require File.dirname(__FILE__) + '/test_helper'
-require 'sale_items_controller'
+require 'payment_methods_controller'
 # require 'action_controller/test_process'
 
-class SaleItemsController; def rescue_action(e) raise e end; end
+class PaymentMethodsController; def rescue_action(e) raise e end; end
  
-class SaleItemsControllerTest < Test::Unit::TestCase
+class PaymentMethodsControllerTest < Test::Unit::TestCase
   def setup
-    @controller = SaleItemsController.new
+    @controller = PaymentMethodsController.new
     @request = ActionController::TestRequest.new
     @response = ActionController::TestResponse.new
  
     ActionController::Routing::Routes.draw do |map|
-      map.resources :sale_items
+      map.resources :payment_methods
     end
   end
  
