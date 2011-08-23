@@ -1,8 +1,8 @@
 class CreateMoClients < ActiveRecord::Migration
   
   def self.up
-    create_table :clients, :options => "ENGINE=INNODB" do |t|
-      t.references :client_types
+    create_table :client, :options => "ENGINE=INNODB" do |t|
+      t.references :client_type
       t.string :unique_id
       t.string :registered_name
       t.string :email_address
@@ -15,7 +15,7 @@ class CreateMoClients < ActiveRecord::Migration
     end
     #add a unique token
     execute <<-SQL
-      ALTER TABLE `clients` ADD UNIQUE (
+      ALTER TABLE `client` ADD UNIQUE (
        `token`
        )
     SQL
@@ -24,9 +24,9 @@ class CreateMoClients < ActiveRecord::Migration
       t.string :title
     end
     
-    create_table :contacts, :options => "ENGINE=INODB" do |t|
-      t.references :clients
-      t.references :contact_typs
+    create_table :contact, :options => "ENGINE=INODB" do |t|
+      t.references :client
+      t.references :contact_type
       t.string :contact_name
       t.string :contact_email
       t.string :contact_number
@@ -38,7 +38,7 @@ class CreateMoClients < ActiveRecord::Migration
       t.string :title
     end
 
-    create_table :locations, :options => "ENGINE=INODB" do |t|
+    create_table :location, :options => "ENGINE=INODB" do |t|
       t.references :client
       t.references :location_type
       t.string :addr1

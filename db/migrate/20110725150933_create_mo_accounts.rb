@@ -1,8 +1,8 @@
 class CreateMoAccounts < ActiveRecord::Migration
   def self.up
     create_table :account_item, :options => "ENGINE=INODB" do |t|
-      t.references :clients
-      t.references :account_item_types
+      t.references :client
+      t.references :account_item_type
       t.decimal :credit,               :precision => 8, :scale => 2, :default => 0.0, :null => false
       t.decimal :debit,                :precision => 8, :scale => 2, :default => 0.0, :null => false
       t.string :account_status_id
@@ -32,7 +32,7 @@ class CreateMoAccounts < ActiveRecord::Migration
     end
     
     create_table :invoice_item, :options => "ENGINE=INODB" do |t|
-      t.references :invoices
+      t.references :invoice
       t.text "description"
       t.decimal :total,                :precision => 8, :scale => 2, :default => 0.0, :null => false
       

@@ -2,7 +2,7 @@ class Order < ActiveRecord::Base
   attr_accessible :line_items, :bill_address_attributes, :payments_attributes,
                   :line_items_attributes, :use_billing, :special_instructions
                  
-  belongs_to :client
+  belongs_to :client, :foreign_key => "order_client_id", :class_name => "Client"
   belongs_to :bill_address, :foreign_key => "bill_address_id", :class_name => "Address"
 
   has_many :state_events, :as => :stateful
@@ -10,10 +10,7 @@ class Order < ActiveRecord::Base
   has_many :payments, :dependent => :destroy
 
   accepts_nested_attributes_for :order_items
-  accepts_nested_attributes_for :bill_address
-  accepts_nested_attributes_for :ship_address
   accepts_nested_attributes_for :payments
-  accepts_nested_attributes_for :shipments
   
   before_create :create_client
   before_create :generate_order_number  
@@ -50,8 +47,7 @@ class Order < ActiveRecord::Base
   state_machine :initial => :cart, :use_transactions => false do
 
     event :next do
-      transition :from => 'cart', :to => 'address'
-      transition :from => 'address', :to => 'delivery'
+      transition :from => 'cart', :to => 'delivery'
       transition :from => 'delivery', :to => 'payment', :if => :payment_required?
       transition :from => 'delivery', :to => 'complete'
       transition :from => 'confirm', :to => 'complete'
@@ -79,8 +75,8 @@ class Order < ActiveRecord::Base
     before_transition :to => 'complete' do |order|
       begin
         order.process_payments!
-      rescue Spree::GatewayError
-        if Spree::Config[:allow_checkout_on_gateway_error]
+      rescue MoSeller::GatewayError
+        if MoSeller::Config[:allow_checkout_on_gateway_error]
           true
         else
           false

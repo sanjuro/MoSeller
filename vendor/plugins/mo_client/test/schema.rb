@@ -9,6 +9,9 @@ ActiveRecord::Schema.define(:version => 0) do
     t.string :token
     t.datetime :created_at
   end
+  create_table :client_type, :options => "ENGINE=INODB" do |t|
+    t.string :title
+  end
   create_table :contact, :force => true do |t|
     t.integer :client_id
     t.string :contact_name
@@ -28,5 +31,8 @@ ActiveRecord::Schema.define(:version => 0) do
     t.string :longitude
     t.integer :address_type_id
     t.datetime :created_at
+  end
+  create_table :location_type, :options => "ENGINE=INODB" do |t|
+    t.string :title
   end
 end

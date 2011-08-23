@@ -27,9 +27,12 @@ gem 'devise'
 gem 'aws-s3', :require => 'aws/s3'
 gem 'savon'
 
+gem 'state_machine'
+
 # Bundle gems for the local environment. Make sure to
 # put test-only gems in this group so their generators
 # and rake tasks are available in development mode:
 # group :development, :test do
 #   gem 'webrat'
 # end
+

@@ -1,5 +1,5 @@
 class Product < ActiveRecord::Base
-  has_many :productsources
+  belongs_to :productsources
   
   validates :productsource_id,  :presence => true
   validates :productsource_product_code,  :presence => true

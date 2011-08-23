@@ -1,14 +1,24 @@
 Moseller::Application.routes.draw do
+    
+  root :to => "categorys#index"  
   
-  devise_for :users
+  devise_for :users, :controllers => {:sessions => 'devise/sessions'}, :skip => [:sessions] do
+    get 'signin' => 'devise/sessions#new', :as => :new_user_session
+    post 'signin' => 'devise/sessions#create', :as => :user_session
+    get 'signout' => 'devise/sessions#destroy', :as => :destroy_user_session
+  end
 
-  root :to => "home#index"
 
   
   resources :clients 
   resources :contacts
   resources :locations
 
+  resources :categorys  
+  
+  resources :orders 
+  resources :orders_items
+  
   resources :sales 
   resources :sale_items
   

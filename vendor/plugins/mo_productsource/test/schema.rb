@@ -1,12 +1,34 @@
 ActiveRecord::Schema.define(:version => 0) do
-  create_table :productsource, :force => true do |t|
-    t.integer  :supplier_id
-    t.integer  :source_type_id
-    t.string   :source_name
+  create_table :product, :options => "ENGINE=INODB" do |t|
+    t.references :productsource
+    t.references :supplier
+    t.integer :productsource_product_code
+    t.string "name", :default => "", :null => false
+    t.text "description"
+    t.string "meta_description"
+    t.string "meta_keywords"
+    
+    t.timestamps
   end
-  create_table :supplier, :force => true do |t|
+  
+  create_table :productsource, :options => "ENGINE=INODB" do |t|
+    t.references :supplier
+    t.references :source_type
+    t.string :source_name
+    
+    t.timestamps
+  end
+  
+  create_table :source_type, :options => "ENGINE=INODB" do |t|
+    t.string :title
+  end
+  
+  create_table :supplier, :options => "ENGINE=INODB" do |t|
     t.string   :registered_name
+    t.string   :contact_number
     t.string   :email_address
     t.string   :url
+    t.string   :token
+    
+    t.timestamps
   end
-end

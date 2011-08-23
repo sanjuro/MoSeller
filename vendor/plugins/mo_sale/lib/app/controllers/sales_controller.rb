@@ -1,7 +1,7 @@
 class SalesController < ActionController::Base
 
   def index
-    @sale = Sale.all
+    @sales = Sale.all
    
     respond_to do |format|
       format.html # index.html.erb
