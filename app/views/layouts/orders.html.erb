@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <title>MoSeller</title>
+  <%= csrf_meta_tag %>
+  <%= render 'shared/stylesheets' %>
+  <%= javascript_include_tag :all %>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <nav class="round">
+          <%= render "shared/navigation" %>
+        </nav>
+      </header>
+      <section class="round">
+        <%= yield %>
+      </section>
+      <%= render 'shared/footer' %>
+    </div>
+  </body>
+</html>

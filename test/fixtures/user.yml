@@ -1,0 +1,10 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+user_sanjuro:
+  username: sanjuro
+  email: shad6ster@gmail.com
+  encrypted_password: $2a$10$VMRaW8TlmrfHcjhsOsapReehfh8mLSx1TzeQZGYqo1XBtmsP6lZsy
+  client_id: client_moseller
+  first_name: shadley
+  last_name: wentzel
+

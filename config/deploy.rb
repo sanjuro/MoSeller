@@ -8,9 +8,9 @@ set :scm, :git
 
 set :deploy_to, "/home/bitnami/#{application}"
 
-role :web, "ec2-184-73-69-4.compute-1.amazonaws.com"                          # Your HTTP server, Apache/etc
-role :app, "ec2-184-73-69-4.compute-1.amazonaws.com"                          # This may be the same as your `Web` server
-role :db,  "ec2-184-73-69-4.compute-1.amazonaws.com", :primary => true # This is where Rails migrations will run
+role :web, "ec2-50-17-132-6.compute-1.amazonaws.com"                          # Your HTTP server, Apache/etc
+role :app, "ec2-50-17-132-6.compute-1.amazonaws.com"                          # This may be the same as your `Web` server
+role :db,  "ec2-50-17-132-6.compute-1.amazonaws.com", :primary => true # This is where Rails migrations will run
 
 
 # if you're still using the script/reaper helper you will need
@@ -27,7 +27,7 @@ role :db,  "ec2-184-73-69-4.compute-1.amazonaws.com", :primary => true # This is
 
 ssh_options[:user] = 'bitnami'
   
-ssh_options[:keys] =  %w(/home/bitnami/id_rsa)
+# ssh_options[:keys] =  %w(/home/bitnami/id_rsa)
   
 
 set :user, "bitnami"  # The server's user for deploys
@@ -35,6 +35,6 @@ set :user, "bitnami"  # The server's user for deploys
 set :branch, "master"
   
 
-set :use_sudo, true
+# set :use_sudo, true
 
 set :keep_releases,  3

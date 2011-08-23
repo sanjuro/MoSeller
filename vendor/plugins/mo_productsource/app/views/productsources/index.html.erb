@@ -1,0 +1,13 @@
+<h2>Product Categories</h2>
+ 
+<table> 
+<% @categorys.each do |category| %>
+<tbody>
+  <tr>
+    <td><%= link_to category.title , category %></td>
+  </tr>
+</tbody>
+<% end %>
+</table>
+ 
+<br />

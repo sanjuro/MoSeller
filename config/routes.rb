@@ -1,5 +1,7 @@
 Moseller::Application.routes.draw do
     
+  get "users/new"
+
   root :to => "categorys#index"  
   
   devise_for :users, :controllers => {:sessions => 'devise/sessions'}, :skip => [:sessions] do

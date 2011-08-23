@@ -1,0 +1,17 @@
+client_moseller:
+  unique_id: moseller
+  registered_name: Moseller Inc.
+  email_address: shad6ster@gmail.com
+  tax: 1
+  telephone: 27217062685
+  url: www.moseller.com
+  token: E2as2w222sa3jn3j
+
+client_shadley:
+  unique_id: sha1108
+  registered_name: Shadley Inc.
+  email_address: shad6ster@gmail.com
+  tax: 1
+  telephone: 27217062685
+  url: www.shadley.com
+  token: 1qas2w222sa3jn3j

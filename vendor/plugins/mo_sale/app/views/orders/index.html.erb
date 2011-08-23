@@ -1,0 +1,13 @@
+<h2>Orders</h2>
+ 
+<table> 
+<% @orders.each do |oder| %>
+<tbody>
+  <tr>
+    <td><%= link_to order.client_id , order %></td>
+  </tr>
+</tbody>
+<% end %>
+</table>
+ 
+<br />

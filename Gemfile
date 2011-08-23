@@ -24,8 +24,10 @@ gem 'devise'
 # gem 'bj'
 # gem 'nokogiri'
 # gem 'sqlite3-ruby', :require => 'sqlite3'
-gem 'aws-s3', :require => 'aws/s3'
+# gem 'aws-s3', :require => 'aws/s3'
 gem 'savon'
+
+gem 'gravatar_image_tag', '1.0.0.pre2'
 
 gem 'state_machine'
 

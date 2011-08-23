@@ -1,0 +1,9 @@
+eset_productsource:
+  source_name: ESET
+  source_type_id: 1
+  supplier_id: eset_supplier
+
+freepiad_productsource:
+  source_name: Freepaid
+  source_type_id: 1
+  supplier_id: freepaid_supplier
