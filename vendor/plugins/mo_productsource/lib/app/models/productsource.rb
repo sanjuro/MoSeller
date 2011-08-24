@@ -1,6 +1,6 @@
 class Productsource < ActiveRecord::Base
   
-  attr_accessible :source_name, :product_source_type_id, :supplier_id
+  attr_accessible :source_name, :service_type_id, :supplier_id
   
   belongs_to :supplier, :foreign_key => "productsource_supplier_id", :class_name => "Supplier"  
   belongs_to :service_type, :foreign_key => "productsource_service_type_id", :class_name => "ServiceType"  

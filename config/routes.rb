@@ -1,6 +1,9 @@
 Moseller::Application.routes.draw do
     
-  devise_for :users
+  devise_for :users do
+     get "/users/sign_out", :to => "devise/sessions#destroy" # Add a custom sing out route for user sign out
+  end
+
 
   get "users/new"
 

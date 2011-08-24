@@ -146,7 +146,7 @@ ActiveRecord::Schema.define(:version => 20110824084915) do
 
   create_table "productsource", :force => true do |t|
     t.integer  "supplier_id"
-    t.integer  "product_source_type_id"
+    t.integer  "service_type_id"
     t.string   "source_name"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -173,7 +173,7 @@ ActiveRecord::Schema.define(:version => 20110824084915) do
     t.datetime "updated_at"
   end
 
-  create_table "source_type", :force => true do |t|
+  create_table "service_type", :force => true do |t|
     t.string "title"
   end
 
@@ -191,7 +191,6 @@ ActiveRecord::Schema.define(:version => 20110824084915) do
     t.string   "contact_number"
     t.string   "email_address"
     t.string   "url"
-    t.string   "token"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

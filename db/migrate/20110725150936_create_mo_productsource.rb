@@ -14,13 +14,13 @@ class CreateMoProductsource < ActiveRecord::Migration
     
     create_table :productsource, :options => "ENGINE=INODB" do |t|
       t.references :supplier
-      t.references :product_source_type
+      t.references :service_type
       t.string :source_name
       
       t.timestamps
     end
     
-    create_table :source_type, :options => "ENGINE=INODB" do |t|
+    create_table :service_type, :options => "ENGINE=INODB" do |t|
       t.string :title
     end
     
@@ -29,7 +29,6 @@ class CreateMoProductsource < ActiveRecord::Migration
       t.string   :contact_number
       t.string   :email_address
       t.string   :url
-      t.string   :token
       
       t.timestamps
     end        
