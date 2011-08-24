@@ -20,12 +20,13 @@ gem 'capistrano'
 # gem 'ruby-debug19', :require => 'ruby-debug'
 
 # Bundle the extra gems:
-gem 'devise'
 # gem 'bj'
 # gem 'nokogiri'
 # gem 'sqlite3-ruby', :require => 'sqlite3'
 # gem 'aws-s3', :require => 'aws/s3'
 gem 'savon'
+
+gem 'devise'
 
 gem 'gravatar_image_tag', '1.0.0.pre2'
 

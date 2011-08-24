@@ -14,7 +14,7 @@ class CreateMoProductsource < ActiveRecord::Migration
     
     create_table :productsource, :options => "ENGINE=INODB" do |t|
       t.references :supplier
-      t.references :source_type
+      t.references :product_source_type
       t.string :source_name
       
       t.timestamps

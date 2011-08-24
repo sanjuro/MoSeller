@@ -1,5 +1,7 @@
 class Location < ActiveRecord::Base
-  belongs_to :client
+  
+  attr_accessible :address1, :address2, :address3, :address4, :latitude, :longitude, :address_type_id  
+
   validates :address1,  :presence => true
   validates :address2,  :presence => true
   validates :address3,  :presence => true
@@ -7,4 +9,6 @@ class Location < ActiveRecord::Base
   validates :latitude,  :presence => true
   validates :longitude,  :presence => true
   validates :address_type_id,  :presence => true
+  
+  belongs_to :client
 end

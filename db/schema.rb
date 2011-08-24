@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110815183942) do
+ActiveRecord::Schema.define(:version => 20110824084915) do
 
   create_table "account_item", :force => true do |t|
     t.integer  "client_id"
@@ -91,11 +91,10 @@ ActiveRecord::Schema.define(:version => 20110815183942) do
   create_table "location", :force => true do |t|
     t.integer  "client_id"
     t.integer  "location_type_id"
-    t.string   "addr1"
-    t.string   "addr2"
-    t.string   "addr3"
-    t.string   "addr4"
-    t.string   "addr5"
+    t.string   "address1"
+    t.string   "address2"
+    t.string   "address3"
+    t.string   "address4"
     t.string   "latitude"
     t.string   "longitude"
     t.datetime "created_at"
@@ -147,23 +146,11 @@ ActiveRecord::Schema.define(:version => 20110815183942) do
 
   create_table "productsource", :force => true do |t|
     t.integer  "supplier_id"
-    t.integer  "source_type_id"
+    t.integer  "product_source_type_id"
     t.string   "source_name"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
-
-  create_table "role", :force => true do |t|
-    t.string "name"
-  end
-
-  create_table "roles_user", :id => false, :force => true do |t|
-    t.integer "role_id"
-    t.integer "user_id"
-  end
-
-  add_index "roles_user", ["role_id"], :name => "index_role_user_on_role_id"
-  add_index "roles_user", ["user_id"], :name => "index_role_user_on_user_id"
 
   create_table "sale", :force => true do |t|
     t.integer  "client_id"
@@ -210,8 +197,9 @@ ActiveRecord::Schema.define(:version => 20110815183942) do
   end
 
   create_table "user", :force => true do |t|
-    t.string   "email",                                 :default => "",     :null => false
-    t.string   "encrypted_password",     :limit => 128, :default => "",     :null => false
+    t.integer  "client_id"
+    t.string   "email",                                 :default => "", :null => false
+    t.string   "encrypted_password",     :limit => 128, :default => "", :null => false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
@@ -220,12 +208,6 @@ ActiveRecord::Schema.define(:version => 20110815183942) do
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
-    t.string   "username"
-    t.string   "first_name"
-    t.string   "last_name"
-    t.boolean  "active",                                :default => true
-    t.string   "role",                                  :default => "user"
-    t.integer  "client_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

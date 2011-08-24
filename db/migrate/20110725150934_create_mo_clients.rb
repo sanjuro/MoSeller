@@ -41,11 +41,10 @@ class CreateMoClients < ActiveRecord::Migration
     create_table :location, :options => "ENGINE=INODB" do |t|
       t.references :client
       t.references :location_type
-      t.string :addr1
-      t.string :addr2
-      t.string :addr3
-      t.string :addr4
-      t.string :addr5
+      t.string :address1
+      t.string :address2
+      t.string :address3
+      t.string :address4
       t.string :latitude
       t.string :longitude
 
