@@ -109,6 +109,7 @@ GEM
       rack (>= 1.0)
     wasabi (2.0.0)
       nokogiri (>= 1.4.0)
+    will_paginate (3.0.pre2)
 
 PLATFORMS
   ruby
@@ -122,3 +123,4 @@ DEPENDENCIES
   savon
   sqlite3
   state_machine
+  will_paginate (= 3.0.pre2)

@@ -1,7 +1,7 @@
 class OrdersController < ActionController::Base
   
   def index
-    @orders = Order.all
+    @orders = Order.paginate(:page => params[:page])
    
     respond_to do |format|
       format.html # index.html.erb

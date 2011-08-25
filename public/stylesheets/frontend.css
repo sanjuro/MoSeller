@@ -51,6 +51,7 @@ nav {
 
 nav {
   background-color: white;
+  line-height: 20px;
   padding: 0 0.7em;
   white-space: nowrap;
 }
