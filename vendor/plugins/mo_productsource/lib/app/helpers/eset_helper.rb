@@ -6,7 +6,7 @@ module EsetHelper
   def ESETLogin(username, password)
     # Setting up a Savon::Client representing a SOAP service.
     client = Savon::Client.new do
-      wsdl.document = "https://dextertest.eset.com/DexterDev/Services/SecurityService.asmx?WSDL"
+      wsdl.document = SECURITY_SERVICE_WSDL_URL
     end
       
       
@@ -37,10 +37,10 @@ module EsetHelper
   end  
   
   
-  def ESETCreateLicense(userId, sessionId, countryId, productCode, workstationCount, serversCount, updateTypeId, dPrice, dExpirationDate, firstName, lastName, companyName, customerEmail, phoneNumber, note)
+  def ESETCreateLicense(transaction_options)
     # Setting up a Savon::Client representing a SOAP service.
     client = Savon::Client.new do
-      wsdl.document = "https://dextertest.eset.com/DexterDev/Services/LicenceService.asmx?WSDL"
+      wsdl.document = LICENSE_SERVICE_WSDL_URL
     end
 
       
@@ -49,21 +49,21 @@ module EsetHelper
       response = client.request :wsdl, :CreateLicence do
         soap.input = ["CreateLicence", {"xmlns" => "https://secure.eset.sk/dexter/"}]
         soap.body = {
-          :userId => userId,
-          :sessionId  => sessionId,
-          :countryID  => countryId,
-          :productCode  => productCode,   
-          :workstationCount => workstationCount,
-          :serversCount => serversCount,
-          :updateTypeID => updateTypeId,
-          :dPrice => dPrice,
-          :dExpirationDate => dExpirationDate,
-          :firstName => firstName,
-          :lastName => lastName,
-          :companyName => companyName,
-          :customerEmail => customerEmail,
-          :phone_number => phoneNumber,
-          :note => note
+          :userId => transaction_options["user_id"],
+          :sessionId  => transaction_options["session_id"],
+          :countryID  => transaction_options["country_id"],
+          :productCode  => transaction_options["product_code"],   
+          :workstationCount => transaction_options["workstation_count"],
+          :serversCount => transaction_options["servers_count"],
+          :updateTypeID => transaction_options["update_type"],
+          :dPrice =>  transaction_options["d_price"],
+          :dExpirationDate =>  transaction_options["expiration_date"],
+          :firstName =>  transaction_options["first_name"],
+          :lastName =>  transaction_options["last_name"],
+          :companyName =>  transaction_options["company_name"],
+          :customerEmail =>  transaction_options["customer_email"],
+          :phone_number =>  transaction_options["phone_number"],
+          :note =>  transaction_options["note"]
         }
         soap.element_form_default = :unqualified
         http.headers['SOAPAction'] = "https://secure.eset.sk/dexter/CreateLicence"
@@ -85,5 +85,10 @@ module EsetHelper
     licenseDetails = Hash.new
     licenseDetails = { 'username' => username, 'password' => password, 'expirationDate' => expirationDate, 'price' => price, 'error' => error }
   end
+  
+  private
+
+  LICENSE_SERVICE_WSDL_URL = "https://dextertest.eset.com/DexterDev/Services/LicenceService.asmx?WSDL"
+  SECURITY_SERVICE_WSDL_URL = "https://dextertest.eset.com/DexterDev/Services/SecurityService.asmx?WSDL"
  
 end

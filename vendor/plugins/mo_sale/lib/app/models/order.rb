@@ -44,13 +44,13 @@ class Order < ActiveRecord::Base
   end  
   
   # order state machine (see http://github.com/pluginaweek/state_machine/tree/master for details)
-  state_machine :initial => :cart, :use_transactions => false do
-
+  state_machine :initial => 'cart', :use_transactions => false do
+  
     event :next do
-      transition :from => 'cart', :to => 'delivery'
-      transition :from => 'delivery', :to => 'payment', :if => :payment_required?
-      transition :from => 'delivery', :to => 'complete'
+      transition :from => 'cart', :to => 'address'
+      transition :from => 'address', :to => 'payment'
       transition :from => 'confirm', :to => 'complete'
+
 
       # note: some payment methods will not support a confirm step
       transition :from => 'payment', :to => 'confirm',
@@ -68,9 +68,6 @@ class Order < ActiveRecord::Base
     event :resume do
       transition :to => 'resumed', :from => 'canceled', :if => :allow_resume?
     end
-    event :authorize_return do
-      transition :to => 'awaiting_return'
-    end
 
     before_transition :to => 'complete' do |order|
       begin
@@ -84,12 +81,79 @@ class Order < ActiveRecord::Base
       end
     end
 
-    after_transition :to => 'complete', :do => :finalize!
-    after_transition :to => 'delivery', :do => :create_tax_charge!
-    after_transition :to => 'payment', :do => :create_shipment!
-    after_transition :to => 'canceled', :do => :after_cancel
 
+    # after_transition :to => 'complete', :do => :finalize!
+    # after_transition :to => 'delivery', :do => :create_tax_charge!
+    # after_transition :to => 'payment', :do => :create_shipment!
+
+  end 
+  
+  # This is a multi-purpose method for processing logic related to changes in the Order. It is meant to be called from
+  # various observers so that the Order is aware of changes that affect totals and other values stored in the Order.
+  # This method should never do anything to the Order that results in a save call on the object (otherwise you will end
+  # up in an infinite recursion as the associations try to save and then in turn try to call +update!+ again.)
+  def update!
+    update_totals
+    update_payment_state
+    update_adjustments
+    # update totals a second time in case updated adjustments have an effect on the total
+    update_totals
+
+    update_attributes_without_callbacks({
+      :payment_state => payment_state,
+      :shipment_state => shipment_state,
+      :item_total => item_total,
+      :adjustment_total => adjustment_total,
+      :payment_total => payment_total,
+      :total => total
+    })
+
+    #ensure checkout payment always matches order total
+    if payment and payment.checkout? and payment.amount != total
+      payment.update_attributes_without_callbacks(:amount => total)
+    end
+
+    update_hooks.each { |hook| self.send hook }
+  end 
+  
+  def allow_cancel?
+    return false unless completed? and state != 'canceled'
+    %w{ready backorder pending}.include? shipment_state
+  end
+
+  def allow_resume?
+    # we shouldn't allow resume for legacy orders b/c we lack the information necessary to restore to a previous state
+    return false if state_events.empty? || state_events.last.previous_state.nil?
+    true
   end  
+  
+  def add_variant(variant, quantity = 1)
+    current_item = contains?(variant)
+    if current_item
+      current_item.quantity += quantity
+      current_item.save
+    else
+      current_item = LineItem.new(:quantity => quantity)
+      current_item.variant = variant
+      current_item.price = variant.price
+      self.line_items << current_item
+    end
+
+    # populate line_items attributes for additional_fields entries
+    # that have populate => [:line_item]
+    Variant.additional_fields.select{|f| !f[:populate].nil? && f[:populate].include?(:line_item) }.each do |field|
+      value = ""
+
+      if field[:only].nil? || field[:only].include?(:variant)
+        value = variant.send(field[:name].gsub(" ", "_").downcase)
+      elsif field[:only].include?(:product)
+        value = variant.product.send(field[:name].gsub(" ", "_").downcase)
+      end
+      current_item.update_attribute(field[:name].gsub(" ", "_").downcase, value)
+    end
+
+    current_item
+  end
   
   # FIXME refactor this method and implement validation using validates_* utilities
   def generate_order_number
@@ -101,5 +165,116 @@ class Order < ActiveRecord::Base
     self.number = random if self.number.blank?
     self.number
   end
+  
+  def creditcards
+    creditcard_ids = payments.from_creditcard.map(&:source_id).uniq
+    Creditcard.scoped(:conditions => {:id => creditcard_ids})
+  end
+
+  def process_payments!
+    ret = payments.each(&:process!)
+  end
+
+  # Finalizes an in progress order after checkout is complete.
+  # Called after transition to complete state when payments will have been processed
+  def finalize!
+    update_attribute(:completed_at, Time.now)
+    self.out_of_stock_items = InventoryUnit.assign_opening_inventory(self)
+    # lock any optional adjustments (coupon promotions, etc.)
+    adjustments.optional.each { |adjustment| adjustment.update_attribute("locked", true) }
+    OrderMailer.confirm_email(self).deliver
+
+    self.state_events.create({
+      :previous_state => "cart",
+      :next_state => "complete",
+      :name => "order" ,
+      :user_id => (User.respond_to?(:current) && User.current.try(:id)) || self.user_id
+    })
+  end  
+  
+  def payment
+    payments.first
+  end
+
+  def available_payment_methods
+    @available_payment_methods ||= PaymentMethod.available(:front_end)
+  end
+
+  def payment_method
+    if payment and payment.payment_method
+      payment.payment_method
+    else
+      available_payment_methods.first
+    end
+  end
+  
+  def products
+    line_items.map{|li| li.variant.product}
+  end
+
+  private
+  def create_user
+    self.email = user.email if self.user and not user.anonymous?
+    self.user ||= User.anonymous!
+  end
+  
+  # Updates the +payment_state+ attribute according to the following logic:
+  #
+  # paid when +payment_total+ is equal to +total+
+  # balance_due when +payment_total+ is less than +total+
+  # credit_owed when +payment_total+ is greater than +total+
+  # failed when most recent payment is in the failed state
+  #
+  # The +payment_state+ value helps with reporting, etc. since it provides a quick and easy way to locate Orders needing attention.
+  def update_payment_state
+    if round_money(payment_total) < round_money(total)
+      self.payment_state = "balance_due"
+      self.payment_state = "failed" if payments.present? and payments.last.state == "failed"
+    elsif round_money(payment_total) > round_money(total)
+      self.payment_state = "credit_owed"
+    else
+      self.payment_state = "paid"
+    end
+
+    if old_payment_state = self.changed_attributes["payment_state"]
+      self.state_events.create({
+        :previous_state => old_payment_state,
+        :next_state => self.payment_state,
+        :name => "payment",
+        :user_id => (User.respond_to?(:current) && User.current && User.current.id) || self.user_id
+      })
+    end
+  end
+  
+    def round_money(n)
+      (n*100).round / 100.0
+    end
+    
+    # Updates the following Order total values:
+    #
+    # +payment_total+ The total value of all finalized Payments (NOTE: non-finalized Payments are excluded)
+    # +item_total+ The total value of all LineItems
+    # +adjustment_total+ The total value of all adjustments (promotions, credits, etc.)
+    # +total+ The so-called "order total." This is equivalent to +item_total+ plus +adjustment_total+.
+    def update_totals
+      # update_adjustments
+      self.payment_total = payments.completed.map(&:amount).sum
+      self.item_total = line_items.map(&:amount).sum
+      self.adjustment_total = adjustments.eligible.map(&:amount).sum
+      self.total = item_total + adjustment_total
+    end
+    
+    # Updates each of the Order adjustments. This is intended to be called from an Observer so that the Order can
+    # respond to external changes to LineItem, Shipment, other Adjustments, etc.
+    # Adjustments will check if they are still eligible. Ineligible adjustments are preserved but not counted
+    # towards adjustment_total.
+    def update_adjustments
+      self.adjustments.reload.each(&:update!)
+    end
+  
+    # Determine if email is required (we don't want validation errors before we hit the checkout)
+    def require_email
+      return true unless new_record? or state == 'cart'
+    end                    
   
 end

@@ -1,12 +1,12 @@
-<h2>Orders</h2>
+<h2>Products</h2>
  
 <%= will_paginate %> 
  
 <table> 
-<% @orders.each do |order| %>
+<% @products.each do |product| %>
 <tbody>
   <tr>
-    <td><%= link_to order.id , order %></td>
+    <td><%= link_to product.name , product %></td>
   </tr>
 </tbody>
 <% end %>

@@ -1,6 +1,6 @@
 module FreepaidHelper
   
-  def FreepaidGetVoucher(user, pass, ref_no, network, sellValue)
+  def FreepaidGetVoucher(transaction_options)
     # Setting up a Savon::Client representing a SOAP service.
     client = Savon::Client.new do
       wsdl.document = "http://pi.dynalias.net:3088/airtime/?wsdl"
@@ -10,11 +10,11 @@ module FreepaidHelper
     begin
       response = client.request :wsdl,  :getVoucher do
         soap.body = { :request => {           
-            :user => user, 
-            :pass => pass, 
-            :refno => ref_no,
-            :network => network,
-            :sellvalue => sellValue 
+            :user => transaction_options["user"], 
+            :pass => transaction_options["pass"], 
+            :refno => transaction_options["ref_no"],
+            :network => transaction_options["network"],
+            :sellvalue => transaction_options["sell_vaue"] 
            },
           :attributes! => { :request => { 'xsi:type' => 'tns:getVoucherIn' } }
         }

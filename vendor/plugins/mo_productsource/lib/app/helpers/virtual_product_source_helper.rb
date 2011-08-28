@@ -1,13 +1,13 @@
-module ProductsourceHelper
+module VirtualProductSourceHelper
   include EsetHelper # Get ESET Interface
   include FreepaidHelper # Get Freepaid Interface
   
   # Send the NewOrder call to the correct product source and returns the product
   def NewOrder(productorder)
     
-    productsource = productorder['productsource']
+    product_gateway = productorder['productgatewy']
     
-    case productsource
+    case product_gateway
     when "ESET"
       #Login to the ESET License Server
       login = ESETLogin('stanford', 'rE2a6REm');

@@ -1,7 +1,7 @@
 require File.dirname(__FILE__) + '/test_helper'
-include ProductsourceHelper
+include ProductSourceHelper
  
-class ProductsourceHelperTest < Test::Unit::TestCase
+class ProductSourceHelperTest < Test::Unit::TestCase
   def test_new_product
     
   end

@@ -7,13 +7,12 @@
   <%= javascript_include_tag :all %>
   </head>
   <body>
-    <div class="container">
-      <header>
-        <nav class="round">
+	<header>
+        <nav>
           <%= render "shared/navigation" %>
         </nav>
-      	<div class="" style="height:20px;"></div>
-      </header>
+	</header>
+    <div class="container">
       <section class="round">
          <% flash.each do |key, value| %>
           <div class="flash <%= key %>"><%= value %></div>

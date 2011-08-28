@@ -1,12 +1,14 @@
-<h2>Product Categories</h2>
+<h1>Product Categories</h1>
  
-<table> 
-<% @categorys.each do |category| %>
-<tbody>
+<table>
   <tr>
-    <td><%= link_to category.title , category %></td>
+    <th>Title</th>
   </tr>
-</tbody>
+ 
+<% @categorys.each do |category| %>
+  <tr>
+    <td><%= category.title %></td>
+  </tr>
 <% end %>
 </table>
  

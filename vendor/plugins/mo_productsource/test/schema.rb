@@ -1,26 +1,21 @@
 ActiveRecord::Schema.define(:version => 0) do
-  create_table :product, :options => "ENGINE=INODB" do |t|
-    t.references :productsource
+  create_table :product_source, :options => "ENGINE=INODB" do |t|
     t.references :supplier
-    t.integer :productsource_product_code
-    t.string "name", :default => "", :null => false
-    t.text "description"
-    t.string "meta_description"
-    t.string "meta_keywords"
-    
-    t.timestamps
-  end
-  
-  create_table :productsource, :options => "ENGINE=INODB" do |t|
-    t.references :supplier
-    t.references :source_type
+    t.references :product_gateway
     t.string :source_name
     
     t.timestamps
   end
   
-  create_table :source_type, :options => "ENGINE=INODB" do |t|
-    t.string :title
+  create_table :product_gateway, :force => true do |t|
+    t.string :type
+    t.string :name
+    t.text :description
+    t.boolean :active, :default => true
+    t.string :environment, :default => "development"
+    t.string :server, :default => "test"
+    t.boolean :test_mode, :default => true
+    t.timestamps
   end
   
   create_table :supplier, :options => "ENGINE=INODB" do |t|
@@ -28,7 +23,7 @@ ActiveRecord::Schema.define(:version => 0) do
     t.string   :contact_number
     t.string   :email_address
     t.string   :url
-    t.string   :token
     
     t.timestamps
   end
+end

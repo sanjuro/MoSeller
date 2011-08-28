@@ -1,19 +1,38 @@
-.container {
-  width: 710px;
-}
-
 body {
-  background: #cff;
-  font: 13px/1.231 verdana,arial,helvetica,clean,sans-serif;
+   background: url("/images/clouds-light.gif") repeat-x scroll 0 0 #DFEEF6;
+    color: #333333;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 14px;
+    font-weight: normal;
+    line-height: 20px;
+    padding-top: 40px;
 }
-
-header {
-  padding-top: 20px;
+h1 {
+    border-bottom: 2px solid #EEEEEE;
+    margin-bottom: 24px;
+    padding-bottom: 19px;	
+}
+header
+{
+    background-color: #008DB8;
+    background-image: -moz-linear-gradient(#00A0D1, #008DB8);
+    background-repeat: no-repeat;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25), 0 -1px 0 rgba(0, 0, 0, 0.1) inset;
+    height: 40px;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
 }
 
 header img {
   padding: 1em;
   background: #fff;
+}
+
+.container {
+	margin: 0 auto;
+ 	width: 710px;
 }
 
 section {
@@ -50,8 +69,8 @@ nav {
 }
 
 nav {
-  background-color: white;
-  line-height: 20px;
+  color: white;
+  line-height: 30px;
   padding: 0 0.7em;
   white-space: nowrap;
 }
@@ -68,12 +87,12 @@ nav ul li {
 }
 
 nav ul li a {
-  padding: 0 5px;
+  padding: 5px 5px;
   font-weight: bold;
 }
 
 nav ul li a:visited {
-  color: #09c;
+  color: #FFF;
 }
 
 nav ul li a:hover {

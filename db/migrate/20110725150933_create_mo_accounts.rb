@@ -16,6 +16,7 @@ class CreateMoAccounts < ActiveRecord::Migration
     
     create_table :invoice, :options => "ENGINE=INODB" do |t|
       t.references :client
+      t.references :order
       t.decimal :margin,               :precision => 8, :scale => 2, :default => 0.0, :null => false
       t.decimal :subtotal,             :precision => 8, :scale => 2, :default => 0.0, :null => false
       t.decimal :tax,                  :precision => 8, :scale => 2, :default => 0.0, :null => false
