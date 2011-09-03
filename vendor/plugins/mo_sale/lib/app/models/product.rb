@@ -5,38 +5,42 @@ class Product < ActiveRecord::Base
   has_many :option_types, :through => :product_option_types
   has_many :product_properties, :dependent => :destroy
   has_many :properties, :through => :product_properties
+  has_many :images, :as => :viewable, :order => :position, :dependent => :destroy
   
   has_one :master,
     :class_name => 'Variant',
-    :conditions => ["variants.is_master = ? AND variants.deleted_at IS NULL", true]
+    :conditions => ["variant.is_master = ? AND variant.deleted_at IS NULL", true]
 
-  delegate_belongs_to :master, :sku, :product_source_id, :is_master
+  delegate_belongs_to :master, :sku, :price, :is_master
   delegate_belongs_to :master, :cost_price if Variant.table_exists? && Variant.column_names.include?("cost_price")  
   
   after_create :set_master_variant_defaults
-  after_create :add_properties_and_option_types_from_prototype
   before_update :sanitize_permalink
   after_save :save_master
 
   has_many :variants,
-    :conditions => ["variants.is_master = ? AND variants.deleted_at IS NULL", false],
+    :conditions => ["variant.is_master = ? AND variant.deleted_at IS NULL", false],
     :order => 'variants.position ASC'  
   
   has_many :variants_including_master,
     :class_name => 'Variant',
-    :conditions => ["variants.deleted_at IS NULL"],
+    :conditions => ["variant.deleted_at IS NULL"],
     :dependent => :destroy
 
   has_many :variants_with_only_master,
     :class_name => 'Variant',
-    :conditions => ["variants.deleted_at IS NULL AND variants.is_master = ?", true],
+    :conditions => ["variant.deleted_at IS NULL AND variant.is_master = ?", true],
     :dependent => :destroy
     
-  validates :name, :billing_price, :permalink, :presence => true  
+  def variant_images
+    Image.find_by_sql("SELECT assets.* FROM assets LEFT JOIN variants ON (variants.id = assets.viewable_id) WHERE (variants.product_id = #{self.id})")
+  end    
+    
+  validates :name, :cost_price, :customer_price, :presence => true  
   
-  make_permalink
-
-  alias :options :product_option_types
+  # make_permalink   
+  
+  alias :options :product_option_types 
   
   def to_param
     return permalink if permalink.present?

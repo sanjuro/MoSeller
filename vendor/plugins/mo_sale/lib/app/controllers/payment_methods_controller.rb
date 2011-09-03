@@ -1,4 +1,4 @@
-class PaymentMethodsController < ApplicationController
+class PaymentMethodsController < ActionController::Base
 
   def index
     @payment_methods = PaymentMethod.all

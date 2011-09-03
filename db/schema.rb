@@ -26,6 +26,19 @@ ActiveRecord::Schema.define(:version => 20110824084915) do
     t.string "title"
   end
 
+  create_table "assets", :force => true do |t|
+    t.integer  "viewable_id"
+    t.string   "viewable_type",           :limit => 50
+    t.string   "attachment_content_type"
+    t.string   "attachment_file_name"
+    t.integer  "attachment_size"
+    t.integer  "position"
+    t.string   "type",                    :limit => 75
+    t.datetime "attachment_updated_at"
+    t.integer  "attachment_width"
+    t.integer  "attachment_height"
+  end
+
   create_table "category", :force => true do |t|
     t.string "title"
   end
@@ -185,15 +198,17 @@ ActiveRecord::Schema.define(:version => 20110824084915) do
   create_table "product", :force => true do |t|
     t.integer  "category_id"
     t.integer  "product_source_id"
-    t.string   "name",              :default => "", :null => false
+    t.string   "name",                                            :default => "", :null => false
     t.text     "description"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.decimal  "cost_price",        :precision => 8, :scale => 2
+    t.decimal  "customer_price",    :precision => 8, :scale => 2,                 :null => false
     t.string   "permalink"
     t.datetime "available_on"
     t.datetime "deleted_at"
     t.string   "meta_description"
     t.string   "meta_keywords"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "product", ["available_on"], :name => "index_products_on_available_on"
@@ -211,8 +226,10 @@ ActiveRecord::Schema.define(:version => 20110824084915) do
 
   create_table "product_source", :force => true do |t|
     t.integer  "supplier_id"
-    t.integer  "product_gateway_id"
-    t.string   "source_name"
+    t.string   "name"
+    t.string   "description"
+    t.string   "clazz"
+    t.datetime "deleted_at"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -258,10 +275,8 @@ ActiveRecord::Schema.define(:version => 20110824084915) do
   create_table "variant", :force => true do |t|
     t.integer  "product_id"
     t.string   "sku",                                          :default => "",    :null => false
-    t.decimal  "cost_price",     :precision => 8, :scale => 2,                    :null => false
-    t.decimal  "billing_price",  :precision => 8, :scale => 2,                    :null => false
-    t.decimal  "customer_price", :precision => 8, :scale => 2,                    :null => false
-    t.decimal  "full_price",     :precision => 8, :scale => 2,                    :null => false
+    t.decimal  "cost_price",     :precision => 8, :scale => 2
+    t.decimal  "customer_price", :precision => 8, :scale => 2
     t.datetime "deleted_at"
     t.boolean  "is_master",                                    :default => false
   end

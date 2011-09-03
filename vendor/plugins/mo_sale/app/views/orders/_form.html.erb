@@ -1,0 +1,17 @@
+<%= render "shared/error_messages", :target => @order %>
+<table id="cart-detail" data-hook>
+  <thead>
+    <tr data-hook="cart_items_headers">
+      <th colspan="2" width="200px"><%= t("item") %></th>
+      <th><%= t("price") %></th>
+      <th><%= t("qty") %></th>
+      <th><%= t("total") %></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody id="order_items" data-hook>
+    <%= order_form.fields_for :order_items do |item_form| %>
+      <%= render 'order_item', :variant => item_form.object.variant, :order_item => item_form.object, :item_form => item_form %>
+    <% end %>
+  </tbody>
+</table>

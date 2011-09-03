@@ -1,0 +1,20 @@
+<tr class="<%= cycle('', 'alt') %>">
+
+  <td data-hook="cart_item_description">
+    <h4><%= link_to variant.product.name, product_path(variant.product) %></h4>
+    
+    <%= truncate(variant.product.description, :length => 50, :omission => "...") %>
+  </td>
+  <td data-hook="cart_item_price">
+    <%= order_item.customer_price %>
+  </td>
+  <td data-hook="cart_item_quantity">
+    <%= item_form.text_field :quantity, :size => 3, :class => "line_item_quantity" %>
+  </td>
+  <td data-hook="cart_item_total">
+    <%= (order_item.customer_price * order_item.quantity) unless order_item.quantity.nil? %>
+  </td>
+  <td data-hook="cart_item_delete">
+    <%= link_to(image_tag('icons/delete.png'), '#', :class => 'delete') %>
+  </td>
+</tr>

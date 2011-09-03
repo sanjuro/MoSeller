@@ -69,60 +69,56 @@ ActiveRecord::Base.transaction do
     supplier3.id = 3
     supplier3.save!
   end
-  
-  if Product == 0
-    product = Product.new :product_source => "ESET", :category => 1
-    product.id = 1
-    product.save!
-  end  
+
   
   if OptionType == 0
-    option_type = OptionType.new :name => "product_code", :presentation => "ProductCode"
-    option_type.id = 1
-    option_type.save!
+    option_type1 = OptionType.new :name => "product_code", :presentation => "ProductCode"
+    option_type1.id = 1
+    option_type1.save!
     
-    option_type = OptionType.new :name => "product_update_type", :presentation => "UpdateType"
-    option_type.id = 2
-    option_type.save!  
+    option_type2 = OptionType.new :name => "product_update_type", :presentation => "UpdateType"
+    option_type2.id = 2
+    option_type2.save!  
     
-    option_type = OptionType.new :name => "product_purchaste_type", :presentation => "PurchaseType"
-    option_type.id = 3
-    option_type.save!    
+    option_type3 = OptionType.new :name => "product_purchaste_type", :presentation => "PurchaseType"
+    option_type3.id = 3
+    option_type3.save!    
        
   end
   
   if OptionValue == 0
-    option_value = OptionValue.new :option_type_id => 1, :name => "product_code_106", :position => 1, :presentation => "NOD32"
-    option_value.id = 1
-    option_value.save!
+    option_value1 = OptionValue.new :option_type_id => 1, :name => "product_code_106", :position => 1, :presentation => "NOD32"
+    option_value1.id = 1
+    option_value1.save!
     
-    option_value = OptionValue.new :option_type_id => 2, :name => "update_type_1_year", :position => 1, :presentation => "1 Year"
-    option_value.id = 2
-    option_value.save! 
+    option_value2 = OptionValue.new :option_type_id => 2, :name => "update_type_1_year", :position => 1, :presentation => "1 Year"
+    option_value2.id = 2
+    option_value2.save! 
     
-    option_value = OptionValue.new :option_type_id => 3, :name => "update_type_2_year", :position => 2, :presentation => "2 Year"
-    option_value.id = 3
-    option_value.save!    
+    option_value3 = OptionValue.new :option_type_id => 3, :name => "update_type_2_year", :position => 2, :presentation => "2 Year"
+    option_value3.id = 3
+    option_value3.save!    
     
-    option_value = OptionValue.new :option_type_id => 3, :name => "purchase_type_new", :position => 2, :presentation => "New"
-    option_value.id = 4
-    option_value.save!       
+    option_value4 = OptionValue.new :option_type_id => 3, :name => "purchase_type_new", :position => 2, :presentation => "New"
+    option_value4.id = 4
+    option_value4.save!       
   end  
   
-  if OptionValueVariant == 0
-    option_value_variant = OptionValueVariant.new :variant_id => 1, :option_value_id => 1
-    option_value_variant.id = 1
-    option_value_variant.save!
-    
-    option_value_variant = OptionValueVariant.new :variant_id => 1, :option_value_id => 2
-    option_value_variant.id = 2
-    option_value_variant.save!
-    
-    option_value_variant = OptionValueVariant.new :variant_id => 1, :option_value_id => 4
-    option_value_variant.id = 3
-    option_value_variant.save!
-  end
+  if Product.count == 0
+    product = Product.new :category_id => 1, :product_source_id => 1, :name => "NOD32", :cost_price => 236.00, :description => "ESET NOD32", :customer_price => 312.00
+    product.id = 1
+    product.save!
+  end  
   
+  if ProductSource.count == 0
+    product_source1 = ProductSource.new :name => "ESET", :description => "ESET SOAP Gateway", :clazz => "eset_helper"
+    product_source1.id = 1
+    product_source1.save!
+    
+    product_source2 = ProductSource.new :name => "Freepaid", :description => "Freepaid Airtime API", :clazz => "freepaid_helper"
+    product_source2.id = 2
+    product_source2.save!
+  end 
   
   if User.count == 0
     user = User.new :name => "shadley", :client_id => 1, :email => "shad6ster@gmail.com", :password => "rad6hia", :password_confirmation => "rad6hia"
@@ -131,7 +127,7 @@ ActiveRecord::Base.transaction do
   end
   
   if Variant.count == 0
-    variant = Variant.new :product_id => 1, :sku => "ESET000000106", :cost_price => 236.00, :billing_price => 312.00, :customer_price => 312.00, :is_master => true
+    variant = Variant.new :product_id => 1, :customer_price => 312.00, :sku => "ESET000000106", :cost_price => 236.00, :is_master => true
     variant.id = 1
     variant.save!
   end

@@ -1,5 +1,6 @@
 class ProductsController < ActionController::Base
-
+  helper :products
+  
   def index
     @product = Product.all
    
@@ -21,14 +22,20 @@ class ProductsController < ActionController::Base
   end
   
   def show
-    @product = Product.find(params[:id])
-   
+    @product = Product.find_by_permalink!(params[:id])
+    return unless @product
+
+    @variants = Variant.active.includes([:option_values, :images]).where(:product_id => @product.id)
+    # @selected_variant = @variants.detect { |v| v.available? }
+
+    referer = request.env['HTTP_REFERER']
+
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @product }
       format.json  { render :json => @product }
     end
-  end
+  end  
  
   def destroy
     @product = Product.find(params[:id])
@@ -40,4 +47,9 @@ class ProductsController < ActionController::Base
     end
   end  
   
+  private
+
+  def accurate_title
+    @product ? @product.name : super
+  end
 end

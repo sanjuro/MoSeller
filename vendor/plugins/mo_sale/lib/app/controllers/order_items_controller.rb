@@ -1,5 +1,5 @@
-class OrderItemsController < ApplicationController
-
+class OrderItemsController < ActionController::Base
+  
   def index
     @order_items = OrderItem.all
    

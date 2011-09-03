@@ -1,5 +1,18 @@
 class CreateMoSales < ActiveRecord::Migration
   def self.up
+    create_table "assets", :force => true do |t|
+      t.integer  "viewable_id"
+      t.string   "viewable_type", :limit => 50
+      t.string   "attachment_content_type"
+      t.string   "attachment_file_name"
+      t.integer  "attachment_size"
+      t.integer  "position"
+      t.string   "type", :limit => 75
+      t.datetime "attachment_updated_at"
+      t.integer  "attachment_width"
+      t.integer  "attachment_height"
+    end    
+    
     create_table :category, :options => "ENGINE=INODB" do |t|
       t.string :title
     end    
@@ -85,13 +98,14 @@ class CreateMoSales < ActiveRecord::Migration
       t.references :product_source
       t.string "name", :default => "", :null => false
       t.text "description"
-      t.datetime "created_at"
-      t.datetime "updated_at"
+      t.decimal "cost_price", :precision => 8, :scale => 2, :null => true
+      t.decimal "customer_price", :precision => 8, :scale => 2, :null => false
       t.string "permalink"
       t.datetime "available_on"
       t.datetime "deleted_at"
       t.string "meta_description"
       t.string "meta_keywords"
+      t.timestamps
     end
 
     add_index "product", ["available_on"], :name => "index_products_on_available_on"
@@ -119,9 +133,8 @@ class CreateMoSales < ActiveRecord::Migration
     create_table "variant", :force => true do |t|
       t.integer "product_id"
       t.string "sku", :default => "", :null => false
-      t.decimal "cost_price", :precision => 8, :scale => 2, :null => false
-      t.decimal "billing_price", :precision => 8, :scale => 2, :null => false
-      t.decimal "customer_price", :precision => 8, :scale => 2, :null => false
+      t.decimal "cost_price", :precision => 8, :scale => 2, :null => true
+      t.decimal "customer_price", :precision => 8, :scale => 2, :null => true
       t.datetime "deleted_at"
       t.boolean "is_master", :default => false
     end

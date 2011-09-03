@@ -9,19 +9,19 @@ class OrderItem < ActiveRecord::Base
 
   validates :variant, :presence => true
   validates :quantity, :numericality => { :only_integer => true, :message => I18n.t("validation.must_be_int") }
-  validates :price, :numericality => true
+  validates :customer_price, :numericality => true
   # validate :meta_validation_of_quantities
 
   attr_accessible :quantity
 
-  before_save :update_inventory
-  before_destroy :ensure_not_shipped, :remove_inventory
+  # before_save :update_inventory
+  # before_destroy :ensure_not_shipped, :remove_inventory
 
   after_save :update_order
   after_destroy :update_order
 
   def copy_price
-    self.price = variant.price if variant && self.price.nil?
+    self.customer_price = variant.customer_price if variant && self.customer_price.nil?
   end
 
   # def meta_validation_of_quantities
@@ -50,7 +50,7 @@ class OrderItem < ActiveRecord::Base
   end
 
   def amount
-    self.price * self.quantity
+    self.customer_price * self.quantity
   end
   alias total amount
 

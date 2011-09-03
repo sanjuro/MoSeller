@@ -1,6 +1,6 @@
 class Order < ActiveRecord::Base
-  attr_accessible :line_items, :bill_address_attributes, :payments_attributes,
-                  :line_items_attributes, :use_billing, :special_instructions
+  attr_accessible :order_items, :bill_address_attributes, :payments_attributes,
+                  :order_items_attributes, :use_billing, :special_instructions
                  
   belongs_to :client, :foreign_key => "order_client_id", :class_name => "Client"
   belongs_to :bill_address, :foreign_key => "bill_address_id", :class_name => "Address"
@@ -22,8 +22,18 @@ class Order < ActiveRecord::Base
   scope :complete, where("orders.completed_at IS NOT NULL")
   scope :incomplete, where("orders.completed_at IS NULL")
   
+  # make_permalink :field => :number  
+  
+  class_attribute :update_hooks
+  self.update_hooks = Set.new
+
+  # Use this method in other gems that wish to register their own custom logic that should be called after Order#updat
+  def self.register_update_hook(hook)
+    self.update_hooks.add(hook)
+  end
+  
   def completed?
-    !! completed_at
+    # !! completed_at
   end
 
   # Indicates whether or not the user is allowed to proceed to checkout. Currently this is implemented as a
@@ -94,24 +104,16 @@ class Order < ActiveRecord::Base
   # up in an infinite recursion as the associations try to save and then in turn try to call +update!+ again.)
   def update!
     update_totals
-    update_payment_state
-    update_adjustments
+    # update_payment_state
+    # update_adjustments
     # update totals a second time in case updated adjustments have an effect on the total
-    update_totals
-
+    # update_totals
+    
     update_attributes_without_callbacks({
-      :payment_state => payment_state,
-      :shipment_state => shipment_state,
       :item_total => item_total,
-      :adjustment_total => adjustment_total,
-      :payment_total => payment_total,
-      :total => total
-    })
+      :customer_total => customer_total
+    })    
 
-    #ensure checkout payment always matches order total
-    if payment and payment.checkout? and payment.amount != total
-      payment.update_attributes_without_callbacks(:amount => total)
-    end
 
     update_hooks.each { |hook| self.send hook }
   end 
@@ -133,25 +135,15 @@ class Order < ActiveRecord::Base
       current_item.quantity += quantity
       current_item.save
     else
-      current_item = LineItem.new(:quantity => quantity)
+      current_item = OrderItem.new(:quantity => quantity)
       current_item.variant = variant
-      current_item.price = variant.price
-      self.line_items << current_item
+      current_item.customer_price = variant.customer_price
+      self.order_items << current_item
     end
 
-    # populate line_items attributes for additional_fields entries
-    # that have populate => [:line_item]
-    Variant.additional_fields.select{|f| !f[:populate].nil? && f[:populate].include?(:line_item) }.each do |field|
-      value = ""
-
-      if field[:only].nil? || field[:only].include?(:variant)
-        value = variant.send(field[:name].gsub(" ", "_").downcase)
-      elsif field[:only].include?(:product)
-        value = variant.product.send(field[:name].gsub(" ", "_").downcase)
-      end
-      current_item.update_attribute(field[:name].gsub(" ", "_").downcase, value)
-    end
-
+    # populate order_items attributes for additional_fields entries
+    # that have populate => [:order_item]
+    
     current_item
   end
   
@@ -164,6 +156,10 @@ class Order < ActiveRecord::Base
     end
     self.number = random if self.number.blank?
     self.number
+  end
+  
+  def contains?(variant)
+    order_items.detect{|order_item| order_item.variant_id == variant.id}
   end
   
   def creditcards
@@ -209,7 +205,7 @@ class Order < ActiveRecord::Base
   end
   
   def products
-    line_items.map{|li| li.variant.product}
+    order_items.map{|li| li.variant.product}
   end
 
   private
@@ -258,10 +254,11 @@ class Order < ActiveRecord::Base
     # +total+ The so-called "order total." This is equivalent to +item_total+ plus +adjustment_total+.
     def update_totals
       # update_adjustments
-      self.payment_total = payments.completed.map(&:amount).sum
-      self.item_total = line_items.map(&:amount).sum
-      self.adjustment_total = adjustments.eligible.map(&:amount).sum
-      self.total = item_total + adjustment_total
+      # self.payment_total = payments.completed.map(&:amount).sum
+      self.item_total = order_items.map(&:amount).sum
+      # self.adjustment_total = adjustments.eligible.map(&:amount).sum
+      # self.total = item_total + adjustment_total
+      self.customer_total = item_total
     end
     
     # Updates each of the Order adjustments. This is intended to be called from an Observer so that the Order can

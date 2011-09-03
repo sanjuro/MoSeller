@@ -9,6 +9,9 @@ Moseller::Application.routes.draw do
 
   root :to => "categorys#index"  
   
+  get "pages/home" 
+  get "pages/contact" 
+  get "pages/about"
 
   
   
@@ -21,19 +24,29 @@ Moseller::Application.routes.draw do
 
   resources :categorys  
   
-  resources :orders 
-  resources :orders_items
+  resources :orders do
+    post :populate, :on => :collection
+    resources :order_items
+  end
   
-  resources :sales 
-  resources :sale_items
+  match '/cart', :to => 'orders#edit', :via => :get, :as => :cart
+  match '/cart', :to => 'orders#update', :via => :put, :as => :update_cart
+  match '/cart/empty', :to => 'orders#empty', :via => :put, :as => :empty_cart
   
   resources :productsources 
   match 'productsources/order/', :to => 'productsources#order' 
+  
+  # non-restful checkout stuff
+  match '/checkout/update/:state' => 'checkout#update', :as => :update_checkout
+  match '/checkout/:state' => 'checkout#edit', :as => :checkout_state
+  match '/checkout' => 'checkout#edit', :state => 'address', :as => :checkout  
   
   resources :products
    
   resources :suppliers 
 
+  
+  
   
   # The priority is based upon order of creation:
   # first created -> highest priority.

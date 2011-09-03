@@ -1,0 +1,19 @@
+<div data-hook="product_show">
+
+  <h1><%= @product.name %></h1>
+  
+  <div id="product-images" data-hook="product_images">
+    <div id="main-image" data-hook>
+      <%= render 'image' %>
+    </div>
+  </div>
+  
+  <div id="product-description" data-hook="product_description">
+    <%= @product.description rescue t("product_has_no_description") %>
+  </div>
+
+  <div id="cart-form" data-hook="cart_form">
+    <%= render 'cart_form' %>
+  </div>
+
+</div>

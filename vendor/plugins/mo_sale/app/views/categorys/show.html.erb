@@ -1,0 +1,20 @@
+<h1>Products for <%= @category.title %></h1>
+
+<table>
+    <% if @category.products.empty? %>
+      <%= t(:no_products_found) %>
+    <% else %>
+		<thead>
+			<th style="text-align:center;width:300px;">Name</th>
+			<th style="text-align:center;">Price</th>
+		</thead>
+		<tbody>
+	    <% @category.products.each do |product| %>
+			<tr>
+				<td><%= link_to product.name, product  %></td>
+				<td><%= product.customer_price %></td>
+			</tr>
+		<% end %>
+		</tbody>
+    <% end %>    
+</table>

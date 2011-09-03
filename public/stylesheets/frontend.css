@@ -9,6 +9,7 @@ body {
 }
 h1 {
     border-bottom: 2px solid #EEEEEE;
+	font-size: 30px;
     margin-bottom: 24px;
     padding-bottom: 19px;	
 }
@@ -43,7 +44,7 @@ section {
 }
 
 section h1 {
-  font-size: 200%;
+ 
 }
 
 /* Links */
@@ -112,6 +113,31 @@ footer {
 footer nav {
   float: none;
 }
+
+/* Sign Up Form */
+
+label {
+    font-weight: bold;
+    line-height: 1.75em;
+    margin: 0;
+    padding-top: 1em;
+    vertical-align: middle;	
+}
+
+input {
+	border: 1px solid #CCCCCC;
+    border-radius: 4px 4px 4px 4px;
+    box-shadow: 0 1px 1px #EEEEEE;
+    font: 13px/1.5 'Helvetica Neue',Arial,'Liberation Sans',FreeSans,sans-serif;
+    margin: 0;
+    padding: 6px;
+    width: auto;
+}
+input:focus {
+    border-color: rgba(82, 168, 236, 0.75);
+    box-shadow: 0 0 8px rgba(82, 168, 236, 0.5);
+}
+
 
 /* Sign up button */
 

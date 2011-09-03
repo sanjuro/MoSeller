@@ -1,13 +1,13 @@
-<h1>Product Categories</h1>
+<h1>What would you like to purchase</h1>
  
 <table>
   <tr>
-    <th>Title</th>
+    <th></th>
   </tr>
  
 <% @categorys.each do |category| %>
   <tr>
-    <td><%= category.title %></td>
+    <td><%= link_to category.title, category %></td>
   </tr>
 <% end %>
 </table>

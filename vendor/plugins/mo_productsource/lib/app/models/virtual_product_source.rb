@@ -14,11 +14,11 @@
 class VirtualProductSource < ProductSource
   delegate_belongs_to :provider, :new_product, :show_product
 
-  attr_accessible :source_name, :supplier_id
+  attr_accessible :name, :description, :clazz
   
   belongs_to :supplier, :foreign_key => "productsource_supplier_id", :class_name => "Supplier"  
   
-  validates :source_name,  :presence => true
+  validates :name,  :presence => true
   validates :supplier_id,  :presence => true
 
   preference :server, :string, :default => 'test'

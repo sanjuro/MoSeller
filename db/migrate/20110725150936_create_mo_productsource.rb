@@ -3,8 +3,10 @@ class CreateMoProductsource < ActiveRecord::Migration
     
     create_table :product_source, :options => "ENGINE=INODB" do |t|
       t.references :supplier
-      t.references :product_gateway
-      t.string :source_name
+      t.string :name
+      t.string :description
+      t.string :clazz
+      t.datetime "deleted_at"
       
       t.timestamps
     end

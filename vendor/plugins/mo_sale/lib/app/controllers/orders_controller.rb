@@ -1,6 +1,6 @@
 class OrdersController < ActionController::Base
   rescue_from ActiveRecord::RecordNotFound, :with => :render_404  
-  
+  include ProductsHelper
   
   def index
     @orders = Order.paginate(:page => params[:page])
@@ -35,8 +35,8 @@ class OrdersController < ActionController::Base
   def update
     @order = current_order
     if @order.update_attributes(params[:order])
-      @order.line_items = @order.line_items.select {|li| li.quantity > 0 }
-      fire_event('moseller.order.contents_changed')
+      @order.order_items = @order.order_items.select {|li| li.quantity > 0 }
+      # fire_event('moseller.order.contents_changed')
       respond_to do |format|
         format.html { redirect_to cart_path }
         format.xml  { render :xml => @order }
@@ -64,8 +64,8 @@ class OrdersController < ActionController::Base
   # +:products => {product_id => variant_id, product_id => variant_id}}, :quantity => {variant_id => quantity, variant_id => quantity}+
   def populate
     @order = current_order(true)
-
-    params[:products].each do |product_id,variant_id|
+    puts params
+    params[:products].each do |product_id, variant_id|
       quantity = params[:quantity].to_i if !params[:quantity].is_a?(Hash)
       quantity = params[:quantity][variant_id.to_i].to_i if params[:quantity].is_a?(Hash)
       @order.add_variant(Variant.find(variant_id), quantity) if quantity > 0
@@ -76,8 +76,8 @@ class OrdersController < ActionController::Base
       @order.add_variant(Variant.find(variant_id), quantity) if quantity > 0
     end if params[:variants]
 
-    fire_event('moseller.cart.add')
-    fire_event('moseller.order.contents_changed')
+    # fire_event('moseller.cart.add')
+    # fire_event('moseller.order.contents_changed')
     respond_to do |format|
       format.html { redirect_to cart_path }
       format.xml  { render :xml => @order }
@@ -87,7 +87,7 @@ class OrdersController < ActionController::Base
   
   def empty
     if @order = current_order
-      @order.line_items.destroy_all
+      @order.order_items.destroy_all
     end
 
     respond_to do |format|
@@ -106,6 +106,6 @@ class OrdersController < ActionController::Base
       format.html { redirect_to(orders_url) }
       format.xml  { head :ok }
     end
-  end  
+  end   
   
 end
