@@ -4,7 +4,7 @@ class OptionType < ActiveRecord::Base
   
   validates :name, :presentation, :presence => true
   
-  default_scope :order => "option_types.position"
+  # default_scope :order => "option_type.position"
 
   accepts_nested_attributes_for :option_values, :reject_if => lambda { |ov| ov[:name].blank? || ov[:presentation].blank? }, :allow_destroy => true
 end

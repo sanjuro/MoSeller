@@ -1,6 +1,7 @@
 class OrdersController < ActionController::Base
   rescue_from ActiveRecord::RecordNotFound, :with => :render_404  
-  include ProductsHelper
+  helper :base  
+  helper :products
   
   def index
     @orders = Order.paginate(:page => params[:page])

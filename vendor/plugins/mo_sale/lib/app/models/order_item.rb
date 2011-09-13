@@ -39,8 +39,12 @@ class OrderItem < ActiveRecord::Base
   # if shipped_count = order.shipped_units.nil? ? nil : order.shipped_units[variant]
   # errors.add(:quantity, I18n.t("validation.cannot_be_less_than_shipped_units") ) if quantity < shipped_count
   # end
-  # end
-
+  # en
+  
+  def process!
+    ret = variant.product_source.new_product(variant, self.order)
+  end  
+  
   def increment_quantity
     self.quantity += 1
   end

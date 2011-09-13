@@ -11,11 +11,15 @@
 #  product_gateway_id   :datetime
 #
 class ProductSource < ActiveRecord::Base
-
+  has_many :products
+  
+  attr_accessible :name, :description, :clazz  
+  
   default_scope where(:deleted_at => nil)
 
   @provider = nil
   @@providers = Set.new
+  
   def self.register
     @@providers.add(self)
   end
@@ -25,15 +29,23 @@ class ProductSource < ActiveRecord::Base
   end
 
   def provider_class
-    raise "You must implement provider_class method for this gateway."
+    self.clazz
   end
-
-  # The class that will process payments for this payment type, used for @payment.source
-  # e.g. Virtual in the case of a the ESET License Product type
-  # nil means the product source doesn't require a source e.g. check
-  def product_source_class
-    raise "You must implement product_source_class method for this gateway."
+  
+  def provider
+    logger.error "CALLING PRODUCTSOURCE PROVIDER"
+    # product_source_options = options
+    # product_source_options.delete :login if product_source_options.has_key?(:login) and product_source_options[:login].nil?
+    @provider ||= ProductSource::VirtualProductSource::Freepaid.new
   end
+  
+  def options
+    options_hash = {}
+    self.preferences.each do |key,value|
+      options_hash[key.to_sym] = value
+    end
+    options_hash
+  end  
 
   def self.available(display_on='both')
     ProductSource.all.select { |p| p.active && (p.display_on == display_on.to_s || p.display_on.blank?) && (p.environment == Rails.env || p.environment.blank?) }
@@ -58,5 +70,9 @@ class ProductSource < ActiveRecord::Base
   def self.find_with_destroyed *args
     self.with_exclusive_scope { find(*args) }
   end
-
+  
+  def new_product(variant, order)
+    logger.error "CALLING NEWPRODUCT FROM PRODUCT SOURCE"
+    package = provider.new_product(variant, order)
+  end     
 end

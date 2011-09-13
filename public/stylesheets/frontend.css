@@ -185,7 +185,9 @@ td.sidebar {
   border: 1px solid #999;
   margin-bottom: -15px;
 }
-
+.links {
+	float:right;	
+}
 /* Flash Messages */
 
 .error, .alert, .notice, .success, .info, #error_explanation {padding:0.8em;margin-bottom:1em;border:2px solid #ddd;}

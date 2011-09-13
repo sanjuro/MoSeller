@@ -1,6 +1,6 @@
 class CreateMoSales < ActiveRecord::Migration
   def self.up
-    create_table "assets", :force => true do |t|
+    create_table "asset", :force => true do |t|
       t.integer  "viewable_id"
       t.string   "viewable_type", :limit => 50
       t.string   "attachment_content_type"
@@ -15,6 +15,34 @@ class CreateMoSales < ActiveRecord::Migration
     
     create_table :category, :options => "ENGINE=INODB" do |t|
       t.string :title
+    end    
+    
+    create_table "creditcards", :force => true do |t|
+      t.text     "number"
+      t.string   "month"
+      t.string   "year"
+      t.text     "verification_value"
+      t.string   "cc_type"
+      t.string   "display_number"
+      t.string   "first_name"
+      t.string   "last_name"
+      t.datetime "created_at"
+      t.datetime "updated_at"
+      t.string   "start_month"
+      t.string   "start_year"
+      t.string   "issue_number"
+      t.integer  "address_id"
+    end
+    
+    create_table :gateway, :force => true do |t|
+      t.string :type
+      t.string :name
+      t.text :description
+      t.boolean :active, :default => true
+      t.string :environment, :default => "development"
+      t.string :server, :default => "test"
+      t.boolean :test_mode, :default => true
+      t.timestamps
     end    
     
     create_table "option_type", :force => true do |t|
@@ -43,14 +71,17 @@ class CreateMoSales < ActiveRecord::Migration
     create_table "order", :force => true do |t|
       t.references :supplier
       t.references :client      
-      t.integer "user_id"
+      t.references "user"
       t.string "number", :limit => 15
       t.decimal "item_total", :precision => 8, :scale => 2, :default => 0.0, :null => false
       t.decimal "customer_total", :precision => 8, :scale => 2, :default => 0.0, :null => false
       t.decimal "billing_total", :precision => 8, :scale => 2, :default => 0.0, :null => false
       t.decimal "full_total", :precision => 8, :scale => 2, :default => 0.0, :null => false
+      t.string "email_address"
+      t.string "mobile_number"
       t.datetime "created_at"
       t.datetime "updated_at"
+      t.datetime "completed_at"
       t.string "state"
       t.string "token"
       t.decimal "adjustment_total", :precision => 8, :scale => 2, :default => 0.0, :null => false
@@ -76,20 +107,23 @@ class CreateMoSales < ActiveRecord::Migration
             
           
     create_table "payment", :force => true do |t|
-      t.integer "order_id"
+      t.references :source, :polymorphic => true 
+      t.string :state
+      t.integer :order_id
+      t.integer :payment_method_id     
       t.datetime "created_at"
       t.datetime "updated_at"
       t.decimal "amount", :precision => 8, :scale => 2, :default => 0.0, :null => false
-      t.integer "creditcard_id"
-      t.string "type"
     end     
     
-    create_table :payment_methods do |t|
+    create_table :payment_method do |t|
       t.string :type
       t.string :name
+      t.string :display_on, :default => nil
       t.text :description
       t.boolean :active, :default => true
       t.string :environment, :default => "development"
+      t.timestamp :deleted_at, :default => nil
       t.timestamps
     end 
     

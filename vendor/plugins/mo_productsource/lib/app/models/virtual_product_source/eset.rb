@@ -1,4 +1,4 @@
-class VirtualProductSource::ESET < VirtualProductSource
+class ESET < ProductSource
   include EsetHelper # Get ESET Interface 
   
   SERIVCE_USERNAME =  'stanford'
@@ -24,7 +24,7 @@ class VirtualProductSource::ESET < VirtualProductSource
     super
   end
   
-  def new_product(product_options)
+  def new_product!(variant, order)
     # Login to the ESET License Server
     login = ESETLogin(SERIVCE_USERNAME, PASSWORD);
     

@@ -1,5 +1,6 @@
 class CategorysController < ActionController::Base
-
+  helper :base
+  
   def index
     @categorys = Category.all
    

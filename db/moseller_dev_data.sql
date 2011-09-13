@@ -1,0 +1,2 @@
+"id","client_id","email","encrypted_password","reset_password_token","reset_password_sent_at","remember_created_at","sign_in_count","current_sign_in_at","last_sign_in_at","current_sign_in_ip","last_sign_in_ip","name","created_at","updated_at"
+1,1,"shad6ster@gmail.com","$2a$10$dUtGGLLqMRbvR/N.ZuwP7uxD9q.1bYw50ariaEoLDarZF.bEC5wLS",NULL,NULL,NULL,1,"2011-09-03 17:37:34","2011-09-03 17:37:34","127.0.0.1","127.0.0.1","shadley","2011-09-01 02:06:50","2011-09-03 17:37:34"

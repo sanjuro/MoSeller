@@ -1,4 +1,5 @@
 class ProductsController < ActionController::Base
+  helper :base
   helper :products
   
   def index

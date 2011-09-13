@@ -1,0 +1,19 @@
+Succceful purchase, Order Number: <%= @order.number %>
+===============================================
+ 
+You have successfully made a purchase from MoSeller.
+ 
+Succceful purchase, Order Number: <%= @order.number %>
+
+    <% @order.order_items.each do |item| %>
+        <%=item.variant.product.name%>>
+        <%= number_to_currency item.customer_price %>
+        <%=item.quantity%>
+        <%= number_to_currency (item.customer_price * item.quantity)%>
+    <% end %>
+    
+    <% @order.packages.each do |package| %>
+      <%= package.payload %><br>
+    <% end %>
+ 
+Thanks for buying and have a great day!

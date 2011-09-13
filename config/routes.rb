@@ -1,11 +1,25 @@
 Moseller::Application.routes.draw do
     
-  devise_for :users do
-     get "/users/sign_out", :to => "devise/sessions#destroy" # Add a custom sing out route for user sign out
+
+  ActiveAdmin.routes(self)
+  
+  devise_for :users, :skip => [:registrations, :sessions] do
+    # devise/registrations
+    get 'signup' => 'devise/registrations#new', :as => :new_user_registration
+    post 'signup' => 'devise/registrations#create', :as => :user_registration
+    get 'users/cancel' => 'devise/registrations#cancel', :as => :cancel_user_registration
+    get 'users/edit' => 'devise/registrations#edit', :as => :edit_user_registration
+    put 'users' => 'devise/registrations#update'
+    delete 'users/cancel' => 'devise/registrations#destroy'
+   
+    # devise/sessions
+    get 'signin' => 'devise/sessions#new', :as => :new_user_session
+    post 'signin' => 'devise/sessions#create', :as => :user_session
+    get 'signout' => 'devise/sessions#destroy', :as => :destroy_user_session
   end
 
 
-  get "users/new"
+  devise_for :admin_user
 
   root :to => "categorys#index"  
   
@@ -14,10 +28,9 @@ Moseller::Application.routes.draw do
   get "pages/about"
 
   
-  
   resources :users
-
-  
+  resources :admin_users
+ 
   resources :clients 
   resources :contacts
   resources :locations
@@ -38,14 +51,14 @@ Moseller::Application.routes.draw do
   
   # non-restful checkout stuff
   match '/checkout/update/:state' => 'checkout#update', :as => :update_checkout
-  match '/checkout/:state' => 'checkout#edit', :as => :checkout_state
-  match '/checkout' => 'checkout#edit', :state => 'address', :as => :checkout  
+  match '/checkout/:state' => 'checkout#update', :as => :checkout_state
+  match '/checkout' => 'checkout#update', :state => 'cart', :as => :checkout  
   
   resources :products
+  match '/admin' => 'admin/products#index', :as => :admin
    
   resources :suppliers 
 
-  
   
   
   # The priority is based upon order of creation:

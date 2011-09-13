@@ -1,13 +1,16 @@
 class Order < ActiveRecord::Base
   attr_accessible :order_items, :bill_address_attributes, :payments_attributes,
-                  :order_items_attributes, :use_billing, :special_instructions
+                  :order_items_attributes, :use_billing, :special_instructions,
+                  :email_address, :mobile_number, :completed_at
                  
   belongs_to :client, :foreign_key => "order_client_id", :class_name => "Client"
+  belongs_to :user
   belongs_to :bill_address, :foreign_key => "bill_address_id", :class_name => "Address"
 
   has_many :state_events, :as => :stateful
   has_many :order_items, :dependent => :destroy
   has_many :payments, :dependent => :destroy
+  has_many :packages, :dependent => :destroy
 
   accepts_nested_attributes_for :order_items
   accepts_nested_attributes_for :payments
@@ -45,7 +48,7 @@ class Order < ActiveRecord::Base
 
   # Is this a free order in which case the payment step should be skipped
   def payment_required?
-    total.to_f > 0.0
+    full_total.to_f > 0.0
   end
 
   # Indicates the number of items in the order
@@ -57,16 +60,16 @@ class Order < ActiveRecord::Base
   state_machine :initial => 'cart', :use_transactions => false do
   
     event :next do
-      transition :from => 'cart', :to => 'address'
-      transition :from => 'address', :to => 'payment'
-      transition :from => 'confirm', :to => 'complete'
+      transition :from => 'cart',     :to => 'delivery'
+      transition :from => 'delivery', :to => 'confirm'
+      transition :from => 'confirm',  :to => 'complete'
 
 
       # note: some payment methods will not support a confirm step
-      transition :from => 'payment', :to => 'confirm',
-                                      :if => Proc.new { Gateway.current && Gateway.current.payment_profiles_supported? }
+      # transition :from => 'payment', :to => 'confirm',
+      #                                :if => Proc.new { Gateway.current && Gateway.current.payment_profiles_supported? }
 
-      transition :from => 'payment', :to => 'complete'
+      # transition :from => 'payment', :to => 'complete'
     end
 
     event :cancel do
@@ -77,21 +80,20 @@ class Order < ActiveRecord::Base
     end
     event :resume do
       transition :to => 'resumed', :from => 'canceled', :if => :allow_resume?
-    end
+    end   
 
     before_transition :to => 'complete' do |order|
-      begin
-        order.process_payments!
-      rescue MoSeller::GatewayError
-        if MoSeller::Config[:allow_checkout_on_gateway_error]
-          true
-        else
-          false
-        end
-      end
+      # order.process_payments! # process payments
+      order.process_order_items! # fetch products
     end
 
-
+    after_transition :to => 'complete' do |order|
+      # do account and product stuff here   
+      order.finalize! 
+      
+      # order.billing!
+    end
+    
     # after_transition :to => 'complete', :do => :finalize!
     # after_transition :to => 'delivery', :do => :create_tax_charge!
     # after_transition :to => 'payment', :do => :create_shipment!
@@ -111,7 +113,8 @@ class Order < ActiveRecord::Base
     
     update_attributes_without_callbacks({
       :item_total => item_total,
-      :customer_total => customer_total
+      :customer_total => customer_total,
+      :full_total => full_total
     })    
 
 
@@ -147,6 +150,13 @@ class Order < ActiveRecord::Base
     current_item
   end
   
+  def add_package(package_value)
+    current_item = Package.new(:order => self, 
+                               :payload => package_value
+                               )    
+    self.packages << current_item
+  end
+  
   # FIXME refactor this method and implement validation using validates_* utilities
   def generate_order_number
     record = true
@@ -170,22 +180,33 @@ class Order < ActiveRecord::Base
   def process_payments!
     ret = payments.each(&:process!)
   end
-
+  
+  def process_order_items!
+    ret = order_items.each(&:process!)
+  end
+  
   # Finalizes an in progress order after checkout is complete.
   # Called after transition to complete state when payments will have been processed
   def finalize!
+    logger.error 'FINALIZE ORDER '
+    
     update_attribute(:completed_at, Time.now)
-    self.out_of_stock_items = InventoryUnit.assign_opening_inventory(self)
+    # self.out_of_stock_items = InventoryUnit.assign_opening_inventory(self)
     # lock any optional adjustments (coupon promotions, etc.)
-    adjustments.optional.each { |adjustment| adjustment.update_attribute("locked", true) }
-    OrderMailer.confirm_email(self).deliver
+    # adjustments.optional.each { |adjustment| adjustment.update_attribute("locked", true) }
+    # OrderMailer.confirm_email(self).deliver
+    
+    # Mail products
+    logger.error "MAILING PRODUCTS"
+    
+    OrderMailer.order_email(self).deliver
 
-    self.state_events.create({
-      :previous_state => "cart",
-      :next_state => "complete",
-      :name => "order" ,
-      :user_id => (User.respond_to?(:current) && User.current.try(:id)) || self.user_id
-    })
+    # self.state_events.create({
+    #  :previous_state => "cart",
+    #  :next_state => "complete",
+    #  :name => "order" ,
+    #  :user_id => (User.respond_to?(:current) && User.current.try(:id)) || self.user_id
+    # })
   end  
   
   def payment
@@ -259,6 +280,7 @@ class Order < ActiveRecord::Base
       # self.adjustment_total = adjustments.eligible.map(&:amount).sum
       # self.total = item_total + adjustment_total
       self.customer_total = item_total
+      self.full_total = item_total
     end
     
     # Updates each of the Order adjustments. This is intended to be called from an Observer so that the Order can

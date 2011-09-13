@@ -24,9 +24,12 @@ gem 'capistrano'
 # gem 'nokogiri'
 # gem 'sqlite3-ruby', :require => 'sqlite3'
 # gem 'aws-s3', :require => 'aws/s3'
+
+gem 'activeadmin'
+
 gem 'savon'
 
-gem 'devise'
+gem "devise", :git => "git://github.com/plataformatec/devise.git" 
 
 gem 'savon'
 gem 'gravatar_image_tag', '1.0.0.pre2'

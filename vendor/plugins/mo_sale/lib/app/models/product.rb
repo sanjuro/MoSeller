@@ -1,6 +1,7 @@
 class Product < ActiveRecord::Base
   belongs_to :product_source
   belongs_to :category
+  
   has_many :product_option_types, :dependent => :destroy
   has_many :option_types, :through => :product_option_types
   has_many :product_properties, :dependent => :destroy
@@ -10,7 +11,8 @@ class Product < ActiveRecord::Base
   has_one :master,
     :class_name => 'Variant',
     :conditions => ["variant.is_master = ? AND variant.deleted_at IS NULL", true]
-
+     
+      
   delegate_belongs_to :master, :sku, :price, :is_master
   delegate_belongs_to :master, :cost_price if Variant.table_exists? && Variant.column_names.include?("cost_price")  
   
@@ -19,8 +21,7 @@ class Product < ActiveRecord::Base
   after_save :save_master
 
   has_many :variants,
-    :conditions => ["variant.is_master = ? AND variant.deleted_at IS NULL", false],
-    :order => 'variants.position ASC'  
+    :conditions => ["variant.is_master = ? AND variant.deleted_at IS NULL", false] 
   
   has_many :variants_including_master,
     :class_name => 'Variant',
@@ -33,7 +34,7 @@ class Product < ActiveRecord::Base
     :dependent => :destroy
     
   def variant_images
-    Image.find_by_sql("SELECT assets.* FROM assets LEFT JOIN variants ON (variants.id = assets.viewable_id) WHERE (variants.product_id = #{self.id})")
+    Image.find_by_sql("SELECT assets.* FROM assets LEFT JOIN variants ON (variant.id = asset.viewable_id) WHERE (variant.product_id = #{self.id})")
   end    
     
   validates :name, :cost_price, :customer_price, :presence => true  
@@ -69,23 +70,28 @@ class Product < ActiveRecord::Base
   def self.like_any(fields, values)
     where_str = fields.map{|field| Array.new(values.size, "products.#{field} #{LIKE} ?").join(' OR ') }.join(' OR ')
     self.where([where_str, values.map{|value| "%#{value}%"} * fields.size].flatten)
-  end
+  end 
+  
+  def new_product(variant, order)    
+    self.product_source.new_product(variant, order) 
+  end  
+  
   
   private
   
-  def sanitize_permalink
-    self.permalink = self.permalink.to_url
-  end
-  
-  # ensures the master variant is flagged as such
-  def set_master_variant_defaults
-    master.is_master = true
-  end
-  
-  # there's a weird quirk with the delegate stuff that does not automatically save the delegate object
-  # when saving so we force a save using a hook.
-  def save_master
-    master.save if master && (master.changed? || master.new_record?)
-  end
+    def sanitize_permalink
+      self.permalink = self.permalink.to_url
+    end
+    
+    # ensures the master variant is flagged as such
+    def set_master_variant_defaults
+      master.is_master = true
+    end
+    
+    # there's a weird quirk with the delegate stuff that does not automatically save the delegate object
+    # when saving so we force a save using a hook.
+    def save_master
+      master.save if master && (master.changed? || master.new_record?)
+    end 
   
 end

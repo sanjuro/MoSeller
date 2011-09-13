@@ -126,6 +126,12 @@ ActiveRecord::Base.transaction do
     user.save!
   end
   
+  if AdminUser.count == 0
+    adminuser = AdminUser.new :name => "shadley", :client_id => 1, :email => "shad6ster@gmail.com", :password => "rad6hia", :password_confirmation => "rad6hia"
+    adminuser.id = 1
+    adminuser.save!
+  end
+  
   if Variant.count == 0
     variant = Variant.new :product_id => 1, :customer_price => 312.00, :sku => "ESET000000106", :cost_price => 236.00, :is_master => true
     variant.id = 1

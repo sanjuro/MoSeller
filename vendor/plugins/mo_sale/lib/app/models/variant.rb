@@ -5,7 +5,10 @@ class Variant < ActiveRecord::Base
 
   has_many :order_items
   has_and_belongs_to_many :option_values
+    
   has_many :images, :as => :viewable, :order => :position, :dependent => :destroy
+  
+  has_one :product_source, :through => :product
 
   validates :cost_price,  :presence => true
   validates :customer_price,  :presence => true
@@ -14,8 +17,8 @@ class Variant < ActiveRecord::Base
 
   include ::Scopes::Variant
   # default variant scope only lists non-deleted variants
-  scope :active, where("variants.deleted_at is null")
-  scope :deleted, where("not variants.deleted_at is null")  
+  scope :active, where("variant.deleted_at is null")
+  scope :deleted, where("not variant.deleted_at is null")  
   
   def self.additional_fields
     @fields
@@ -39,6 +42,7 @@ class Variant < ActiveRecord::Base
   def deleted?
     deleted_at
   end
+    
 
   private
 

@@ -1,5 +1,6 @@
 class CheckoutController < ActionController::Base
-
+  helper :base  
+  
   before_filter :load_order
 
   respond_to :html
@@ -8,9 +9,17 @@ class CheckoutController < ActionController::Base
   def update
     if @order.update_attributes(object_params)
 
-      fire_event('moseller.checkout.update')
+      # fire_event('moseller.checkout.update')
+      
       if @order.respond_to?(:coupon_code) && @order.coupon_code.present?
-        fire_event('spree.checkout.coupon_code_added', :coupon_code => @order.coupon_code)
+        # fire_event('moseller.checkout.coupon_code_added', :coupon_code => @order.coupon_code)
+      end
+      
+      
+      if @order.state == "delivery"
+        @order.email_address = params[:email_address]
+        @order.mobile_number = params[:mobile_number]
+        @order.save
       end
 
       if @order.next
@@ -20,10 +29,10 @@ class CheckoutController < ActionController::Base
         respond_with(@order, :location => checkout_state_path(@order.state))
         return
       end
-
+      
       if @order.state == "complete" || @order.completed?
         flash[:notice] = I18n.t(:order_processed_successfully)
-        flash[:commerce_tracking] = "nothing special"
+        flash[:commerce_tracking] = "Your order number is " + @order.number().to_s()
         respond_with(@order, :location => completion_route)
       else
         respond_with(@order, :location => checkout_state_path(@order.state))
@@ -42,14 +51,14 @@ class CheckoutController < ActionController::Base
 
   def object_params
     # For payment step, filter order parameters to produce the expected nested attributes for a single payment and its source, discarding attributes for payment methods other than the one selected
-    if @order.payment?
-      if params[:payment_source].present? && source_params = params.delete(:payment_source)[params[:order][:payments_attributes].first[:payment_method_id].underscore]
-        params[:order][:payments_attributes].first[:source_attributes] = source_params
-      end
-      if (params[:order][:payments_attributes])
-        params[:order][:payments_attributes].first[:amount] = @order.total
-      end
-    end
+    # if @order.payment?
+    #  if params[:payment_source].present? && source_params = params.delete(:payment_source)[params[:order][:payments_attributes].first[:payment_method_id].underscore]
+    #    params[:order][:payments_attributes].first[:source_attributes] = source_params
+    #  end
+    #  if (params[:order][:payments_attributes])
+    #    params[:order][:payments_attributes].first[:amount] = @order.total
+    #  end
+    # end
     params[:order]
   end
 
@@ -67,13 +76,13 @@ class CheckoutController < ActionController::Base
   end
 
   def before_address
-    @order.bill_address ||= Address.default
-    @order.ship_address ||= Address.default
+    # @order.bill_address ||= Address.default
+    # @order.ship_address ||= Address.default
   end
 
   def before_delivery
-    return if params[:order].present?
-    @order.shipping_method ||= (@order.rate_hash.first && @order.rate_hash.first[:shipping_method])
+    # return if params[:order].present?
+    # @order.shipping_method ||= (@order.rate_hash.first && @order.rate_hash.first[:shipping_method])
   end
 
   def before_payment
@@ -84,7 +93,7 @@ class CheckoutController < ActionController::Base
     session[:order_id] = nil
   end
 
-  def rescue_from_spree_gateway_error
+  def rescue_from_moseller_gateway_error
     flash[:error] = t('moseller_gateway_error_flash_for_checkout')
     render :edit
   end

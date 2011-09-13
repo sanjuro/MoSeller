@@ -6,13 +6,13 @@
     <% else %>
 		<thead>
 			<th style="text-align:center;width:300px;">Name</th>
-			<th style="text-align:center;">Price</th>
+			<th style="text-align:center;">Description</th>
 		</thead>
 		<tbody>
 	    <% @category.products.each do |product| %>
 			<tr>
 				<td><%= link_to product.name, product  %></td>
-				<td><%= product.customer_price %></td>
+				<td><%= product.description %></td>
 			</tr>
 		<% end %>
 		</tbody>
