@@ -25,7 +25,7 @@ class CreateMoProductsource < ActiveRecord::Migration
       t.string   :url
       
       t.timestamps
-    end        
+    end    
   end
 
   def self.down

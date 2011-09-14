@@ -27,8 +27,6 @@ gem 'capistrano'
 
 gem 'activeadmin'
 
-gem 'savon'
-
 gem "devise", :git => "git://github.com/plataformatec/devise.git" 
 
 gem 'savon'
@@ -40,6 +38,10 @@ gem 'state_machine'
 
 # Active Record Plugins
 gem 'acts_as_list', '>= 0.1.0'
+
+gem 'fb_graph'
+
+gem "gritter", "0.6.2"
 
 
 

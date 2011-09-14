@@ -5,7 +5,7 @@ module ProductsHelper
     return product_price(variant) unless variant.product.master.customer_price
     diff = product_price(variant, :format_as_currency => false) - variant.cost_price
     if diff > 0
-      "(#{t("add")}: #{format_price diff.abs})"
+      "(#{t("you_save")}: #{format_price diff.abs})"
     else
       "(#{t("subtract")}: #{format_price diff.abs})"
     end

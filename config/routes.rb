@@ -59,6 +59,9 @@ Moseller::Application.routes.draw do
    
   resources :suppliers 
 
+  resource :facebook, :except => :create do
+    get :callback, :to => :create
+  end
   
   
   # The priority is based upon order of creation:

@@ -3,8 +3,10 @@
   <head>
   <title>MoSeller</title>
   <%= csrf_meta_tag %>
+  <meta property="fb:app_id" content="<%= Facebook.config[:client_id] %>">
   <%= render 'shared/stylesheets' %>
-  <%= javascript_include_tag :all %>
+  <script type="text/javascript" src="/javascripts/jquery-1.5.1..min.js?1310575043"></script>
+  <%= include_gritter_and_jquery %>
   </head>
   <body>
 	<header>
@@ -14,6 +16,7 @@
 	</header>
     <div class="container">
       <section class="round">
+      	 <%= gflash %>
          <% flash.each do |key, value| %>
           <div class="flash <%= key %>"><%= value %></div>
         <% end %>
@@ -23,3 +26,12 @@
     </div>
   </body>
 </html>
+<script src="http://connect.facebook.net/en_US/all.js"></script>
+<script>
+      FB.init({
+        appId: "<%= Facebook.config[:client_id] %>",
+        cookie: true,
+        xfbml: true,
+        oauth: true
+      });
+</script>

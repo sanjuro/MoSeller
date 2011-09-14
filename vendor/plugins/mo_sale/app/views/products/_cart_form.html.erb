@@ -2,7 +2,7 @@
 
     <% if @product.has_variants? %>
       <div id="product-variants">
-        <h2><%= t('variants') %></h2>
+        <h2><%= t('availible_products') %></h2>
         <ul>
           <%  has_checked = false
           @product.variants.active.each_with_index do |v,index|
@@ -28,7 +28,7 @@
     <% if @product.customer_price %>
       <div data-hook="product_price">
         <dl id="product-price">
-          <dt><%= t("customer_price") %></dt>
+          <dt><%= t("master_price") %></dt>
           <dd><span class="price selling"><%= format_price(@product.customer_price) %></span></dd>
         </dl>
       </div>

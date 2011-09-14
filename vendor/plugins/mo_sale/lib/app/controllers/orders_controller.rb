@@ -24,7 +24,7 @@ class OrdersController < ActionController::Base
   end
   
   def show
-    @order = Order.find_by_number!(params[:id])
+    @order = Order.find_by_id!(params[:id])
    
     respond_to do |format|
       format.html # show.html.erb

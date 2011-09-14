@@ -12,6 +12,10 @@
   <% end -%>
 
   <p><%= f.submit "Sign in" %></p>
+  <div id="fb-root"></div>
+  <fb:login-button length="long" onlogin="location.href = '<%= facebook_path %>'" scope="<%= Facebook.config[:scope] %>"></fb:login-button>
 <% end %>
+
+<br>
 
 <%= render :partial => "devise/shared/links" %>
