@@ -9,15 +9,17 @@ module FreepaidHelper
     # Executing a SOAP request to call a "getVoucher" action.
     begin
       response = client.request :wsdl,  :getVoucher do
+        soap.input = ["getVoucher", {"xmlns" => "http://pi.dynalias.net:3088/airtime/"}]
         soap.body = { :request => {           
-            :user => transaction_options["user"], 
-            :pass => transaction_options["pass"], 
-            :refno => transaction_options["ref_no"],
-            :network => transaction_options["network"],
-            :sellvalue => transaction_options["sell_vaue"] 
+            :user => transaction_options[:user], 
+            :pass => transaction_options[:pass], 
+            :refno => transaction_options[:ref_no],
+            :network => transaction_options[:network],
+            :sellvalue => transaction_options[:sell_value] 
            },
           :attributes! => { :request => { 'xsi:type' => 'tns:getVoucherIn' } }
         }
+        soap.element_form_default = :unqualified
         http.headers['SOAPAction'] = "http://pi.dynalias.net:3088/airtime/getVoucher"
       end
     rescue Savon::SOAP::Fault => fault
@@ -36,7 +38,7 @@ module FreepaidHelper
     costprice = response.to_hash[:get_voucher_response][:reply][:costprice]
       
     voucherDetails = Hash.new
-    voucherDetails = { 'status' => status, 'message' => message, 'balance' => balance, 'pin' => pin, 'serial' => serial, 'costprice' => costprice }
+    voucherDetails = { :status => status, :message => message, :balance => balance, :pin => pin, :serial => serial, :costprice => costprice }
   end
 
 end

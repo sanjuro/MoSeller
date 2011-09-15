@@ -603,6 +603,7 @@ en:
   order_operation_authorize: Authorize
   order_processed_but_following_items_are_out_of_stock: "Your order has been processed, but following items are out of stock:"
   order_processed_successfully: "Your order has been processed successfully"
+  order_packages: "Your packages"
   order_state:
     # keys correspond to Checkout state names:
     address: address

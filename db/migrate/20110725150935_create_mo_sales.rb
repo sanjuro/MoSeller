@@ -93,6 +93,7 @@ class CreateMoSales < ActiveRecord::Migration
     create_table "order_item", :force => true do |t|
       t.references :order
       t.references :product
+      t.references :package
       t.integer  :variant_id
       t.integer :quantity
       t.decimal  :customer_price,            :precision => 8, :scale => 2, :default => 0.0, :null => false
@@ -169,6 +170,7 @@ class CreateMoSales < ActiveRecord::Migration
       t.string "sku", :default => "", :null => false
       t.decimal "cost_price", :precision => 8, :scale => 2, :null => true
       t.decimal "customer_price", :precision => 8, :scale => 2, :null => true
+      t.decimal "full_price", :precision => 8, :scale => 2, :null => true
       t.datetime "deleted_at"
       t.boolean "is_master", :default => false
     end

@@ -4,6 +4,7 @@ class OrderItem < ActiveRecord::Base
   belongs_to :variant
 
   has_one :product, :through => :variant
+  has_one :package
 
   before_validation :copy_price
 
@@ -12,7 +13,7 @@ class OrderItem < ActiveRecord::Base
   validates :customer_price, :numericality => true
   # validate :meta_validation_of_quantities
 
-  attr_accessible :quantity
+  attr_accessible :id, :quantity
 
   # before_save :update_inventory
   # before_destroy :ensure_not_shipped, :remove_inventory
@@ -42,7 +43,7 @@ class OrderItem < ActiveRecord::Base
   # en
   
   def process!
-    ret = variant.product_source.new_product(variant, self.order)
+    ret = variant.product_source.new_product(variant, self)
   end  
   
   def increment_quantity

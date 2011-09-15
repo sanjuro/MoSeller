@@ -150,13 +150,6 @@ class Order < ActiveRecord::Base
     current_item
   end
   
-  def add_package(package_value)
-    current_item = Package.new(:order => self, 
-                               :payload => package_value
-                               )    
-    self.packages << current_item
-  end
-  
   # FIXME refactor this method and implement validation using validates_* utilities
   def generate_order_number
     record = true

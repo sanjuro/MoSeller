@@ -71,8 +71,8 @@ class ProductSource < ActiveRecord::Base
     self.with_exclusive_scope { find(*args) }
   end
   
-  def new_product(variant, order)
+  def new_product(variant, order_item)
     logger.error "CALLING NEWPRODUCT FROM PRODUCT SOURCE"
-    package = provider.new_product(variant, order)
+    package = provider.new_product(variant, order_item)
   end     
 end

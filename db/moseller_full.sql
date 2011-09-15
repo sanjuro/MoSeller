@@ -7,7 +7,7 @@
 #
 # Host: 127.0.0.1 (MySQL 5.5.14)
 # Database: moseller
-# Generation Time: 2011-09-04 15:08:59 +0200
+# Generation Time: 2011-09-15 13:44:53 +0200
 # ************************************************************
 
 
@@ -50,6 +50,65 @@ CREATE TABLE `account_item_type` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+
+
+# Dump of table active_admin_comments
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `active_admin_comments`;
+
+CREATE TABLE `active_admin_comments` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `resource_id` int(11) NOT NULL,
+  `resource_type` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `author_id` int(11) DEFAULT NULL,
+  `author_type` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `body` text COLLATE utf8_unicode_ci,
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  `namespace` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `index_admin_notes_on_resource_type_and_resource_id` (`resource_type`,`resource_id`),
+  KEY `index_active_admin_comments_on_namespace` (`namespace`),
+  KEY `index_active_admin_comments_on_author_type_and_author_id` (`author_type`,`author_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+
+# Dump of table admin_user
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `admin_user`;
+
+CREATE TABLE `admin_user` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  `email` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `encrypted_password` varchar(128) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `reset_password_token` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `reset_password_sent_at` datetime DEFAULT NULL,
+  `remember_created_at` datetime DEFAULT NULL,
+  `sign_in_count` int(11) DEFAULT '0',
+  `current_sign_in_at` datetime DEFAULT NULL,
+  `last_sign_in_at` datetime DEFAULT NULL,
+  `current_sign_in_ip` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `last_sign_in_ip` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `index_admin_user_on_email` (`email`),
+  UNIQUE KEY `index_admin_user_on_reset_password_token` (`reset_password_token`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+LOCK TABLES `admin_user` WRITE;
+/*!40000 ALTER TABLE `admin_user` DISABLE KEYS */;
+
+INSERT INTO `admin_user` (`id`, `name`, `created_at`, `updated_at`, `email`, `encrypted_password`, `reset_password_token`, `reset_password_sent_at`, `remember_created_at`, `sign_in_count`, `current_sign_in_at`, `last_sign_in_at`, `current_sign_in_ip`, `last_sign_in_ip`)
+VALUES
+	(1,'shadley','2011-09-01 02:06:50','2011-09-03 17:37:34','shad6ster@gmail.com','$2a$10$dUtGGLLqMRbvR/N.ZuwP7uxD9q.1bYw50ariaEoLDarZF.bEC5wLS',NULL,NULL,NULL,1,'2011-09-03 17:37:34','2011-09-03 17:37:34','127.0.0.1','127.0.0.1');
+
+/*!40000 ALTER TABLE `admin_user` ENABLE KEYS */;
+UNLOCK TABLES;
 
 
 # Dump of table asset
@@ -201,6 +260,62 @@ VALUES
 
 /*!40000 ALTER TABLE `contact_type` ENABLE KEYS */;
 UNLOCK TABLES;
+
+
+# Dump of table creditcards
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `creditcards`;
+
+CREATE TABLE `creditcards` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `number` text COLLATE utf8_unicode_ci,
+  `month` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `year` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `verification_value` text COLLATE utf8_unicode_ci,
+  `cc_type` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `display_number` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `first_name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `last_name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  `start_month` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `start_year` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `issue_number` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `address_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+LOCK TABLES `creditcards` WRITE;
+/*!40000 ALTER TABLE `creditcards` DISABLE KEYS */;
+
+INSERT INTO `creditcards` (`id`, `number`, `month`, `year`, `verification_value`, `cc_type`, `display_number`, `first_name`, `last_name`, `created_at`, `updated_at`, `start_month`, `start_year`, `issue_number`, `address_id`)
+VALUES
+	(1,'1234123412341234','03','2013','123\n','Visa',NULL,'Shadley','Wentzel',NULL,NULL,NULL,NULL,NULL,NULL);
+
+/*!40000 ALTER TABLE `creditcards` ENABLE KEYS */;
+UNLOCK TABLES;
+
+
+# Dump of table gateway
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `gateway`;
+
+CREATE TABLE `gateway` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `type` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `description` text COLLATE utf8_unicode_ci,
+  `active` tinyint(1) DEFAULT '1',
+  `environment` varchar(255) COLLATE utf8_unicode_ci DEFAULT 'development',
+  `server` varchar(255) COLLATE utf8_unicode_ci DEFAULT 'test',
+  `test_mode` tinyint(1) DEFAULT '1',
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
 
 
 # Dump of table invoice
@@ -450,8 +565,11 @@ CREATE TABLE `order` (
   `customer_total` decimal(8,2) NOT NULL DEFAULT '0.00',
   `billing_total` decimal(8,2) NOT NULL DEFAULT '0.00',
   `full_total` decimal(8,2) NOT NULL DEFAULT '0.00',
+  `email_address` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `mobile_number` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `created_at` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL,
+  `completed_at` datetime DEFAULT NULL,
   `state` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `token` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `adjustment_total` decimal(8,2) NOT NULL DEFAULT '0.00',
@@ -460,15 +578,6 @@ CREATE TABLE `order` (
   KEY `index_orders_on_number` (`number`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-LOCK TABLES `order` WRITE;
-/*!40000 ALTER TABLE `order` DISABLE KEYS */;
-
-INSERT INTO `order` (`id`, `supplier_id`, `client_id`, `user_id`, `number`, `item_total`, `customer_total`, `billing_total`, `full_total`, `created_at`, `updated_at`, `state`, `token`, `adjustment_total`, `credit_total`)
-VALUES
-	(1,NULL,NULL,NULL,'R188358574',9419.51,9419.51,0.00,0.00,'2011-09-04 01:00:45','2011-09-04 12:55:25','cart',NULL,0.00,0.00);
-
-/*!40000 ALTER TABLE `order` ENABLE KEYS */;
-UNLOCK TABLES;
 
 
 # Dump of table order_item
@@ -480,6 +589,7 @@ CREATE TABLE `order_item` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `order_id` int(11) DEFAULT NULL,
   `product_id` int(11) DEFAULT NULL,
+  `package_id` int(11) DEFAULT NULL,
   `variant_id` int(11) DEFAULT NULL,
   `quantity` int(11) DEFAULT NULL,
   `customer_price` decimal(8,2) NOT NULL DEFAULT '0.00',
@@ -492,16 +602,23 @@ CREATE TABLE `order_item` (
   KEY `index_line_items_on_variant_id` (`variant_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-LOCK TABLES `order_item` WRITE;
-/*!40000 ALTER TABLE `order_item` DISABLE KEYS */;
 
-INSERT INTO `order_item` (`id`, `order_id`, `product_id`, `variant_id`, `quantity`, `customer_price`, `billing_price`, `full_price`, `created_at`, `updated_at`)
-VALUES
-	(9,1,NULL,3,1000,9.41,0.00,0.00,'2011-09-04 11:20:22','2011-09-04 11:22:04'),
-	(10,1,NULL,11,1,9.51,0.00,0.00,'2011-09-04 12:55:25','2011-09-04 12:55:25');
 
-/*!40000 ALTER TABLE `order_item` ENABLE KEYS */;
-UNLOCK TABLES;
+# Dump of table package
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `package`;
+
+CREATE TABLE `package` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `order_item_id` int(11) DEFAULT NULL,
+  `payload` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `permalink` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
 
 
 # Dump of table payment
@@ -511,15 +628,26 @@ DROP TABLE IF EXISTS `payment`;
 
 CREATE TABLE `payment` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `source_id` int(11) DEFAULT NULL,
+  `source_type` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `state` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `order_id` int(11) DEFAULT NULL,
+  `payment_method_id` int(11) DEFAULT NULL,
   `created_at` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL,
   `amount` decimal(8,2) NOT NULL DEFAULT '0.00',
-  `creditcard_id` int(11) DEFAULT NULL,
-  `type` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+LOCK TABLES `payment` WRITE;
+/*!40000 ALTER TABLE `payment` DISABLE KEYS */;
+
+INSERT INTO `payment` (`id`, `source_id`, `source_type`, `state`, `order_id`, `payment_method_id`, `created_at`, `updated_at`, `amount`)
+VALUES
+	(1,1,'Creditcard',NULL,1,1,NULL,NULL,0.00);
+
+/*!40000 ALTER TABLE `payment` ENABLE KEYS */;
+UNLOCK TABLES;
 
 
 # Dump of table payment_method
@@ -531,14 +659,25 @@ CREATE TABLE `payment_method` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `type` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `display_on` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `description` text COLLATE utf8_unicode_ci,
   `active` tinyint(1) DEFAULT '1',
   `environment` varchar(255) COLLATE utf8_unicode_ci DEFAULT 'development',
+  `deleted_at` datetime DEFAULT NULL,
   `created_at` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+LOCK TABLES `payment_method` WRITE;
+/*!40000 ALTER TABLE `payment_method` DISABLE KEYS */;
+
+INSERT INTO `payment_method` (`id`, `type`, `name`, `display_on`, `description`, `active`, `environment`, `deleted_at`, `created_at`, `updated_at`)
+VALUES
+	(1,'gateway','Paypal','front_end','Paypal',1,'development',NULL,NULL,NULL);
+
+/*!40000 ALTER TABLE `payment_method` ENABLE KEYS */;
+UNLOCK TABLES;
 
 
 # Dump of table product
@@ -638,19 +777,6 @@ CREATE TABLE `schema_migrations` (
   UNIQUE KEY `unique_schema_migrations` (`version`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-LOCK TABLES `schema_migrations` WRITE;
-/*!40000 ALTER TABLE `schema_migrations` DISABLE KEYS */;
-
-INSERT INTO `schema_migrations` (`version`)
-VALUES
-	('20110725150933'),
-	('20110725150934'),
-	('20110725150935'),
-	('20110725150936'),
-	('20110824084915');
-
-/*!40000 ALTER TABLE `schema_migrations` ENABLE KEYS */;
-UNLOCK TABLES;
 
 
 # Dump of table state_event
@@ -748,6 +874,7 @@ CREATE TABLE `variant` (
   `sku` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
   `cost_price` decimal(8,2) DEFAULT NULL,
   `customer_price` decimal(8,2) DEFAULT NULL,
+  `full_price` decimal(8,2) DEFAULT NULL,
   `deleted_at` datetime DEFAULT NULL,
   `is_master` tinyint(1) DEFAULT '0',
   PRIMARY KEY (`id`),
@@ -757,37 +884,37 @@ CREATE TABLE `variant` (
 LOCK TABLES `variant` WRITE;
 /*!40000 ALTER TABLE `variant` DISABLE KEYS */;
 
-INSERT INTO `variant` (`id`, `product_id`, `sku`, `cost_price`, `customer_price`, `deleted_at`, `is_master`)
+INSERT INTO `variant` (`id`, `product_id`, `sku`, `cost_price`, `customer_price`, `full_price`, `deleted_at`, `is_master`)
 VALUES
-	(1,1,'FREEPAID00000VOD2',1.82,1.92,NULL,1),
-	(2,1,'FREEPAID00000VOD5',4.56,4.80,NULL,0),
-	(3,1,'FREEPAID0000VOD10',9.11,9.41,NULL,0),
-	(4,1,'FREEPAID0000VOD12',10.92,11.32,NULL,0),
-	(5,1,'FREEPAID0000VOD29',26.41,27.50,NULL,0),
-	(6,1,'FREEPAID0000VOD55',50.07,52.57,NULL,0),
-	(7,1,'FREEPAID000VOD110',100.12,105.00,NULL,0),
-	(8,1,'FREEPAID000VOD275',250.29,262.29,NULL,0),
-	(9,1,'FREEPAID00VOD1100',912.49,1052.49,NULL,0),
-	(10,2,'FREEPAID00000MTN5',4.61,4.85,NULL,1),
-	(11,2,'FREEPAID0000MTN10',9.21,9.51,NULL,0),
-	(12,2,'FREEPAID0000MTN15',13.82,14.50,NULL,0),
-	(13,2,'FREEPAID0000MTN30',27.63,29.00,NULL,0),
-	(14,2,'FREEPAID0000MTN60',55.26,58.00,NULL,0),
-	(15,2,'FREEPAID000MTN180',165.78,172.78,NULL,0),
-	(16,3,'FREEPAID00000CELL5',4.55,4.79,NULL,1),
-	(17,3,'FREEPAID0000CELL10',8.98,9.48,NULL,0),
-	(18,3,'FREEPAID0000CELL25',22.45,23.90,NULL,0),
-	(19,3,'FREEPAID0000CELL35',31.41,33.41,NULL,0),
-	(20,3,'FREEPAID0000CELL50',44.88,47.00,NULL,0),
-	(21,3,'FREEPAID0000CELL70',62.83,66.42,NULL,0),
-	(22,3,'FREEPAID000CELL150',134.63,142.63,NULL,0),
-	(23,4,'FREEPAID00000VIR15',13.73,14.53,NULL,1),
-	(24,4,'FREEPAID00000VIR35',32.03,34.00,NULL,0),
-	(25,4,'FREEPAID00000VIR50',45.75,47.00,NULL,0),
-	(26,4,'FREEPAID00000VIR80',73.20,76.20,NULL,0),
-	(27,4,'FREEPAID00000VIR99',90.59,95.60,NULL,0),
-	(28,4,'FREEPAID0000VIR120',109.80,115.00,NULL,0),
-	(29,4,'FREEPAID0000VIR180',166.50,174.00,NULL,0);
+	(1,1,'FREEPAID00000VOD2',1.82,1.92,2.00,NULL,1),
+	(2,1,'FREEPAID00000VOD5',4.56,4.80,5.00,NULL,0),
+	(3,1,'FREEPAID0000VOD10',9.11,9.41,10.00,NULL,0),
+	(4,1,'FREEPAID0000VOD12',10.92,11.32,12.00,NULL,0),
+	(5,1,'FREEPAID0000VOD29',26.41,27.50,29.00,NULL,0),
+	(6,1,'FREEPAID0000VOD55',50.07,52.57,55.00,NULL,0),
+	(7,1,'FREEPAID000VOD110',100.12,105.00,110.00,NULL,0),
+	(8,1,'FREEPAID000VOD275',250.29,262.29,275.00,NULL,0),
+	(9,1,'FREEPAID00VOD1100',912.49,1052.49,1100.00,NULL,0),
+	(10,2,'FREEPAID00000MTN5',4.61,4.85,5.00,NULL,1),
+	(11,2,'FREEPAID0000MTN10',9.21,9.51,10.00,NULL,0),
+	(12,2,'FREEPAID0000MTN15',13.82,14.50,15.00,NULL,0),
+	(13,2,'FREEPAID0000MTN30',27.63,29.00,30.00,NULL,0),
+	(14,2,'FREEPAID0000MTN60',55.26,58.00,60.00,NULL,0),
+	(15,2,'FREEPAID000MTN180',165.78,172.78,180.00,NULL,0),
+	(16,3,'FREEPAID00000CELL5',4.55,4.79,5.00,NULL,1),
+	(17,3,'FREEPAID0000CELL10',8.98,9.48,10.00,NULL,0),
+	(18,3,'FREEPAID0000CELL25',22.45,23.90,25.00,NULL,0),
+	(19,3,'FREEPAID0000CELL35',31.41,33.41,35.00,NULL,0),
+	(20,3,'FREEPAID0000CELL50',44.88,47.00,50.00,NULL,0),
+	(21,3,'FREEPAID0000CELL70',62.83,66.42,70.00,NULL,0),
+	(22,3,'FREEPAID000CELL150',134.63,142.63,150.00,NULL,0),
+	(23,4,'FREEPAID00000VIR15',13.73,14.53,15.00,NULL,1),
+	(24,4,'FREEPAID00000VIR35',32.03,34.00,35.00,NULL,0),
+	(25,4,'FREEPAID00000VIR50',45.75,47.00,50.00,NULL,0),
+	(26,4,'FREEPAID00000VIR80',73.20,76.20,80.00,NULL,0),
+	(27,4,'FREEPAID00000VIR99',90.59,95.60,99.00,NULL,0),
+	(28,4,'FREEPAID0000VIR120',109.80,115.00,120.00,NULL,0),
+	(29,4,'FREEPAID0000VIR180',166.50,174.00,180.00,NULL,0);
 
 /*!40000 ALTER TABLE `variant` ENABLE KEYS */;
 UNLOCK TABLES;

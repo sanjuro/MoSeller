@@ -1,6 +1,6 @@
 class Package < ActiveRecord::Base
-  has_one :order
-  
+  belongs_to :supplier
+  belongs_to :order_item
   
   attr_accessible :payload, :permalink, :created_at 
   

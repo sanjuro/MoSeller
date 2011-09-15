@@ -230,6 +230,7 @@ ActiveRecord::Schema.define(:version => 20110905233450) do
   create_table "order_item", :force => true do |t|
     t.integer  "order_id"
     t.integer  "product_id"
+    t.integer  "package_id"
     t.integer  "variant_id"
     t.integer  "quantity"
     t.decimal  "customer_price", :precision => 8, :scale => 2, :default => 0.0, :null => false
@@ -243,7 +244,7 @@ ActiveRecord::Schema.define(:version => 20110905233450) do
   add_index "order_item", ["variant_id"], :name => "index_line_items_on_variant_id"
 
   create_table "package", :force => true do |t|
-    t.integer  "order_id"
+    t.integer  "order_item_id"
     t.string   "payload"
     t.string   "permalink"
     t.datetime "created_at"
@@ -355,6 +356,7 @@ ActiveRecord::Schema.define(:version => 20110905233450) do
     t.string   "sku",                                          :default => "",    :null => false
     t.decimal  "cost_price",     :precision => 8, :scale => 2
     t.decimal  "customer_price", :precision => 8, :scale => 2
+    t.decimal  "full_price",     :precision => 8, :scale => 2
     t.datetime "deleted_at"
     t.boolean  "is_master",                                    :default => false
   end

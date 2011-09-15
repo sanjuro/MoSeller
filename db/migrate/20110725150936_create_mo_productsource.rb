@@ -1,7 +1,7 @@
 class CreateMoProductsource < ActiveRecord::Migration
   def self.up
     create_table :package, :options => "ENGINE=INODB" do |t|
-      t.references :order
+      t.integer :order_item_id
       t.string :payload
       t.string :permalink
       

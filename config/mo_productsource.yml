@@ -1,0 +1,11 @@
+development:
+  freepaid_service_username: 1416266
+  freepaid_service_password: 123456
+
+test:
+  freepaid_service_username: 1416266
+  freepaid_service_password: 123456
+
+production:
+  freepaid_service_username: 1952645
+  freepaid_service_password: rad6hia

@@ -12,6 +12,7 @@ class Variant < ActiveRecord::Base
 
   validates :cost_price,  :presence => true
   validates :customer_price,  :presence => true
+  validates :full_price,  :presence => true
 
   before_save :touch_product
 

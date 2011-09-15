@@ -12,8 +12,8 @@ Succceful purchase, Order Number: <%= @order.number %>
         <%= number_to_currency (item.customer_price * item.quantity)%>
     <% end %>
     
-    <% @order.packages.each do |package| %>
-      <%= package.payload %><br>
+    <% @order.order_items.each do |order_item| %>
+      <%= order_item.package.payload %>
     <% end %>
  
 Thanks for buying and have a great day!
