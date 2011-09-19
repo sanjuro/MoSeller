@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+  </head>
+  <body>
+    <h1>Invoice for Order Number: <%= @order.number %></h1>
+    <p>
+      Invoice Number: <%= @invoice.id %>
+      Invoice Date: <%= @invoice.created_at %>
+    </p>
+    
+    <table>
+    <% @invoice.invoice_items.each do |item| %>
+      <tr data-hook="invoice_details_line_item_row">
+        <td width="300"><%= item.description %></td>
+        <td class="price"><%= number_to_currency item.total %></td>
+      </tr>
+    <% end %>
+    </table>
+    
+    <table>
+    <% @order.order_items.each do |order_item| %>
+      <tr data-hook="invoice_line_item_row">
+      		<td width="100">SubTotal: <%= number_to_currency @invoice.sub_total %></td>
+      </tr>
+       <tr data-hook="invoice_line_item_row">
+      		<td width="100">Total: <%= number_to_currency @invoice.total %></td>
+      </tr>
+    <% end %>
+    </table>    
+    
+    <p>Thanks for buying and have a great day!</p>
+  </body>
+</html>

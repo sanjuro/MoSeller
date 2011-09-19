@@ -7,7 +7,7 @@
 #
 # Host: 127.0.0.1 (MySQL 5.5.14)
 # Database: moseller
-# Generation Time: 2011-09-15 13:45:08 +0200
+# Generation Time: 2011-09-16 08:10:14 +0200
 # ************************************************************
 
 
@@ -297,7 +297,6 @@ UNLOCK TABLES;
 # ------------------------------------------------------------
 
 
-
 # Dump of table payment
 # ------------------------------------------------------------
 
@@ -336,8 +335,9 @@ INSERT INTO `product` (`id`, `category_id`, `product_source_id`, `name`, `descri
 VALUES
 	(1,1,2,'Vodacom','Vodacom Airtime vouchers',4.56,4.80,'vodacom_5',NULL,NULL,NULL,NULL,'2011-09-01 02:06:49','2011-09-01 02:06:49'),
 	(2,1,2,'MTN','MTN Airtime Vouchers',4.61,4.85,'mtn_5',NULL,NULL,NULL,NULL,'2011-09-01 02:06:49','2011-09-01 02:06:49'),
-	(3,1,2,'Cell C','Cell C Airtime vouchers',4.55,4.81,'cellc_5',NULL,NULL,NULL,NULL,NULL,NULL),
-	(4,1,2,'Virgin Mobile','Virgin Mobile Airtime',13.73,14.37,'virgin_15',NULL,NULL,NULL,NULL,NULL,NULL);
+	(3,1,2,'CellC','Cell C Airtime vouchers',4.55,4.81,'cellc_5',NULL,NULL,NULL,NULL,'2011-09-01 02:06:49','2011-09-01 02:06:49'),
+	(4,1,2,'Virgin','Virgin Mobile Airtime',13.73,14.37,'virgin_15',NULL,NULL,NULL,NULL,'2011-09-01 02:06:49','2011-09-01 02:06:49'),
+	(5,1,2,'Heita','Heita Airtime',4.58,4.82,'heita_5',NULL,NULL,NULL,NULL,'2011-09-01 02:06:49','2011-09-01 02:06:49');
 
 /*!40000 ALTER TABLE `product` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -365,7 +365,6 @@ UNLOCK TABLES;
 
 # Dump of table schema_migrations
 # ------------------------------------------------------------
-
 
 
 # Dump of table state_event
@@ -439,7 +438,8 @@ VALUES
 	(26,4,'FREEPAID00000VIR80',73.20,76.20,80.00,NULL,0),
 	(27,4,'FREEPAID00000VIR99',90.59,95.60,99.00,NULL,0),
 	(28,4,'FREEPAID0000VIR120',109.80,115.00,120.00,NULL,0),
-	(29,4,'FREEPAID0000VIR180',166.50,174.00,180.00,NULL,0);
+	(29,4,'FREEPAID0000VIR180',166.50,174.00,180.00,NULL,0),
+	(30,5,'FREEPAID000000HEI5',4.58,4.82,5.00,NULL,1);
 
 /*!40000 ALTER TABLE `variant` ENABLE KEYS */;
 UNLOCK TABLES;

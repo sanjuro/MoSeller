@@ -27,7 +27,15 @@
     <table>
     <% @order.order_items.each do |order_item| %>
       <tr data-hook="package_details_line_item_row">
-      		<td width="100"><%= order_item.package.payload %></td>
+      	<td width="100">
+	      	<table>
+	      		<% order_item.packages.each do |package| %>
+	      		<tr data-hook="package_details_line_item_row">
+	      			<td width="100"><%= package.payload %></td>
+	      		</tr>
+	      		<% end %>
+	      	</table>
+      	</td>   		
       </tr>
     <% end %>
     </table>    

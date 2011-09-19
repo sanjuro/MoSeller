@@ -13,7 +13,9 @@ Succceful purchase, Order Number: <%= @order.number %>
     <% end %>
     
     <% @order.order_items.each do |order_item| %>
-      <%= order_item.package.payload %>
+    	<% order_item.packages.each do |package| %>
+      		<%= package.payload %>
+        <% end %>
     <% end %>
  
 Thanks for buying and have a great day!

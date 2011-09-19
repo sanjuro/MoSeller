@@ -4,7 +4,7 @@ class OrderItem < ActiveRecord::Base
   belongs_to :variant
 
   has_one :product, :through => :variant
-  has_one :package
+  has_many :packages
 
   before_validation :copy_price
 
@@ -25,25 +25,13 @@ class OrderItem < ActiveRecord::Base
     self.customer_price = variant.customer_price if variant && self.customer_price.nil?
   end
 
-  # def meta_validation_of_quantities
-  # unless quantity && quantity >= 0
-  # errors.add(:quantity, I18n.t("validation.must_be_non_negative"))
-  # end
-  # # avoid reload of order.inventory_units by using direct lookup
-  # unless !Spree::Config[:track_inventory_levels] ||
-  # Spree::Config[:allow_backorders] ||
-  # order && InventoryUnit.order_id_equals(order).first.present? ||
-  # variant && quantity <= variant.on_hand
-  # errors.add(:quantity, I18n.t("validation.is_too_large") + " (#{self.variant.name})")
-  # end
-  #
-  # if shipped_count = order.shipped_units.nil? ? nil : order.shipped_units[variant]
-  # errors.add(:quantity, I18n.t("validation.cannot_be_less_than_shipped_units") ) if quantity < shipped_count
-  # end
-  # en
-  
   def process!
-    ret = variant.product_source.new_product(variant, self)
+    
+    update_attribute(:product_id, variant.product_id)
+    
+    (1..self.quantity).each do |k|
+      ret = variant.product_source.new_product(variant, self)
+    end    
   end  
   
   def increment_quantity
@@ -58,9 +46,19 @@ class OrderItem < ActiveRecord::Base
     self.customer_price * self.quantity
   end
   alias total amount
+  
+  def cost
+    self.billing_price * self.quantity
+  end
+  alias total cost
 
   def adjust_quantity
     self.quantity = 0 if self.quantity.nil? || self.quantity < 0
+  end
+  
+  def add_package(package)
+      current_package = package
+      self.packages << current_package
   end
 
   private

@@ -14,6 +14,10 @@ class ApplicationController < ActionController::Base
     redirect_to root_url
   end
   
+  def set_current_user
+    User.current = current_user
+  end 
+  
   private
  
   def authenticate

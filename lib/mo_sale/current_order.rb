@@ -2,6 +2,8 @@ module CurrentOrder
   # This should be overridden by an auth-related extension which would then have the
   # opportunity to associate the new order with the # current user before saving.
   def before_save_new_order
+    @current_order.user_id = current_user.id
+    @current_order.email = current_user.email
   end
 
   # This should be overridden by an auth-related extension which would then have the

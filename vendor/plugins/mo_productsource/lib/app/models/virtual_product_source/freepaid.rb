@@ -29,7 +29,7 @@ class VirtualProductSource::Freepaid < VirtualProductSource
   def new_product(variant, order_item)
     
     order = order_item.order
-    product = order_item.variant.product
+    product = Product.find_by_id!(variant.product_id)
     
     # Build Transaction options for the call to the Licensing server
     transaction_options = {
@@ -39,18 +39,19 @@ class VirtualProductSource::Freepaid < VirtualProductSource
       :network => product.name.downcase!,
       :sell_value => Integer(variant.full_price)
     }    
-    logger.error "CALLING NEWPRODUCT FROM FREEPAID " + transaction_options[:user]
+    
+    logger.info "CALLING NEWPRODUCT FROM FREEPAID "
       
     # Create a Freepaid Voucher 
     productOut = FreepaidGetVoucher(transaction_options);
     logger.error productOut
     
-    createdPackage = Package.new(:payload => "PIN: " + productOut[:pin] + ", SERIAL: " + productOut[:serial]
-                                )
-    createdPackage.order_item = order_item
-    createdPackage.save
+    package = Package.new(:payload => "PIN: " + productOut[:pin] + ", SERIAL: " + productOut[:serial])
+    package.save
     
-    logger.error "CREATE NEW PACKACGE"
+    order_item.add_package(package)
+    
+    logger.info "CREATE NEW PACKACGE"
      
     return productOut
   end

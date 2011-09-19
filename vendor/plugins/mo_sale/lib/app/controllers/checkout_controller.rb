@@ -1,7 +1,8 @@
-class CheckoutController < ActionController::Base
+class CheckoutController < ApplicationController
+
   helper :base  
   
-  before_filter :load_order
+  before_filter :load_order, :authenticate_user!, :set_current_user
 
   respond_to :html
 
@@ -17,7 +18,8 @@ class CheckoutController < ActionController::Base
       
       
       if @order.state == "delivery"
-        @order.email_address = params[:email_address]
+        @order.customer_name = params[:customer_name]
+        @order.email = params[:email]
         @order.mobile_number = params[:mobile_number]
         @order.save
       end

@@ -13,7 +13,7 @@
 ActiveRecord::Schema.define(:version => 20110905233450) do
 
   create_table "account_item", :force => true do |t|
-    t.integer  "client_id"
+    t.integer  "user_id"
     t.integer  "account_item_type_id"
     t.decimal  "credit",               :precision => 8, :scale => 2, :default => 0.0, :null => false
     t.decimal  "debit",                :precision => 8, :scale => 2, :default => 0.0, :null => false
@@ -140,14 +140,15 @@ ActiveRecord::Schema.define(:version => 20110905233450) do
   end
 
   create_table "invoice", :force => true do |t|
-    t.integer  "client_id"
+    t.integer  "user_id"
     t.integer  "order_id"
-    t.decimal  "margin",            :precision => 8, :scale => 2, :default => 0.0, :null => false
-    t.decimal  "subtotal",          :precision => 8, :scale => 2, :default => 0.0, :null => false
-    t.decimal  "tax",               :precision => 8, :scale => 2, :default => 0.0, :null => false
-    t.decimal  "total",             :precision => 8, :scale => 2, :default => 0.0, :null => false
+    t.decimal  "margin",          :precision => 8, :scale => 2, :default => 0.0, :null => false
+    t.decimal  "sub_total",       :precision => 8, :scale => 2, :default => 0.0, :null => false
+    t.decimal  "tax",             :precision => 8, :scale => 2, :default => 0.0, :null => false
+    t.decimal  "total",           :precision => 8, :scale => 2, :default => 0.0, :null => false
     t.datetime "date_paid"
-    t.string   "invoice_status_id"
+    t.string   "email"
+    t.string   "state"
     t.string   "invoice_type_id"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -214,8 +215,9 @@ ActiveRecord::Schema.define(:version => 20110905233450) do
     t.decimal  "customer_total",                 :precision => 8, :scale => 2, :default => 0.0, :null => false
     t.decimal  "billing_total",                  :precision => 8, :scale => 2, :default => 0.0, :null => false
     t.decimal  "full_total",                     :precision => 8, :scale => 2, :default => 0.0, :null => false
-    t.string   "email_address"
-    t.string   "mobile_number"
+    t.string   "email",            :limit => 15
+    t.string   "mobile_number",    :limit => 15
+    t.string   "customer_name",    :limit => 20
     t.datetime "created_at"
     t.datetime "updated_at"
     t.datetime "completed_at"
@@ -230,7 +232,6 @@ ActiveRecord::Schema.define(:version => 20110905233450) do
   create_table "order_item", :force => true do |t|
     t.integer  "order_id"
     t.integer  "product_id"
-    t.integer  "package_id"
     t.integer  "variant_id"
     t.integer  "quantity"
     t.decimal  "customer_price", :precision => 8, :scale => 2, :default => 0.0, :null => false
@@ -320,6 +321,7 @@ ActiveRecord::Schema.define(:version => 20110905233450) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "previous_state"
+    t.string   "next_state"
   end
 
   create_table "supplier", :force => true do |t|

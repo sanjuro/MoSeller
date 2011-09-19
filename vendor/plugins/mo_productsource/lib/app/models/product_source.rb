@@ -72,7 +72,7 @@ class ProductSource < ActiveRecord::Base
   end
   
   def new_product(variant, order_item)
-    logger.error "CALLING NEWPRODUCT FROM PRODUCT SOURCE"
+    logger.info "CALLING NEWPRODUCT FROM PRODUCT SOURCE"
     package = provider.new_product(variant, order_item)
   end     
 end

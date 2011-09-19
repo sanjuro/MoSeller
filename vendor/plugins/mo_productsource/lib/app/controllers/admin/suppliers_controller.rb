@@ -1,5 +1,6 @@
 class SuppliersController < ActionController::Base
-
+  before_filter :authenticate_admin!
+  
   def index
     @suppliers = Supplier.all
    

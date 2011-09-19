@@ -341,6 +341,7 @@ en:
   credits: Credits
   current: Current
   customer: Customer
+  customer_name: "Customer Name"
   customer_details: "Customer Details"
   customer_search: "Customer Search"
   date_created: Date created

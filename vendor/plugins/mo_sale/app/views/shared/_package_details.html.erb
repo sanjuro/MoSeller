@@ -5,7 +5,14 @@
       <tr data-hook="package_details_line_item_row">
       		<td width="50"><%= order_item.variant.product.name %></td>
       		<td width="20"><%= format_price(order_item.variant.full_price) %></td>
-      		<td width="300"><b><%= order_item.package.payload %></b></td>
+      			<table>
+      				<% order_item.packages.each do |package| %>
+      				<tr>
+      					<td width="300"><b><%= package.payload %></b></td>
+      				</tr>
+      				<% end %>
+      			</table>
+      		</td>
       </tr>
     <% end %>
   </tbody>

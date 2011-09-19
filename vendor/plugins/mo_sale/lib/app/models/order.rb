@@ -1,11 +1,13 @@
 class Order < ActiveRecord::Base
   attr_accessible :order_items, :bill_address_attributes, :payments_attributes,
                   :order_items_attributes, :use_billing, :special_instructions,
-                  :email_address, :mobile_number, :completed_at
+                  :email, :customer_name, :mobile_number, :completed_at
                  
-  belongs_to :client, :foreign_key => "order_client_id", :class_name => "Client"
-  belongs_to :user
+  belongs_to :client, :foreign_key => "client_id", :class_name => "Client"
+  belongs_to :user, :foreign_key => "user_id", :class_name => "User"
   belongs_to :bill_address, :foreign_key => "bill_address_id", :class_name => "Address"
+  
+  has_one :invoice
 
   has_many :state_events, :as => :stateful
   has_many :order_items, :dependent => :destroy
@@ -15,7 +17,7 @@ class Order < ActiveRecord::Base
   accepts_nested_attributes_for :order_items
   accepts_nested_attributes_for :payments
   
-  before_create :create_client
+  # before_create :create_client
   before_create :generate_order_number  
   
   scope :by_number, lambda {|number| where("orders.number = ?", number)}
@@ -91,10 +93,10 @@ class Order < ActiveRecord::Base
       # do account and product stuff here   
       order.finalize! 
       
-      # order.billing!
+      # do billing for order this needs to be dynamic as the system might not have MoAccount
+      order.billing!
     end
     
-    # after_transition :to => 'complete', :do => :finalize!
     # after_transition :to => 'delivery', :do => :create_tax_charge!
     # after_transition :to => 'payment', :do => :create_shipment!
 
@@ -116,7 +118,6 @@ class Order < ActiveRecord::Base
       :customer_total => customer_total,
       :full_total => full_total
     })    
-
 
     update_hooks.each { |hook| self.send hook }
   end 
@@ -141,16 +142,13 @@ class Order < ActiveRecord::Base
       current_item = OrderItem.new(:quantity => quantity)
       current_item.variant = variant
       current_item.customer_price = variant.customer_price
+      current_item.billing_price = variant.customer_price
       self.order_items << current_item
     end
 
-    # populate order_items attributes for additional_fields entries
-    # that have populate => [:order_item]
-    
     current_item
   end
   
-  # FIXME refactor this method and implement validation using validates_* utilities
   def generate_order_number
     record = true
     while record
@@ -181,7 +179,7 @@ class Order < ActiveRecord::Base
   # Finalizes an in progress order after checkout is complete.
   # Called after transition to complete state when payments will have been processed
   def finalize!
-    logger.error 'FINALIZE ORDER '
+    logger.info 'FINALIZE ORDER'
     
     update_attribute(:completed_at, Time.now)
     # self.out_of_stock_items = InventoryUnit.assign_opening_inventory(self)
@@ -190,17 +188,31 @@ class Order < ActiveRecord::Base
     # OrderMailer.confirm_email(self).deliver
     
     # Mail products
-    logger.error "MAILING PRODUCTS"
+    logger.info 'MAILING PRODUCTS'
     
     OrderMailer.order_email(self).deliver
 
-    # self.state_events.create({
-    #  :previous_state => "cart",
-    #  :next_state => "complete",
-    #  :name => "order" ,
-    #  :user_id => (User.respond_to?(:current) && User.current.try(:id)) || self.user_id
-    # })
+    self.state_events.create({
+      :order_id       => self.id,
+      :previous_state => "cart",
+      :next_state => "complete",
+      :name => "order" ,
+      :user_id => (User.respond_to?(:current) && User.current.try(:id)) || self.user_id
+     })
   end  
+  
+  def billing!
+    logger.info 'START BILLING'
+    
+    invoice = Invoice.new(:user_id => self.user_id, :email => (User.respond_to?(:current) && User.current.try(:email)))
+    invoice.order = self
+    invoice.save
+    
+    invoice.process(self)
+    
+    # invoice.add_invoice_item
+    # invoice.add_account_item
+  end
   
   def payment
     payments.first
@@ -223,7 +235,7 @@ class Order < ActiveRecord::Base
   end
 
   private
-  def create_user
+  def create_client
     self.email = user.email if self.user and not user.anonymous?
     self.user ||= User.anonymous!
   end
@@ -248,6 +260,7 @@ class Order < ActiveRecord::Base
 
     if old_payment_state = self.changed_attributes["payment_state"]
       self.state_events.create({
+        :order_id       => self.id,
         :previous_state => old_payment_state,
         :next_state => self.payment_state,
         :name => "payment",
@@ -269,9 +282,9 @@ class Order < ActiveRecord::Base
     def update_totals
       # update_adjustments
       # self.payment_total = payments.completed.map(&:amount).sum
+      
       self.item_total = order_items.map(&:amount).sum
-      # self.adjustment_total = adjustments.eligible.map(&:amount).sum
-      # self.total = item_total + adjustment_total
+      self.billing_total = order_items.map(&:cost).sum
       self.customer_total = item_total
       self.full_total = item_total
     end

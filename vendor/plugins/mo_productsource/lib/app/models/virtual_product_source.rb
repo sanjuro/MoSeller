@@ -44,7 +44,7 @@ class VirtualProductSource < ProductSource
   end
   
   def new_product(variant, order)
-    logger.error "CALLING NEWPRODUCT FROM VIRTUAL PRODUCT SOURCE"
+    logger.info "CALLING NEWPRODUCT FROM VIRTUAL PRODUCT SOURCE"
     raise "You must implement product_source_class method for this gateway."
   end  
   

@@ -1,10 +1,13 @@
-class OrdersController < ActionController::Base
+class OrdersController < ApplicationController
+
   rescue_from ActiveRecord::RecordNotFound, :with => :render_404  
   helper :base  
   helper :products
   
+  before_filter :authenticate_user!, :set_current_user
+  
   def index
-    @orders = Order.paginate(:page => params[:page])
+    @orders = Order.find_all_by_user_id(current_user.id).paginate(:page => params[:page])
    
     respond_to do |format|
       format.html # index.html.erb
