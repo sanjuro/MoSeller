@@ -10,6 +10,9 @@
   <%= link_to('Orders', orders_path )  %>
   </li>
 <% if user_signed_in? %>
+  <li>
+  <%= link_to('Account', 'account_show' )  %>
+  </li>
  <li>
   <%= link_to('Edit Profile', edit_user_registration_path) %>
   </li>

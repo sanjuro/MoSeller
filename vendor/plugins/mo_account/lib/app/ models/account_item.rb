@@ -1,8 +1,6 @@
 class AccountItem < ActiveRecord::Base
   attr_accessible :credit, :debit
   
-  belongs_to :invoice
-  
   has_many :state_events, :as => :stateful  
   
   # order state machine (see http://github.com/pluginaweek/state_machine/tree/master for details)

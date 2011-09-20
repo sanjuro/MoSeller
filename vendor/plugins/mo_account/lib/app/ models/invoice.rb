@@ -19,6 +19,13 @@ class Invoice < ActiveRecord::Base
       transition :from => 'processing',  :to => 'mailed'
       transition :from => 'mailed',  :to => 'unpaid'
       transition :from => 'unpaid',  :to => 'paid'
+
+
+      # note: some payment methods will not support a confirm step
+      # transition :from => 'payment', :to => 'confirm',
+      #                                :if => Proc.new { Gateway.current && Gateway.current.payment_profiles_supported? }
+
+      # transition :from => 'payment', :to => 'complete'
     end
 
     event :writeoff do
@@ -106,8 +113,7 @@ class Invoice < ActiveRecord::Base
   end
   
   def add_account_item!
-    account_item = AccountItem.new( :user_id => (User.respond_to?(:current) && User.current.try(:id)),
-                                    :credit => 0.00, 
+    account_item = AccountItem.new( :credit => 0.00, 
                                     :debit => self.total,
                                     :account_status_id => 1)
     account_item.save

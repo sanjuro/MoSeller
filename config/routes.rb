@@ -58,6 +58,11 @@ Moseller::Application.routes.draw do
   match '/admin' => 'admin/products#index', :as => :admin
    
   resources :suppliers 
+  
+  match '/account', :to => 'account_items#show', :via => :get, :as => :account_show
+  
+  resources :invoices
+  
 
   resource :facebook, :except => :create do
     get :callback, :to => :create

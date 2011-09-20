@@ -50,18 +50,15 @@ section h1 {
 /* Links */
 
 a {
-  color: #09c;
+  color: #069;
   text-decoration: none;
 }
 
 a:hover {
-  color: #069;
   text-decoration: underline;
 }
 
-a:visited {
-  color: #069;
-}
+
 
 /* Navigation */
 
@@ -88,12 +85,9 @@ nav ul li {
 }
 
 nav ul li a {
+  color: #FFF;
   padding: 5px 5px;
   font-weight: bold;
-}
-
-nav ul li a:visited {
-  color: #FFF;
 }
 
 nav ul li a:hover {
@@ -112,6 +106,14 @@ footer {
 
 footer nav {
   float: none;
+}
+
+footer nav ul li a {
+	color: #069;
+}
+
+footer a:visited {
+	color: #069;
 }
 
 /* Sign Up Form */
