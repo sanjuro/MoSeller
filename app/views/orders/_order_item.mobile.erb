@@ -1,0 +1,8 @@
+<h4>
+	<%= truncate(variant.product.description, :length => 50, :omission => "...") %>
+	<%= format_price(order_item.customer_price) %>
+</h4>
+<br>
+<%= item_form.text_field :quantity, :size => 3, :class => "line_item_quantity" %>
+<br>
+<%= format_price(order_item.customer_price * order_item.quantity) unless order_item.quantity.nil? %>

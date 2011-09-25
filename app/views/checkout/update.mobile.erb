@@ -1,0 +1,21 @@
+<div data-role="header" data-theme="d">
+  <h1><%= t("checkout")%></h1>
+  <%= link_to 'Home', root_path, "class" => "ui-btn-right" %>
+</div>
+
+<div data-role="content">
+
+  <%= render "shared/error_messages", :target => @order %>
+  
+  <% if @order.state != 'confirm' %>
+    <div id="checkout-summary" data-hook="checkout_summary_box">
+      <%= render 'summary', :order => @order %>
+    </div>
+  <% end %>
+  
+  <br><br>
+  
+  <%= form_for @order, :url => update_checkout_path(@order.state), :html => { :id => "checkout_form_#{@order.state}" } do |form| %>
+    <%= render @order.state, :form => form %>
+  <% end %>
+</div>

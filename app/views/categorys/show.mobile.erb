@@ -1,0 +1,30 @@
+<div data-role="header" data-theme="d">
+  <h1>Products for <%= @category.title %></h1>
+  <%= link_to 'Home', :homepage, "class" => "ui-btn-left" %>
+</div>
+
+ <div data-role="content" data-theme="d">
+ 
+      <% unless flash.empty? %>
+        <div class="info">
+        <%- flash.each do |name, msg| -%>
+          <%= content_tag :div, msg, :id => "flash_#{name}" %>
+        <%- end -%>
+        </div>
+      <% end %> 
+ 
+<% if @category.products.empty? %>
+	<%= t(:no_products_found) %>
+<% else %>
+	<ul data-role="listview" data-theme="d">
+    	<% @category.products.each do |product| %>
+    	<li>
+			<%= link_to product.description, product  %>
+    	</li>
+    	<% end %>
+	</ul> 
+<% end %> 
+
+</div>
+
+<br />

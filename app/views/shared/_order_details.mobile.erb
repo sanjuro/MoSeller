@@ -1,0 +1,31 @@
+<table class="index" data-hook="order_details" style="width:100%;">
+  <tbody id='line-items' data-hook>
+    <tr data-hook="order_details_order_items_headers">
+      <th><%= t('item_description') %></th>
+      <th class="price"><%= t('price') %></th>
+      <th class="qty"><%= t('qty') %></th>
+      <th class="total"><span><%= t('total') %></span></th>
+    </tr>
+
+    <% @order.order_items.each do |item| %>
+      <tr data-hook="order_details_line_item_row">
+        <td width="300"><%=item.variant.product.name%> <%= "(" + variant_options(item.variant) + ")" unless item.variant .option_values.empty? %></td>
+        <td class="price"><%= format_price item.customer_price %></td>
+        <td class="qty"><%=item.quantity%></td>
+        <td class="total"><span><%= format_price (item.customer_price * item.quantity)%></span></td>
+      </tr>
+    <% end %>
+  </tbody>
+  <tbody id='subtotal' data-hook="order_details_subtotal">
+    <tr class="total" id="subtotal-row">
+      <td colspan="3"><b><%= t('subtotal') %>:</b></td>
+      <td class="total"><span><%= format_price @order.item_total %></span></td>
+    </tr>
+  </tbody>
+  <tbody id='order-total' data-hook="order_details_total">
+    <tr class="total">
+      <td colspan="3"><b><%= t('order_total') %>:</b></td>
+      <td class="total"><span id="order_total"><%= format_price @order.full_total %></span></td>
+    </tr>
+  </tbody>
+</table>

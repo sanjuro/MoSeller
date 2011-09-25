@@ -1,0 +1,43 @@
+<%= form_for :order, :url => populate_orders_url do |f| %>
+
+    <% if @product.has_variants? %>
+      <div id="product-variants">
+        <h2><%= t('availible_products') %></h2>
+        <ul data-role="listview">
+          <%  has_checked = false
+          @product.variants.active.each_with_index do |v,index|
+            next if v.option_values.empty?
+            checked = !has_checked 
+            has_checked = true if checked %>
+            <li>
+              <%= radio_button_tag "products[#{@product.id}]", v.id, checked %>
+              <label for="<%= ['products', @product.id, v.id].join('_') %>">
+                <span class="variant-description">
+                  <%= variant_options v %>
+                </span>
+                <% if variant_price_diff v %>
+                  <span class="price diff"><%= variant_price_diff v %></span>
+                <% end %>                
+              </label>
+            </li>
+          <% end%>
+        </ul>
+      </div>
+    <% end%>
+
+	<br>
+	<br>
+    
+   <div data-hook="inside_product_cart_form">    
+    
+    <div data-role="fieldcontain">
+		<label for="slider">Quantity:</label>
+	 	<input type="range" name="quantity" id="quantity" value="0" min="0" max="100"  />
+	</div>
+      
+    <button type="submit" class="large primary" id="add-to-cart-button">
+        <%= image_tag('icons/add-to-cart.png') + t('add_to_cart') %>
+    </button>
+    
+  </div>
+<% end %>

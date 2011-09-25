@@ -1,0 +1,25 @@
+<fieldset id='delivery_method' data-hook>
+  <h3><%= t("delivery_method") %></h3>
+  <div class="inner" data-hook="delivery_method_inner">
+  
+      <p id="customer_name" data-hook>
+        <%= label_tag(:customer_name, t("customer_name") ) %><br />
+        <%= text_field_tag(:customer_name) %>
+      </p>      
+  
+      <p id="email_Address" data-hook>
+        <%= label_tag(:email, t("email") ) %><br />
+        <%= text_field_tag(:email) %>
+      </p>
+      
+      <p id="mobile_number" data-hook>
+        <%= label_tag(:mobile_number, t("mobile_number") ) %><br />
+        <%= text_field_tag(:mobile_number) %>
+      </p>      
+      
+  </div>
+</fieldset>
+<br>
+<button type="submit" class="large primary" id="empty-button">
+	              <%=t("save_and_continue") %>
+</button>

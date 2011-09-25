@@ -1,0 +1,24 @@
+<div data-role="header" data-theme="d">
+  <h1><%= @product.name %></h1>
+  <%= link_to 'Home', root_path, "class" => "ui-btn-left" %>
+</div>
+
+ <div data-role="content" data-theme="d">
+ 
+      <% unless flash.empty? %>
+        <div class="info">
+        <%- flash.each do |name, msg| -%>
+          <%= content_tag :div, msg, :id => "flash_#{name}" %>
+        <%- end -%>
+        </div>
+      <% end %> 
+
+<%= @product.description rescue t("product_has_no_description") %>
+ 
+  <div id="cart-form" data-hook="cart_form">
+    <%= render 'cart_form' %>
+  </div>
+
+</div>
+
+<br />

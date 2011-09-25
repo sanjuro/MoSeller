@@ -1,0 +1,14 @@
+<h1><%= t("checkout")%></h1>
+
+<table data-hook="order_summary">
+  <tbody>
+    <tr data-hook="item_total">
+      <td><strong><%= t('item_total') %>:</strong></td>
+      <td><strong><%= format_price(order.item_total) %></strong></td>
+    </tr>
+    <tr data-hook="order_total">
+      <td><strong><%= t('order_total') %>:</strong></td>
+      <td><strong><span id='summary-order-total'><%=  format_price(order.customer_total) %></span></strong></td>
+    </tr>
+  </tbody>
+</table>
