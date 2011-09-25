@@ -1,1 +1,8 @@
-<h1>Accounts for <%= user.name %></h1>
+<h1>Your Account</h1>
+
+<p>
+	Your current balance is : <b><%= format_price(@account_balance) %></b>
+</p>
+
+<h3><%= t(:account_items) %></h3>
+<%= render :partial => 'shared/account_items', :locals => {:account_items => @account_items} %>

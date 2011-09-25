@@ -1,0 +1,18 @@
+<table class="index" data-hook="order_details" style="width:100%;">
+  <thead>
+    <tr data-hook="order_details_order_items_headers">
+      <th><%= t('created') %></th>
+      <th><%= t('debit') %></th>
+      <th><%= t('credit') %></th>
+    </tr>
+  </thead>
+  <tbody id='line-items' data-hook>
+    <% @account_items.each do |item| %>
+      <tr data-hook="order_details_line_item_row">
+        <td><%= item.created_at %></td>
+        <td><%= format_price item.debit %></td>
+        <td><%= format_price item.credit %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

@@ -1,6 +1,6 @@
 class Invoice < ActiveRecord::Base
-  attr_accessible :margin, :sub_total, :tax, :total, 
-                  :date_paid, :email
+  attr_accessible :user_id, :margin, :sub_total, :tax,  
+                  :total, :date_paid, :email
 
   belongs_to :user     
   belongs_to :order          
@@ -114,8 +114,10 @@ class Invoice < ActiveRecord::Base
   
   def add_account_item!
     account_item = AccountItem.new( :credit => 0.00, 
-                                    :debit => self.total,
-                                    :account_status_id => 1)
+                                    :debit => self.total)
+    account_item.user = self.user
+    account_item.account_item_type_id =  1
+    account_item.account_status_id =  1
     account_item.save
   end
   

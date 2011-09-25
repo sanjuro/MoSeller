@@ -6,8 +6,13 @@ class AccountItemsController < ApplicationController
   before_filter :authenticate_user!
   
   def index
-    @account_items = AccountItem.find_all_by_user_id(current_user.id).paginate(:page => params[:page])
-   
+    @account_items = AccountItem.find_all_by_user_id(current_user.id)
+    
+    debit = @account_items.map(&:debit).sum
+    credit = @account_items.map(&:credit).sum
+    
+    @account_balance = debit - credit  
+    
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @account_items }
@@ -17,9 +22,14 @@ class AccountItemsController < ApplicationController
   
   def show
     @account_items = AccountItem.find_all_by_user_id(current_user.id).paginate(:page => params[:page])
-   
+    
+    debit = @account_items.map(&:debit).sum
+    credit = @account_items.map(&:credit).sum
+    
+    @account_balance = debit - credit  
+    
     respond_to do |format|
-      format.html # show.html.erb
+      format.html # index.html.erb
       format.xml  { render :xml => @account_items }
       format.json  { render :json => @account_items }
     end

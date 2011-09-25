@@ -204,7 +204,8 @@ class Order < ActiveRecord::Base
   def billing!
     logger.info 'START BILLING'
     
-    invoice = Invoice.new(:user_id => self.user_id, :email => (User.respond_to?(:current) && User.current.try(:email)))
+    invoice = Invoice.new(:email => (User.respond_to?(:current) && User.current.try(:email)))
+    invoice.user = self.user
     invoice.order = self
     invoice.save
     

@@ -2,3 +2,9 @@
   <h1>Your Accounts</h1>
   <%= link_to 'Home', root_path, "class" => "ui-btn-left" %>
 </div>
+
+<div data-role="content" data-theme="d">
+	<p>
+		Your current balance is : <%= format_price(@account_balance) %>
+	</p>
+</div>

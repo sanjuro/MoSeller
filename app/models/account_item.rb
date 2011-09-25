@@ -1,7 +1,11 @@
 class AccountItem < ActiveRecord::Base
-  attr_accessible :credit, :debit
+  attr_accessible :user_id, :credit, :debit, :account_item_status
+  
+  belongs_to :user
   
   has_many :state_events, :as => :stateful  
+  
+  scope :by_user, lambda {|user| joins(:users).where("users.id =?", user)}
   
   # order state machine (see http://github.com/pluginaweek/state_machine/tree/master for details)
   state_machine :initial => 'created', :use_transactions => false do
