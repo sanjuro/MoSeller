@@ -107,7 +107,7 @@ class Invoice < ActiveRecord::Base
   end
   
   def add_invoice_item(order_item)
-    invoice_item = InvoiceItem.new( :total => order_item.billing_price, :description => order_item.variant.sku)
+    invoice_item = InvoiceItem.new( :total => order_item.billing_price * order_item.quantity, :description => order_item.variant.sku)
     invoice_item.invoice = self
     invoice_item.save
   end
