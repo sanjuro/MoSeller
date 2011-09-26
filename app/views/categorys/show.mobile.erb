@@ -1,6 +1,7 @@
-<div data-role="header" data-add-back-btn="true" data-theme="d">
-  <h1>Products for <%= @category.title %></h1>
-  <%= link_to 'Home', :homepage, "class" => "ui-btn-right" %>
+<div data-role="header" data-theme="d">
+	<a href="" data-rel="back">Back</a> 
+	<h1><%= @category.title %></h1>
+	<%= link_to 'Home', :homepage, "class" => "ui-btn-right" "data-icon" => "home" %>
 </div>
 
  <div data-role="content" data-theme="d">
