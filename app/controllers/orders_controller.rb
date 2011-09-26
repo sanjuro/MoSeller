@@ -42,6 +42,7 @@ class OrdersController < ApplicationController
       @order.order_items = @order.order_items.select {|li| li.quantity > 0 }
       # fire_event('moseller.order.contents_changed')
       respond_to do |format|
+        format.mobile { redirect_to cart_path }
         format.html { redirect_to cart_path }
         format.xml  { render :xml => @order }
         format.json  { render :json => @order }
@@ -83,6 +84,7 @@ class OrdersController < ApplicationController
     # fire_event('moseller.cart.add')
     # fire_event('moseller.order.contents_changed')
     respond_to do |format|
+      format.mobile { redirect_to cart_path }
       format.html { redirect_to cart_path }
       format.xml  { render :xml => @order }
       format.json  { render :json => @order }
@@ -95,6 +97,7 @@ class OrdersController < ApplicationController
     end
 
     respond_to do |format|
+      format.mobile { redirect_to cart_path }
       format.html { redirect_to cart_path }
       format.xml  { render :xml => @order }
       format.json  { render :json => @order }
@@ -107,6 +110,7 @@ class OrdersController < ApplicationController
     @order.destroy
    
     respond_to do |format|
+      format.mobile { redirect_to cart_path }
       format.html { redirect_to(orders_url) }
       format.xml  { head :ok }
     end

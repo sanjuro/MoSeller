@@ -198,7 +198,7 @@ LOCK TABLES `option_type` WRITE;
 
 INSERT INTO `option_type` (`id`, `name`, `presentation`, `created_at`, `updated_at`)
 VALUES
-	(1,'voucher_amount','Voucher Amount',NULL,NULL);
+	(1,'voucher_amount','Voucher',NULL,NULL);
 
 /*!40000 ALTER TABLE `option_type` ENABLE KEYS */;
 UNLOCK TABLES;

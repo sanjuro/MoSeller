@@ -1,4 +1,4 @@
-<ul data-role="listview">
+<ul>
   <li>
   <%= link_to('Products', categorys_path )  %>
   </li>
@@ -9,9 +9,6 @@
   <%= link_to('Orders', orders_path )  %>
   </li>
 <% if user_signed_in? %>
-  <li>
-  <%= link_to('Your Account', account_items_path) %>
-  </li>
   <li>
   <%= link_to('Logout', destroy_user_session_path, :method => 'delete') %>        
   </li>

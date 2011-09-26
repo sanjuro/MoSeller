@@ -16,12 +16,16 @@
 </head>
 <body>
 <div data-role="page" id="home">
- 
+  <header>
+		<%= image_tag "logo.png" %>
+  </header>
+  
   <%= yield %>
 
  <div data-role="footer" data-theme="d">
-	<footer>
-	</footer>
+	<div data-role="navbar">
+		<%= render "shared/footer_navigation" %>
+	</div>
  </div>
 </div>
 </body>

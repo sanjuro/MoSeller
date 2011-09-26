@@ -14,10 +14,7 @@
               <label for="<%= ['products', @product.id, v.id].join('_') %>">
                 <span class="variant-description">
                   <%= variant_options v %>
-                </span>
-                <% if variant_price_diff v %>
-                  <span class="price diff"><%= variant_price_diff v %></span>
-                <% end %>                
+                </span>                
               </label>
             </li>
           <% end%>
@@ -32,7 +29,7 @@
     
     <div data-role="fieldcontain">
 		<label for="slider">Quantity:</label>
-	 	<input type="range" name="quantity" id="quantity" value="0" min="0" max="100"  />
+	 	<input type="range" name="quantity" id="quantity" value="1" min="1" max="100"  />
 	</div>
       
     <button type="submit" class="large primary" id="add-to-cart-button">
