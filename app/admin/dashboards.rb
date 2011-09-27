@@ -15,13 +15,21 @@ ActiveAdmin::Dashboards.build do
        end
      end
      
-  section "Recent Invoices" do
+    section "Recent Invoices" do
+      ul do
+        Invoice.recent(5).collect do |invoice|
+          li link_to(invoice.id, admin_invoice_path(invoice)) +' ' + format_price(invoice.total)
+        end
+      end
+    end   
+    
+  section "Recent Users" do
     ul do
-      Invoice.recent(5).collect do |invoice|
-        li link_to(invoice.id, admin_invoice_path(invoice)) +' ' + format_price(invoice.total)
+      User.recent_by_sign_in(5).collect do |user|
+        li link_to(user.name, admin_user_path(user)) + ' ' + 'signed in at' + ' ' + user.last_sign_in_at
       end
     end
-  end     
+  end        
   
   # == Render Partial Section
   # The block is rendered within the context of the view, so you can
