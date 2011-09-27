@@ -32,7 +32,7 @@ gem "devise", :git => "git://github.com/plataformatec/devise.git"
 gem 'savon'
 gem 'gravatar_image_tag', '1.0.0.pre2'
 gem 'will_paginate', '3.0.pre2'
-gem "paperclip", :git => "https://github.com/thoughtbot/paperclip.git"
+gem "paperclip"
 
 gem 'state_machine'
 
