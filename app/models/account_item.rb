@@ -1,5 +1,5 @@
 class AccountItem < ActiveRecord::Base
-  attr_accessible :user_id, :credit, :debit, :account_item_status
+  attr_accessible :user_id, :credit, :debit, :account_item_status_id
   
   belongs_to :user
   
@@ -14,7 +14,6 @@ class AccountItem < ActiveRecord::Base
       transition :from => 'created',  :to => 'unpaid'
       transition :from => 'unpaid',  :to => 'paid'
     end
-
 
     before_transition :to => 'paid' do |account|
       # order.process_payments! # process payments

@@ -20,12 +20,13 @@ class Order < ActiveRecord::Base
   # before_create :create_client
   before_create :generate_order_number  
   
-  scope :by_number, lambda {|number| where("orders.number = ?", number)}
-  scope :between, lambda {|*dates| where("orders.created_at between ? and ?", dates.first.to_date, dates.last.to_date)}
+  scope :by_number, lambda {|number| where("order.number = ?", number)}
+  scope :recent, order("order.created_at")
+  scope :between, lambda {|*dates| where("order.created_at between ? and ?", dates.first.to_date, dates.last.to_date)}
   scope :by_customer, lambda {|customer| joins(:clients).where("clients.email =?", customer)}
   scope :by_region, lambda {|state| where("region = ?", state)}
-  scope :complete, where("orders.completed_at IS NOT NULL")
-  scope :incomplete, where("orders.completed_at IS NULL")
+  scope :complete, where("order.completed_at IS NOT NULL")
+  scope :incomplete, where("order.completed_at IS NULL")
   
   # make_permalink :field => :number  
   

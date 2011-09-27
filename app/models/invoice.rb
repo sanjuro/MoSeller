@@ -1,6 +1,6 @@
 class Invoice < ActiveRecord::Base
   attr_accessible :user_id, :margin, :sub_total, :tax,  
-                  :total, :date_paid, :email
+                  :total, :date_paid, :email, :state
 
   belongs_to :user     
   belongs_to :order          
@@ -8,7 +8,9 @@ class Invoice < ActiveRecord::Base
   has_one :account_item    
                   
   has_many :state_events, :as => :stateful
-  has_many :invoice_items, :dependent => :destroy          
+  has_many :invoice_items, :dependent => :destroy    
+  
+  scope :recent, order("invoice.created_at")      
                           
   
   # order state machine (see http://github.com/pluginaweek/state_machine/tree/master for details)

@@ -6,14 +6,22 @@ ActiveAdmin::Dashboards.build do
   
   # == Simple Dashboard Section
   # Here is an example of a simple dashboard section
-  #
-  #   section "Recent Posts" do
-  #     ul do
-  #       Post.recent(5).collect do |post|
-  #         li link_to(post.title, admin_post_path(post))
-  #       end
-  #     end
-  #   end
+  
+     section "Recent Orders" do
+       ul do
+         Order.recent(5).collect do |order|
+           li link_to(order.number, admin_order_path(order))
+         end
+       end
+     end
+     
+  section "Recent Invoices" do
+    ul do
+      Invoice.recent(5).collect do |invoice|
+        li link_to(invoice.id, admin_invoice_path(invoice)) +' ' + format_price(invoice.total)
+      end
+    end
+  end     
   
   # == Render Partial Section
   # The block is rendered within the context of the view, so you can
