@@ -5,7 +5,7 @@ gem 'rails', '3.0.9'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
-gem 'sqlite3'
+# gem 'sqlite3'
 gem 'mysql2'
 
 
@@ -42,7 +42,6 @@ gem 'acts_as_list', '>= 0.1.0'
 gem 'fb_graph'
 
 gem "gritter", "0.6.2"
-
 
 
 # Bundle gems for the local environment. Make sure to

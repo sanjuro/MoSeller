@@ -6,12 +6,14 @@ default_run_options[:pty] = true
 set :scm, :git
 # Or: `accurev`, `bzr`, `cvs`, `darcs`, `git`, `mercurial`, `perforce`, `subversion` or `none`
 
-# set :deploy_to, "/usr/share/#{application}"
+# set :deploy_to, "/home/bitnami/#{application}"
 set :deploy_to, "/opt/bitnami/apache2/htdocs/#{application}"
 
-role :web, "ec2-50-16-103-135.compute-1.amazonaws.com"                          # Your HTTP server, Apache/etc
-role :app, "ec2-50-16-103-135.compute-1.amazonaws.com"                          # This may be the same as your `Web` server
-role :db,  "ec2-50-16-103-135.compute-1.amazonaws.com", :primary => true # This is where Rails migrations will run
+set :rails_env, :production
+
+role :web, "ec2-204-236-249-46.compute-1.amazonaws.com"                          # Your HTTP server, Apache/etc
+role :app, "ec2-204-236-249-46.compute-1.amazonaws.com"                          # This may be the same as your `Web` server
+role :db,  "ec2-204-236-249-46.compute-1.amazonaws.com", :primary => true # This is where Rails migrations will run
 
 
 # if you're still using the script/reaper helper you will need
@@ -27,6 +29,7 @@ role :db,  "ec2-50-16-103-135.compute-1.amazonaws.com", :primary => true # This 
 # end
 
 ssh_options[:user] = 'bitnami'
+# ssh_options[:keys] = %w(~/.ssh/id_dsa)
   
 # ssh_options[:keys] =  %w(/home/bitnami/id_rsa)
   
