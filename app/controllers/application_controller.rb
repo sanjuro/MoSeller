@@ -22,6 +22,11 @@ class ApplicationController < ActionController::Base
   
   MOBILE_BROWSERS = ["android", "ipod", "opera mini", "blackberry", "palm","hiptop","avantgo","plucker", "xiino","blazer","elaine", "windows ce; ppc;", "windows ce; smartphone;","windows ce; iemobile", "up.browser","up.link","mmp","symbian","smartphone", "midp","wap","vodafone","o2","pocket","kindle", "mobile","pda","psp","treo"]
   
+  def prepare_for_mobile
+    session[:mobile_param] = params[:mobile] if params[:mobile]
+    request.format = :mobile if mobile_device? == 'mobile'
+  end    
+    
   def mobile_device?
     if session[:mobile_param]
       session[:mobile_param] == "1"
@@ -31,14 +36,10 @@ class ApplicationController < ActionController::Base
         return "mobile" if agent.match(m)
       end
     end
+    return false
   end
   helper_method :mobile_device?
   
-  def prepare_for_mobile
-    session[:mobile_param] = params[:mobile] if params[:mobile]
-    request.format = :mobile if mobile_device? == 'mobile'
-  end
- 
   def authenticate
     authenticate_or_request_with_http_basic do |user_name, password|
       user_name == 'admin' && password == 'password'

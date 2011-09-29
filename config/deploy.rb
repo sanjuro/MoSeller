@@ -8,7 +8,7 @@ set :scm, :git
 # Or: `accurev`, `bzr`, `cvs`, `darcs`, `git`, `mercurial`, `perforce`, `subversion` or `none`
 
 # set :deploy_to, "/home/bitnami/#{application}"
-set :deploy_to, "/var/www/#{application}"
+set :deploy_to, "/usr/share/#{application}"
 
 set :rails_env, :production
 
