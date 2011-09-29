@@ -1,19 +1,20 @@
 set :application, "moseller.com"
 set :repository,  "git@github.com:sanjuro/MoSeller.git"
 
+ssh_options[:forward_agent] = true
 default_run_options[:pty] = true
 
 set :scm, :git
 # Or: `accurev`, `bzr`, `cvs`, `darcs`, `git`, `mercurial`, `perforce`, `subversion` or `none`
 
 # set :deploy_to, "/home/bitnami/#{application}"
-set :deploy_to, "/opt/bitnami/apache2/htdocs/#{application}"
+set :deploy_to, "/var/www/#{application}"
 
 set :rails_env, :production
 
-role :web, "ec2-204-236-249-46.compute-1.amazonaws.com"                          # Your HTTP server, Apache/etc
-role :app, "ec2-204-236-249-46.compute-1.amazonaws.com"                          # This may be the same as your `Web` server
-role :db,  "ec2-204-236-249-46.compute-1.amazonaws.com", :primary => true # This is where Rails migrations will run
+role :web, "ec2-174-129-184-211.compute-1.amazonaws.com"                          # Your HTTP server, Apache/etc
+role :app, "ec2-174-129-184-211.compute-1.amazonaws.com"                          # This may be the same as your `Web` server
+role :db,  "ec2-174-129-184-211.compute-1.amazonaws.com", :primary => true # This is where Rails migrations will run
 
 
 # if you're still using the script/reaper helper you will need
@@ -28,12 +29,12 @@ role :db,  "ec2-204-236-249-46.compute-1.amazonaws.com", :primary => true # This
 #   end
 # end
 
-ssh_options[:user] = 'bitnami'
+ssh_options[:user] = 'ubuntu'
 # ssh_options[:keys] = %w(~/.ssh/id_dsa)
   
 # ssh_options[:keys] =  %w(/home/bitnami/id_rsa)
   
-set :user, "bitnami"  # The server's user for deploys
+set :user, "ubuntu"  # The server's user for deploys
 
 set :branch, "master"
   
