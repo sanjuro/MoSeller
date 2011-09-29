@@ -28,7 +28,7 @@ gem 'capistrano'
 gem 'activeadmin'
 
 # gem "devise", :git => "git://github.com/plataformatec/devise.git" 
-gem "devise", '1.4.7'
+gem "devise"
 
 gem 'savon'
 gem 'gravatar_image_tag', '1.0.0.pre2'
