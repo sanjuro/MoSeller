@@ -7,7 +7,7 @@
 #
 # Host: 127.0.0.1 (MySQL 5.5.14)
 # Database: moseller
-# Generation Time: 2011-09-15 13:44:53 +0200
+# Generation Time: 2011-09-30 00:09:46 +0200
 # ************************************************************
 
 
@@ -27,7 +27,7 @@ DROP TABLE IF EXISTS `account_item`;
 
 CREATE TABLE `account_item` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `client_id` int(11) DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL,
   `account_item_type_id` int(11) DEFAULT NULL,
   `credit` decimal(8,2) NOT NULL DEFAULT '0.00',
   `debit` decimal(8,2) NOT NULL DEFAULT '0.00',
@@ -105,7 +105,7 @@ LOCK TABLES `admin_user` WRITE;
 
 INSERT INTO `admin_user` (`id`, `name`, `created_at`, `updated_at`, `email`, `encrypted_password`, `reset_password_token`, `reset_password_sent_at`, `remember_created_at`, `sign_in_count`, `current_sign_in_at`, `last_sign_in_at`, `current_sign_in_ip`, `last_sign_in_ip`)
 VALUES
-	(1,'shadley','2011-09-01 02:06:50','2011-09-03 17:37:34','shad6ster@gmail.com','$2a$10$dUtGGLLqMRbvR/N.ZuwP7uxD9q.1bYw50ariaEoLDarZF.bEC5wLS',NULL,NULL,NULL,1,'2011-09-03 17:37:34','2011-09-03 17:37:34','127.0.0.1','127.0.0.1');
+	(1,'shadley','2011-09-01 02:06:50','2011-09-27 09:47:46','shad6ster@gmail.com','$2a$10$dUtGGLLqMRbvR/N.ZuwP7uxD9q.1bYw50ariaEoLDarZF.bEC5wLS',NULL,NULL,NULL,3,'2011-09-27 09:47:46','2011-09-27 07:05:03','127.0.0.1','127.0.0.1');
 
 /*!40000 ALTER TABLE `admin_user` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -325,20 +325,35 @@ DROP TABLE IF EXISTS `invoice`;
 
 CREATE TABLE `invoice` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `client_id` int(11) DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL,
   `order_id` int(11) DEFAULT NULL,
   `margin` decimal(8,2) NOT NULL DEFAULT '0.00',
-  `subtotal` decimal(8,2) NOT NULL DEFAULT '0.00',
+  `sub_total` decimal(8,2) NOT NULL DEFAULT '0.00',
   `tax` decimal(8,2) NOT NULL DEFAULT '0.00',
   `total` decimal(8,2) NOT NULL DEFAULT '0.00',
   `date_paid` datetime DEFAULT NULL,
-  `invoice_status_id` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `email` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `state` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `invoice_type_id` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `created_at` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+LOCK TABLES `invoice` WRITE;
+/*!40000 ALTER TABLE `invoice` DISABLE KEYS */;
+
+INSERT INTO `invoice` (`id`, `user_id`, `order_id`, `margin`, `sub_total`, `tax`, `total`, `date_paid`, `email`, `state`, `invoice_type_id`, `created_at`, `updated_at`)
+VALUES
+	(1,1,1,0.00,22.64,0.00,22.64,NULL,'shad6ster@gmail.com','created',NULL,'2011-09-26 14:50:38','2011-09-26 14:50:38'),
+	(2,1,2,0.00,568.08,0.00,568.08,NULL,'shad6ster@gmail.com','created',NULL,'2011-09-26 14:53:07','2011-09-26 14:53:07'),
+	(3,1,3,0.00,262.85,0.00,262.85,NULL,'shad6ster@gmail.com','created',NULL,'2011-09-27 06:22:34','2011-09-27 06:22:34'),
+	(4,1,4,0.00,4.80,0.00,4.80,NULL,'shad6ster@gmail.com','created',NULL,'2011-09-27 06:41:32','2011-09-27 06:41:33'),
+	(5,1,5,0.00,4.80,0.00,4.80,NULL,'shad6ster@gmail.com','created',NULL,'2011-09-29 14:48:05','2011-09-29 14:48:05'),
+	(6,1,6,0.00,52.57,0.00,52.57,NULL,'shad6ster@gmail.com','created',NULL,'2011-09-29 14:49:20','2011-09-29 14:49:20');
+
+/*!40000 ALTER TABLE `invoice` ENABLE KEYS */;
+UNLOCK TABLES;
 
 
 # Dump of table invoice_item
@@ -356,6 +371,21 @@ CREATE TABLE `invoice_item` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+LOCK TABLES `invoice_item` WRITE;
+/*!40000 ALTER TABLE `invoice_item` DISABLE KEYS */;
+
+INSERT INTO `invoice_item` (`id`, `invoice_id`, `description`, `total`, `created_at`, `updated_at`)
+VALUES
+	(1,1,'FREEPAID0000VOD12',22.64,'2011-09-26 14:50:38','2011-09-26 14:50:38'),
+	(2,2,'FREEPAID000VOD275',524.58,'2011-09-26 14:53:07','2011-09-26 14:53:07'),
+	(3,2,'FREEPAID0000MTN15',43.50,'2011-09-26 14:53:07','2011-09-26 14:53:07'),
+	(4,3,'FREEPAID0000VOD55',262.85,'2011-09-27 06:22:34','2011-09-27 06:22:34'),
+	(5,4,'FREEPAID00000VOD5',4.80,'2011-09-27 06:41:32','2011-09-27 06:41:32'),
+	(6,5,'FREEPAID00000VOD5',4.80,'2011-09-29 14:48:05','2011-09-29 14:48:05'),
+	(7,6,'FREEPAID0000VOD55',52.57,'2011-09-29 14:49:20','2011-09-29 14:49:20');
+
+/*!40000 ALTER TABLE `invoice_item` ENABLE KEYS */;
+UNLOCK TABLES;
 
 
 # Dump of table invoice_type
@@ -444,7 +474,7 @@ LOCK TABLES `option_type` WRITE;
 
 INSERT INTO `option_type` (`id`, `name`, `presentation`, `created_at`, `updated_at`)
 VALUES
-	(1,'voucher_amount','Voucher Amount',NULL,NULL);
+	(1,'voucher_amount','Voucher',NULL,NULL);
 
 /*!40000 ALTER TABLE `option_type` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -565,8 +595,9 @@ CREATE TABLE `order` (
   `customer_total` decimal(8,2) NOT NULL DEFAULT '0.00',
   `billing_total` decimal(8,2) NOT NULL DEFAULT '0.00',
   `full_total` decimal(8,2) NOT NULL DEFAULT '0.00',
-  `email_address` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `mobile_number` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `email` varchar(15) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `mobile_number` varchar(15) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `customer_name` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
   `created_at` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL,
   `completed_at` datetime DEFAULT NULL,
@@ -589,7 +620,6 @@ CREATE TABLE `order_item` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `order_id` int(11) DEFAULT NULL,
   `product_id` int(11) DEFAULT NULL,
-  `package_id` int(11) DEFAULT NULL,
   `variant_id` int(11) DEFAULT NULL,
   `quantity` int(11) DEFAULT NULL,
   `customer_price` decimal(8,2) NOT NULL DEFAULT '0.00',
@@ -714,8 +744,9 @@ INSERT INTO `product` (`id`, `category_id`, `product_source_id`, `name`, `descri
 VALUES
 	(1,1,2,'Vodacom','Vodacom Airtime vouchers',4.56,4.80,'vodacom_5',NULL,NULL,NULL,NULL,'2011-09-01 02:06:49','2011-09-01 02:06:49'),
 	(2,1,2,'MTN','MTN Airtime Vouchers',4.61,4.85,'mtn_5',NULL,NULL,NULL,NULL,'2011-09-01 02:06:49','2011-09-01 02:06:49'),
-	(3,1,2,'Cell C','Cell C Airtime vouchers',4.55,4.81,'cellc_5',NULL,NULL,NULL,NULL,NULL,NULL),
-	(4,1,2,'Virgin Mobile','Virgin Mobile Airtime',13.73,14.37,'virgin_15',NULL,NULL,NULL,NULL,NULL,NULL);
+	(3,1,2,'CellC','Cell C Airtime vouchers',4.55,4.81,'cellc_5',NULL,NULL,NULL,NULL,'2011-09-01 02:06:49','2011-09-01 02:06:49'),
+	(4,1,2,'Virgin','Virgin Mobile Airtime',13.73,14.37,'virgin_15',NULL,NULL,NULL,NULL,'2011-09-01 02:06:49','2011-09-01 02:06:49'),
+	(5,1,2,'Heita','Heita Airtime',4.58,4.82,'heita_5',NULL,NULL,NULL,NULL,'2011-09-01 02:06:49','2011-09-01 02:06:49');
 
 /*!40000 ALTER TABLE `product` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -760,8 +791,8 @@ LOCK TABLES `product_source` WRITE;
 
 INSERT INTO `product_source` (`id`, `supplier_id`, `name`, `description`, `clazz`, `deleted_at`, `created_at`, `updated_at`)
 VALUES
-	(1,NULL,'ESET','ESET SOAP Gateway','eset_helper',NULL,'2011-09-01 02:06:50','2011-09-01 02:06:50'),
-	(2,NULL,'Freepaid','Freepaid Airtime API','freepaid_helper',NULL,'2011-09-01 02:06:50','2011-09-01 02:06:50');
+	(1,NULL,'ESET','ESET SOAP Gateway','Eset',NULL,'2011-09-01 02:06:50','2011-09-01 02:06:50'),
+	(2,NULL,'Freepaid','Freepaid Airtime API','Freepaid',NULL,'2011-09-01 02:06:50','2011-09-01 02:06:50');
 
 /*!40000 ALTER TABLE `product_source` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -777,6 +808,22 @@ CREATE TABLE `schema_migrations` (
   UNIQUE KEY `unique_schema_migrations` (`version`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+LOCK TABLES `schema_migrations` WRITE;
+/*!40000 ALTER TABLE `schema_migrations` DISABLE KEYS */;
+
+INSERT INTO `schema_migrations` (`version`)
+VALUES
+	('20110725150933'),
+	('20110725150934'),
+	('20110725150935'),
+	('20110725150936'),
+	('20110824084915'),
+	('20110905213434'),
+	('20110905233449'),
+	('20110905233450');
+
+/*!40000 ALTER TABLE `schema_migrations` ENABLE KEYS */;
+UNLOCK TABLES;
 
 
 # Dump of table state_event
@@ -792,9 +839,174 @@ CREATE TABLE `state_event` (
   `created_at` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL,
   `previous_state` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `next_state` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+LOCK TABLES `state_event` WRITE;
+/*!40000 ALTER TABLE `state_event` DISABLE KEYS */;
+
+INSERT INTO `state_event` (`id`, `order_id`, `user_id`, `name`, `created_at`, `updated_at`, `previous_state`, `next_state`)
+VALUES
+	(4,1,1,'order','2011-09-18 06:01:24','2011-09-18 06:01:24','cart','complete'),
+	(5,NULL,NULL,'invoice','2011-09-18 06:01:24','2011-09-18 06:01:24','created','mailed'),
+	(6,1,NULL,'invoice','2011-09-18 06:01:25','2011-09-18 06:01:25','processing','unpaid'),
+	(7,1,1,'order','2011-09-18 06:04:55','2011-09-18 06:04:55','cart','complete'),
+	(8,NULL,1,'invoice','2011-09-18 06:04:55','2011-09-18 06:04:55','created','mailed'),
+	(9,1,1,'invoice','2011-09-18 06:04:56','2011-09-18 06:04:56','processing','unpaid'),
+	(10,1,1,'order','2011-09-18 06:09:29','2011-09-18 06:09:29','cart','complete'),
+	(11,NULL,1,'invoice','2011-09-18 06:09:29','2011-09-18 06:09:29','created','mailed'),
+	(12,1,1,'invoice','2011-09-18 06:09:30','2011-09-18 06:09:30','processing','unpaid'),
+	(13,1,1,'order','2011-09-18 06:10:22','2011-09-18 06:10:22','cart','complete'),
+	(14,NULL,1,'invoice','2011-09-18 06:10:22','2011-09-18 06:10:22','created','mailed'),
+	(15,1,1,'invoice','2011-09-18 06:10:22','2011-09-18 06:10:22','processing','unpaid'),
+	(16,2,1,'order','2011-09-18 06:11:00','2011-09-18 06:11:00','cart','complete'),
+	(17,NULL,1,'invoice','2011-09-18 06:11:00','2011-09-18 06:11:00','created','mailed'),
+	(18,2,1,'invoice','2011-09-18 06:11:01','2011-09-18 06:11:01','processing','unpaid'),
+	(19,3,1,'order','2011-09-18 10:10:19','2011-09-18 10:10:19','cart','complete'),
+	(20,NULL,1,'invoice','2011-09-18 10:10:19','2011-09-18 10:10:19','created','mailed'),
+	(21,3,1,'invoice','2011-09-18 10:10:19','2011-09-18 10:10:19','processing','unpaid'),
+	(22,4,1,'order','2011-09-18 10:12:14','2011-09-18 10:12:14','cart','complete'),
+	(23,NULL,1,'invoice','2011-09-18 10:12:14','2011-09-18 10:12:14','created','mailed'),
+	(24,4,1,'invoice','2011-09-18 10:12:14','2011-09-18 10:12:14','processing','unpaid'),
+	(25,5,1,'order','2011-09-18 10:14:34','2011-09-18 10:14:34','cart','complete'),
+	(26,NULL,1,'invoice','2011-09-18 10:14:34','2011-09-18 10:14:34','created','mailed'),
+	(27,5,1,'invoice','2011-09-18 10:14:34','2011-09-18 10:14:34','processing','unpaid'),
+	(28,6,1,'order','2011-09-18 17:33:52','2011-09-18 17:33:52','cart','complete'),
+	(29,NULL,1,'invoice','2011-09-18 17:33:52','2011-09-18 17:33:52','created','mailed'),
+	(30,6,1,'invoice','2011-09-18 17:33:52','2011-09-18 17:33:52','processing','unpaid'),
+	(31,7,1,'order','2011-09-18 17:36:20','2011-09-18 17:36:20','cart','complete'),
+	(32,NULL,1,'invoice','2011-09-18 17:36:20','2011-09-18 17:36:20','created','mailed'),
+	(33,7,1,'invoice','2011-09-18 17:36:21','2011-09-18 17:36:21','processing','unpaid'),
+	(34,8,1,'order','2011-09-18 17:39:46','2011-09-18 17:39:46','cart','complete'),
+	(35,NULL,1,'invoice','2011-09-18 17:39:46','2011-09-18 17:39:46','created','mailed'),
+	(36,8,1,'invoice','2011-09-18 17:39:46','2011-09-18 17:39:46','processing','unpaid'),
+	(37,9,1,'order','2011-09-18 17:47:13','2011-09-18 17:47:13','cart','complete'),
+	(38,NULL,1,'invoice','2011-09-18 17:47:13','2011-09-18 17:47:13','created','mailed'),
+	(39,9,1,'invoice','2011-09-18 17:47:14','2011-09-18 17:47:14','processing','unpaid'),
+	(40,10,1,'order','2011-09-18 17:51:57','2011-09-18 17:51:57','cart','complete'),
+	(41,NULL,1,'invoice','2011-09-18 17:51:57','2011-09-18 17:51:57','created','mailed'),
+	(42,10,1,'invoice','2011-09-18 17:51:58','2011-09-18 17:51:58','processing','unpaid'),
+	(43,11,1,'order','2011-09-18 17:52:59','2011-09-18 17:52:59','cart','complete'),
+	(44,NULL,1,'invoice','2011-09-18 17:52:59','2011-09-18 17:52:59','created','mailed'),
+	(45,11,1,'invoice','2011-09-18 17:53:00','2011-09-18 17:53:00','processing','unpaid'),
+	(46,1,1,'order','2011-09-18 18:11:53','2011-09-18 18:11:53','cart','complete'),
+	(47,NULL,1,'invoice','2011-09-18 18:11:54','2011-09-18 18:11:54','created','mailed'),
+	(48,1,1,'invoice','2011-09-18 18:11:54','2011-09-18 18:11:54','processing','unpaid'),
+	(49,2,1,'order','2011-09-18 18:15:44','2011-09-18 18:15:44','cart','complete'),
+	(50,NULL,1,'invoice','2011-09-18 18:15:44','2011-09-18 18:15:44','created','mailed'),
+	(51,2,1,'invoice','2011-09-18 18:15:44','2011-09-18 18:15:44','processing','unpaid'),
+	(52,3,1,'order','2011-09-18 18:23:32','2011-09-18 18:23:32','cart','complete'),
+	(53,NULL,1,'invoice','2011-09-18 18:23:32','2011-09-18 18:23:32','created','mailed'),
+	(54,3,1,'invoice','2011-09-18 18:23:32','2011-09-18 18:23:32','processing','unpaid'),
+	(55,1,1,'order','2011-09-18 19:47:06','2011-09-18 19:47:06','cart','complete'),
+	(56,NULL,1,'invoice','2011-09-18 19:47:06','2011-09-18 19:47:06','created','mailed'),
+	(57,1,1,'invoice','2011-09-18 19:47:06','2011-09-18 19:47:06','processing','unpaid'),
+	(64,2,2,'order','2011-09-19 14:25:23','2011-09-19 14:25:23','cart','complete'),
+	(65,NULL,2,'invoice','2011-09-19 14:25:23','2011-09-19 14:25:23','created','mailed'),
+	(66,2,2,'invoice','2011-09-19 14:25:23','2011-09-19 14:25:23','processing','unpaid'),
+	(67,3,2,'order','2011-09-19 14:26:13','2011-09-19 14:26:13','cart','complete'),
+	(68,NULL,2,'invoice','2011-09-19 14:26:13','2011-09-19 14:26:13','created','mailed'),
+	(69,3,2,'invoice','2011-09-19 14:26:13','2011-09-19 14:26:13','processing','unpaid'),
+	(70,4,2,'order','2011-09-19 14:29:26','2011-09-19 14:29:26','cart','complete'),
+	(71,NULL,2,'invoice','2011-09-19 14:29:26','2011-09-19 14:29:26','created','mailed'),
+	(72,4,2,'invoice','2011-09-19 14:29:27','2011-09-19 14:29:27','processing','unpaid'),
+	(73,5,2,'order','2011-09-19 14:32:33','2011-09-19 14:32:33','cart','complete'),
+	(74,NULL,2,'invoice','2011-09-19 14:32:33','2011-09-19 14:32:33','created','mailed'),
+	(75,5,2,'invoice','2011-09-19 14:32:33','2011-09-19 14:32:33','processing','unpaid'),
+	(76,6,2,'order','2011-09-19 14:33:29','2011-09-19 14:33:29','cart','complete'),
+	(77,NULL,2,'invoice','2011-09-19 14:33:29','2011-09-19 14:33:29','created','mailed'),
+	(78,6,2,'invoice','2011-09-19 14:33:30','2011-09-19 14:33:30','processing','unpaid'),
+	(80,8,1,'order','2011-09-21 07:03:56','2011-09-21 07:03:56','cart','complete'),
+	(81,NULL,1,'invoice','2011-09-21 07:03:56','2011-09-21 07:03:56','created','mailed'),
+	(82,8,1,'invoice','2011-09-21 07:03:56','2011-09-21 07:03:56','processing','unpaid'),
+	(83,7,2,'order','2011-09-21 13:34:20','2011-09-21 13:34:20','cart','complete'),
+	(84,NULL,2,'invoice','2011-09-21 13:34:20','2011-09-21 13:34:20','created','mailed'),
+	(85,7,2,'invoice','2011-09-21 13:34:20','2011-09-21 13:34:20','processing','unpaid'),
+	(86,10,2,'order','2011-09-21 21:01:21','2011-09-21 21:01:21','cart','complete'),
+	(87,NULL,2,'invoice','2011-09-21 21:01:22','2011-09-21 21:01:22','created','mailed'),
+	(88,10,2,'invoice','2011-09-21 21:01:22','2011-09-21 21:01:22','processing','unpaid'),
+	(89,11,2,'order','2011-09-21 21:03:57','2011-09-21 21:03:57','cart','complete'),
+	(90,NULL,2,'invoice','2011-09-21 21:03:57','2011-09-21 21:03:57','created','mailed'),
+	(91,11,2,'invoice','2011-09-21 21:03:57','2011-09-21 21:03:57','processing','unpaid'),
+	(92,12,2,'order','2011-09-21 21:15:58','2011-09-21 21:15:58','cart','complete'),
+	(93,NULL,2,'invoice','2011-09-21 21:15:58','2011-09-21 21:15:58','created','mailed'),
+	(94,12,2,'invoice','2011-09-21 21:15:58','2011-09-21 21:15:58','processing','unpaid'),
+	(95,13,2,'order','2011-09-21 21:18:48','2011-09-21 21:18:48','cart','complete'),
+	(96,NULL,2,'invoice','2011-09-21 21:18:48','2011-09-21 21:18:48','created','mailed'),
+	(97,13,2,'invoice','2011-09-21 21:18:48','2011-09-21 21:18:48','processing','unpaid'),
+	(98,16,1,'order','2011-09-23 14:27:21','2011-09-23 14:27:21','cart','complete'),
+	(99,NULL,1,'invoice','2011-09-23 14:27:22','2011-09-23 14:27:22','created','mailed'),
+	(100,16,1,'invoice','2011-09-23 14:27:22','2011-09-23 14:27:22','processing','unpaid'),
+	(101,16,1,'order','2011-09-23 14:27:54','2011-09-23 14:27:54','cart','complete'),
+	(102,NULL,1,'invoice','2011-09-23 14:27:54','2011-09-23 14:27:54','created','mailed'),
+	(103,16,1,'invoice','2011-09-23 14:27:54','2011-09-23 14:27:54','processing','unpaid'),
+	(104,18,1,'order','2011-09-23 14:37:04','2011-09-23 14:37:04','cart','complete'),
+	(105,NULL,1,'invoice','2011-09-23 14:37:04','2011-09-23 14:37:04','created','mailed'),
+	(106,18,1,'invoice','2011-09-23 14:37:04','2011-09-23 14:37:04','processing','unpaid'),
+	(107,19,1,'order','2011-09-23 14:41:24','2011-09-23 14:41:24','cart','complete'),
+	(108,NULL,1,'invoice','2011-09-23 14:41:24','2011-09-23 14:41:24','created','mailed'),
+	(109,19,1,'invoice','2011-09-23 14:41:24','2011-09-23 14:41:24','processing','unpaid'),
+	(111,25,1,'order','2011-09-25 06:43:37','2011-09-25 06:43:37','cart','complete'),
+	(112,NULL,1,'invoice','2011-09-25 06:43:37','2011-09-25 06:43:37','created','mailed'),
+	(113,25,1,'invoice','2011-09-25 06:43:37','2011-09-25 06:43:37','processing','unpaid'),
+	(114,26,1,'order','2011-09-25 06:56:37','2011-09-25 06:56:37','cart','complete'),
+	(115,NULL,1,'invoice','2011-09-25 06:56:38','2011-09-25 06:56:38','created','mailed'),
+	(116,26,1,'invoice','2011-09-25 06:56:38','2011-09-25 06:56:38','processing','unpaid'),
+	(117,1,1,'order','2011-09-25 18:46:19','2011-09-25 18:46:19','cart','complete'),
+	(118,NULL,1,'invoice','2011-09-25 18:46:20','2011-09-25 18:46:20','created','mailed'),
+	(119,1,1,'invoice','2011-09-25 18:46:20','2011-09-25 18:46:20','processing','unpaid'),
+	(120,2,1,'order','2011-09-25 18:53:22','2011-09-25 18:53:22','cart','complete'),
+	(121,NULL,1,'invoice','2011-09-25 18:53:23','2011-09-25 18:53:23','created','mailed'),
+	(122,2,1,'invoice','2011-09-25 18:53:23','2011-09-25 18:53:23','processing','unpaid'),
+	(123,3,1,'order','2011-09-25 18:55:12','2011-09-25 18:55:12','cart','complete'),
+	(124,NULL,1,'invoice','2011-09-25 18:55:12','2011-09-25 18:55:12','created','mailed'),
+	(125,3,1,'invoice','2011-09-25 18:55:12','2011-09-25 18:55:12','processing','unpaid'),
+	(126,4,1,'order','2011-09-25 18:57:01','2011-09-25 18:57:01','cart','complete'),
+	(127,NULL,1,'invoice','2011-09-25 18:57:01','2011-09-25 18:57:01','created','mailed'),
+	(128,4,1,'invoice','2011-09-25 18:57:01','2011-09-25 18:57:01','processing','unpaid'),
+	(129,5,1,'order','2011-09-25 19:03:16','2011-09-25 19:03:16','cart','complete'),
+	(130,NULL,1,'invoice','2011-09-25 19:03:16','2011-09-25 19:03:16','created','mailed'),
+	(131,5,1,'invoice','2011-09-25 19:03:17','2011-09-25 19:03:17','processing','unpaid'),
+	(132,1,1,'order','2011-09-25 19:04:21','2011-09-25 19:04:21','cart','complete'),
+	(133,NULL,1,'invoice','2011-09-25 19:04:21','2011-09-25 19:04:21','created','mailed'),
+	(134,1,1,'invoice','2011-09-25 19:04:21','2011-09-25 19:04:21','processing','unpaid'),
+	(135,2,1,'order','2011-09-26 06:49:24','2011-09-26 06:49:24','cart','complete'),
+	(136,NULL,1,'invoice','2011-09-26 06:49:24','2011-09-26 06:49:24','created','mailed'),
+	(137,2,1,'invoice','2011-09-26 06:49:24','2011-09-26 06:49:24','processing','unpaid'),
+	(138,4,1,'order','2011-09-26 07:18:27','2011-09-26 07:18:27','cart','complete'),
+	(139,NULL,1,'invoice','2011-09-26 07:18:27','2011-09-26 07:18:27','created','mailed'),
+	(140,4,1,'invoice','2011-09-26 07:18:27','2011-09-26 07:18:27','processing','unpaid'),
+	(141,5,1,'order','2011-09-26 14:42:34','2011-09-26 14:42:34','cart','complete'),
+	(142,NULL,1,'invoice','2011-09-26 14:42:34','2011-09-26 14:42:34','created','mailed'),
+	(143,5,1,'invoice','2011-09-26 14:42:35','2011-09-26 14:42:35','processing','unpaid'),
+	(144,6,1,'order','2011-09-26 14:45:03','2011-09-26 14:45:03','cart','complete'),
+	(145,NULL,1,'invoice','2011-09-26 14:45:04','2011-09-26 14:45:04','created','mailed'),
+	(146,6,1,'invoice','2011-09-26 14:45:04','2011-09-26 14:45:04','processing','unpaid'),
+	(147,3,1,'order','2011-09-26 14:46:58','2011-09-26 14:46:58','cart','complete'),
+	(148,NULL,1,'invoice','2011-09-26 14:46:59','2011-09-26 14:46:59','created','mailed'),
+	(149,3,1,'invoice','2011-09-26 14:46:59','2011-09-26 14:46:59','processing','unpaid'),
+	(150,1,1,'order','2011-09-26 14:50:38','2011-09-26 14:50:38','cart','complete'),
+	(151,NULL,1,'invoice','2011-09-26 14:50:38','2011-09-26 14:50:38','created','mailed'),
+	(152,1,1,'invoice','2011-09-26 14:50:38','2011-09-26 14:50:38','processing','unpaid'),
+	(153,2,1,'order','2011-09-26 14:53:07','2011-09-26 14:53:07','cart','complete'),
+	(154,NULL,1,'invoice','2011-09-26 14:53:07','2011-09-26 14:53:07','created','mailed'),
+	(155,2,1,'invoice','2011-09-26 14:53:07','2011-09-26 14:53:07','processing','unpaid'),
+	(156,3,1,'order','2011-09-27 06:22:34','2011-09-27 06:22:34','cart','complete'),
+	(157,NULL,1,'invoice','2011-09-27 06:22:34','2011-09-27 06:22:34','created','mailed'),
+	(158,3,1,'invoice','2011-09-27 06:22:34','2011-09-27 06:22:34','processing','unpaid'),
+	(159,4,1,'order','2011-09-27 06:41:32','2011-09-27 06:41:32','cart','complete'),
+	(160,NULL,1,'invoice','2011-09-27 06:41:32','2011-09-27 06:41:32','created','mailed'),
+	(161,4,1,'invoice','2011-09-27 06:41:33','2011-09-27 06:41:33','processing','unpaid'),
+	(162,5,1,'order','2011-09-29 14:48:05','2011-09-29 14:48:05','cart','complete'),
+	(163,NULL,1,'invoice','2011-09-29 14:48:05','2011-09-29 14:48:05','created','mailed'),
+	(164,5,1,'invoice','2011-09-29 14:48:05','2011-09-29 14:48:05','processing','unpaid'),
+	(165,6,1,'order','2011-09-29 14:49:20','2011-09-29 14:49:20','cart','complete'),
+	(166,NULL,1,'invoice','2011-09-29 14:49:20','2011-09-29 14:49:20','created','mailed'),
+	(167,6,1,'invoice','2011-09-29 14:49:20','2011-09-29 14:49:20','processing','unpaid');
+
+/*!40000 ALTER TABLE `state_event` ENABLE KEYS */;
+UNLOCK TABLES;
 
 
 # Dump of table supplier
@@ -857,7 +1069,9 @@ LOCK TABLES `user` WRITE;
 
 INSERT INTO `user` (`id`, `client_id`, `email`, `encrypted_password`, `reset_password_token`, `reset_password_sent_at`, `remember_created_at`, `sign_in_count`, `current_sign_in_at`, `last_sign_in_at`, `current_sign_in_ip`, `last_sign_in_ip`, `name`, `created_at`, `updated_at`)
 VALUES
-	(1,NULL,'shad6ster@gmail.com','$2a$10$dUtGGLLqMRbvR/N.ZuwP7uxD9q.1bYw50ariaEoLDarZF.bEC5wLS',NULL,NULL,NULL,1,'2011-09-03 17:37:34','2011-09-03 17:37:34','127.0.0.1','127.0.0.1','shadley','2011-09-01 02:06:50','2011-09-03 17:37:34');
+	(1,NULL,'shad6ster@gmail.com','$2a$10$dUtGGLLqMRbvR/N.ZuwP7uxD9q.1bYw50ariaEoLDarZF.bEC5wLS',NULL,NULL,NULL,22,'2011-09-29 14:45:19','2011-09-27 06:41:04','127.0.0.1','10.32.1.201','shadley','2011-09-01 02:06:50','2011-09-29 14:45:19'),
+	(2,NULL,'shadley@eset.co.za','$2a$10$dUtGGLLqMRbvR/N.ZuwP7uxD9q.1bYw50ariaEoLDarZF.bEC5wLS',NULL,NULL,NULL,2,'2011-09-27 09:46:43','2011-09-18 19:53:15','127.0.0.1','127.0.0.1','shadley','2011-09-01 02:06:50','2011-09-27 09:46:43'),
+	(3,NULL,'uzair.dramat@gmail.com','$2a$10$dUtGGLLqMRbvR/N.ZuwP7uxD9q.1bYw50ariaEoLDarZF.bEC5wLS',NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,'uzair','2011-09-01 02:06:50',NULL);
 
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -914,7 +1128,8 @@ VALUES
 	(26,4,'FREEPAID00000VIR80',73.20,76.20,80.00,NULL,0),
 	(27,4,'FREEPAID00000VIR99',90.59,95.60,99.00,NULL,0),
 	(28,4,'FREEPAID0000VIR120',109.80,115.00,120.00,NULL,0),
-	(29,4,'FREEPAID0000VIR180',166.50,174.00,180.00,NULL,0);
+	(29,4,'FREEPAID0000VIR180',166.50,174.00,180.00,NULL,0),
+	(30,5,'FREEPAID000000HEI5',4.58,4.82,5.00,NULL,1);
 
 /*!40000 ALTER TABLE `variant` ENABLE KEYS */;
 UNLOCK TABLES;
