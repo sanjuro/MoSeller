@@ -7,7 +7,7 @@
 #
 # Host: 127.0.0.1 (MySQL 5.5.14)
 # Database: moseller
-# Generation Time: 2011-09-30 12:48:30 +0200
+# Generation Time: 2011-09-30 14:17:33 +0200
 # ************************************************************
 
 
@@ -23,8 +23,6 @@
 # Dump of table account_item
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `account_item`;
-
 CREATE TABLE `account_item` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) DEFAULT NULL,
@@ -37,12 +35,19 @@ CREATE TABLE `account_item` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+LOCK TABLES `account_item` WRITE;
+/*!40000 ALTER TABLE `account_item` DISABLE KEYS */;
+
+INSERT INTO `account_item` (`id`, `user_id`, `account_item_type_id`, `credit`, `debit`, `account_status_id`, `created_at`, `updated_at`)
+VALUES
+	(1,1,1,0.00,262.29,'1','2011-09-30 12:15:20','2011-09-30 12:15:20');
+
+/*!40000 ALTER TABLE `account_item` ENABLE KEYS */;
+UNLOCK TABLES;
 
 
 # Dump of table account_item_type
 # ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `account_item_type`;
 
 CREATE TABLE `account_item_type` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -54,8 +59,6 @@ CREATE TABLE `account_item_type` (
 
 # Dump of table active_admin_comments
 # ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `active_admin_comments`;
 
 CREATE TABLE `active_admin_comments` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -77,8 +80,6 @@ CREATE TABLE `active_admin_comments` (
 
 # Dump of table admin_user
 # ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `admin_user`;
 
 CREATE TABLE `admin_user` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -114,8 +115,6 @@ UNLOCK TABLES;
 # Dump of table asset
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `asset`;
-
 CREATE TABLE `asset` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `viewable_id` int(11) DEFAULT NULL,
@@ -145,8 +144,6 @@ UNLOCK TABLES;
 # Dump of table category
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `category`;
-
 CREATE TABLE `category` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `title` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -169,8 +166,6 @@ UNLOCK TABLES;
 
 # Dump of table client
 # ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `client`;
 
 CREATE TABLE `client` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -202,8 +197,6 @@ UNLOCK TABLES;
 # Dump of table client_type
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `client_type`;
-
 CREATE TABLE `client_type` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `title` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -214,8 +207,6 @@ CREATE TABLE `client_type` (
 
 # Dump of table contact
 # ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `contact`;
 
 CREATE TABLE `contact` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -243,8 +234,6 @@ UNLOCK TABLES;
 # Dump of table contact_type
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `contact_type`;
-
 CREATE TABLE `contact_type` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `title` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -264,8 +253,6 @@ UNLOCK TABLES;
 
 # Dump of table creditcards
 # ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `creditcards`;
 
 CREATE TABLE `creditcards` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -300,8 +287,6 @@ UNLOCK TABLES;
 # Dump of table gateway
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `gateway`;
-
 CREATE TABLE `gateway` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `type` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -321,8 +306,6 @@ CREATE TABLE `gateway` (
 # Dump of table invoice
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `invoice`;
-
 CREATE TABLE `invoice` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) DEFAULT NULL,
@@ -340,12 +323,19 @@ CREATE TABLE `invoice` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+LOCK TABLES `invoice` WRITE;
+/*!40000 ALTER TABLE `invoice` DISABLE KEYS */;
+
+INSERT INTO `invoice` (`id`, `user_id`, `order_id`, `margin`, `sub_total`, `tax`, `total`, `date_paid`, `email`, `state`, `invoice_type_id`, `created_at`, `updated_at`)
+VALUES
+	(1,1,1,0.00,262.29,0.00,262.29,NULL,'shad6ster@gmail.com','created',NULL,'2011-09-30 12:15:19','2011-09-30 12:15:19');
+
+/*!40000 ALTER TABLE `invoice` ENABLE KEYS */;
+UNLOCK TABLES;
 
 
 # Dump of table invoice_item
 # ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `invoice_item`;
 
 CREATE TABLE `invoice_item` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -357,12 +347,19 @@ CREATE TABLE `invoice_item` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+LOCK TABLES `invoice_item` WRITE;
+/*!40000 ALTER TABLE `invoice_item` DISABLE KEYS */;
+
+INSERT INTO `invoice_item` (`id`, `invoice_id`, `description`, `total`, `created_at`, `updated_at`)
+VALUES
+	(1,1,'FREEPAID000VOD275',262.29,'2011-09-30 12:15:19','2011-09-30 12:15:19');
+
+/*!40000 ALTER TABLE `invoice_item` ENABLE KEYS */;
+UNLOCK TABLES;
 
 
 # Dump of table invoice_type
 # ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `invoice_type`;
 
 CREATE TABLE `invoice_type` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -374,8 +371,6 @@ CREATE TABLE `invoice_type` (
 
 # Dump of table location
 # ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `location`;
 
 CREATE TABLE `location` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -406,8 +401,6 @@ UNLOCK TABLES;
 # Dump of table location_type
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `location_type`;
-
 CREATE TABLE `location_type` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `title` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -428,8 +421,6 @@ UNLOCK TABLES;
 
 # Dump of table option_type
 # ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `option_type`;
 
 CREATE TABLE `option_type` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -453,8 +444,6 @@ UNLOCK TABLES;
 
 # Dump of table option_value
 # ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `option_value`;
 
 CREATE TABLE `option_value` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -504,8 +493,6 @@ UNLOCK TABLES;
 # Dump of table option_value_variant
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `option_value_variant`;
-
 CREATE TABLE `option_value_variant` (
   `variant_id` int(11) DEFAULT NULL,
   `option_value_id` int(11) DEFAULT NULL,
@@ -554,8 +541,6 @@ UNLOCK TABLES;
 # Dump of table order
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `order`;
-
 CREATE TABLE `order` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `supplier_id` int(11) DEFAULT NULL,
@@ -580,12 +565,19 @@ CREATE TABLE `order` (
   KEY `index_orders_on_number` (`number`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+LOCK TABLES `order` WRITE;
+/*!40000 ALTER TABLE `order` DISABLE KEYS */;
+
+INSERT INTO `order` (`id`, `supplier_id`, `client_id`, `user_id`, `number`, `item_total`, `customer_total`, `billing_total`, `full_total`, `email`, `mobile_number`, `customer_name`, `created_at`, `updated_at`, `completed_at`, `state`, `token`, `adjustment_total`, `credit_total`)
+VALUES
+	(1,NULL,NULL,1,'R828380663',262.29,262.29,262.29,262.29,'','','','2011-09-30 11:12:33','2011-09-30 12:15:15','2011-09-30 12:15:15','complete',NULL,0.00,0.00);
+
+/*!40000 ALTER TABLE `order` ENABLE KEYS */;
+UNLOCK TABLES;
 
 
 # Dump of table order_item
 # ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `order_item`;
 
 CREATE TABLE `order_item` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -603,12 +595,19 @@ CREATE TABLE `order_item` (
   KEY `index_line_items_on_variant_id` (`variant_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+LOCK TABLES `order_item` WRITE;
+/*!40000 ALTER TABLE `order_item` DISABLE KEYS */;
+
+INSERT INTO `order_item` (`id`, `order_id`, `product_id`, `variant_id`, `quantity`, `customer_price`, `billing_price`, `full_price`, `created_at`, `updated_at`)
+VALUES
+	(1,1,1,8,1,262.29,262.29,0.00,'2011-09-30 11:12:33','2011-09-30 12:15:13');
+
+/*!40000 ALTER TABLE `order_item` ENABLE KEYS */;
+UNLOCK TABLES;
 
 
 # Dump of table package
 # ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `package`;
 
 CREATE TABLE `package` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -620,12 +619,19 @@ CREATE TABLE `package` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+LOCK TABLES `package` WRITE;
+/*!40000 ALTER TABLE `package` DISABLE KEYS */;
+
+INSERT INTO `package` (`id`, `order_item_id`, `payload`, `permalink`, `created_at`, `updated_at`)
+VALUES
+	(1,1,'PIN: 250319204526, SERIAL: 2673648775',NULL,'2011-09-30 12:15:15','2011-09-30 12:15:15');
+
+/*!40000 ALTER TABLE `package` ENABLE KEYS */;
+UNLOCK TABLES;
 
 
 # Dump of table payment
 # ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `payment`;
 
 CREATE TABLE `payment` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -654,8 +660,6 @@ UNLOCK TABLES;
 # Dump of table payment_method
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `payment_method`;
-
 CREATE TABLE `payment_method` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `type` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -683,8 +687,6 @@ UNLOCK TABLES;
 
 # Dump of table product
 # ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `product`;
 
 CREATE TABLE `product` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -726,8 +728,6 @@ UNLOCK TABLES;
 # Dump of table product_option_type
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `product_option_type`;
-
 CREATE TABLE `product_option_type` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `product_id` int(11) DEFAULT NULL,
@@ -742,8 +742,6 @@ CREATE TABLE `product_option_type` (
 
 # Dump of table product_source
 # ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `product_source`;
 
 CREATE TABLE `product_source` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -762,8 +760,8 @@ LOCK TABLES `product_source` WRITE;
 
 INSERT INTO `product_source` (`id`, `supplier_id`, `name`, `description`, `clazz`, `deleted_at`, `created_at`, `updated_at`)
 VALUES
-	(1,NULL,'ESET','ESET SOAP Gateway','eset_helper',NULL,'2011-09-01 02:06:50','2011-09-01 02:06:50'),
-	(2,NULL,'Freepaid','Freepaid Airtime API','freepaid_helper',NULL,'2011-09-01 02:06:50','2011-09-01 02:06:50');
+	(1,NULL,'ESET','ESET SOAP Gateway','Eset',NULL,'2011-09-01 02:06:50','2011-09-01 02:06:50'),
+	(2,NULL,'Freepaid','Freepaid Airtime API','Freepaid',NULL,'2011-09-01 02:06:50','2011-09-01 02:06:50');
 
 /*!40000 ALTER TABLE `product_source` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -771,8 +769,6 @@ UNLOCK TABLES;
 
 # Dump of table schema_migrations
 # ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `schema_migrations`;
 
 CREATE TABLE `schema_migrations` (
   `version` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
@@ -801,8 +797,6 @@ UNLOCK TABLES;
 # Dump of table state_event
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `state_event`;
-
 CREATE TABLE `state_event` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `order_id` int(11) DEFAULT NULL,
@@ -815,12 +809,21 @@ CREATE TABLE `state_event` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+LOCK TABLES `state_event` WRITE;
+/*!40000 ALTER TABLE `state_event` DISABLE KEYS */;
+
+INSERT INTO `state_event` (`id`, `order_id`, `user_id`, `name`, `created_at`, `updated_at`, `previous_state`, `next_state`)
+VALUES
+	(1,1,1,'order','2011-09-30 12:15:19','2011-09-30 12:15:19','cart','complete'),
+	(2,NULL,1,'invoice','2011-09-30 12:15:19','2011-09-30 12:15:19','created','mailed'),
+	(3,1,1,'invoice','2011-09-30 12:15:19','2011-09-30 12:15:19','processing','unpaid');
+
+/*!40000 ALTER TABLE `state_event` ENABLE KEYS */;
+UNLOCK TABLES;
 
 
 # Dump of table supplier
 # ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `supplier`;
 
 CREATE TABLE `supplier` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -849,8 +852,6 @@ UNLOCK TABLES;
 # Dump of table user
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `user`;
-
 CREATE TABLE `user` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `client_id` int(11) DEFAULT NULL,
@@ -878,7 +879,7 @@ LOCK TABLES `user` WRITE;
 
 INSERT INTO `user` (`id`, `client_id`, `email`, `encrypted_password`, `reset_password_token`, `reset_password_sent_at`, `remember_created_at`, `sign_in_count`, `current_sign_in_at`, `last_sign_in_at`, `current_sign_in_ip`, `last_sign_in_ip`, `name`, `created_at`, `updated_at`, `username`)
 VALUES
-	(1,NULL,'shad6ster@gmail.com','$2a$10$dUtGGLLqMRbvR/N.ZuwP7uxD9q.1bYw50ariaEoLDarZF.bEC5wLS',NULL,NULL,NULL,23,'2011-09-30 10:46:45','2011-09-29 14:45:19','127.0.0.1','127.0.0.1','shadley','2011-09-01 02:06:50','2011-09-30 10:46:45','sanjuro'),
+	(1,NULL,'shad6ster@gmail.com','$2a$10$dUtGGLLqMRbvR/N.ZuwP7uxD9q.1bYw50ariaEoLDarZF.bEC5wLS',NULL,NULL,NULL,24,'2011-09-30 11:10:37','2011-09-30 10:46:45','127.0.0.1','127.0.0.1','shadley','2011-09-01 02:06:50','2011-09-30 11:10:37','sanjuro'),
 	(2,NULL,'shadley@eset.co.za','$2a$10$dUtGGLLqMRbvR/N.ZuwP7uxD9q.1bYw50ariaEoLDarZF.bEC5wLS',NULL,NULL,NULL,2,'2011-09-27 09:46:43','2011-09-18 19:53:15','127.0.0.1','127.0.0.1','shadley','2011-09-01 02:06:50','2011-09-27 09:46:43','shadley'),
 	(3,NULL,'uzair.dramat@gmail.com','$2a$10$dUtGGLLqMRbvR/N.ZuwP7uxD9q.1bYw50ariaEoLDarZF.bEC5wLS',NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,'uzair','2011-09-01 02:06:50',NULL,'uzzy');
 
@@ -888,8 +889,6 @@ UNLOCK TABLES;
 
 # Dump of table variant
 # ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `variant`;
 
 CREATE TABLE `variant` (
   `id` int(11) NOT NULL AUTO_INCREMENT,

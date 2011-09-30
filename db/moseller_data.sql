@@ -7,7 +7,7 @@
 #
 # Host: 127.0.0.1 (MySQL 5.5.14)
 # Database: moseller
-# Generation Time: 2011-09-30 13:30:22 +0200
+# Generation Time: 2011-09-30 14:17:13 +0200
 # ************************************************************
 
 
@@ -23,6 +23,15 @@
 # Dump of table account_item
 # ------------------------------------------------------------
 
+LOCK TABLES `account_item` WRITE;
+/*!40000 ALTER TABLE `account_item` DISABLE KEYS */;
+
+INSERT INTO `account_item` (`id`, `user_id`, `account_item_type_id`, `credit`, `debit`, `account_status_id`, `created_at`, `updated_at`)
+VALUES
+	(1,1,1,0.00,262.29,'1','2011-09-30 12:15:20','2011-09-30 12:15:20');
+
+/*!40000 ALTER TABLE `account_item` ENABLE KEYS */;
+UNLOCK TABLES;
 
 
 # Dump of table account_item_type
@@ -149,11 +158,29 @@ UNLOCK TABLES;
 # Dump of table invoice
 # ------------------------------------------------------------
 
+LOCK TABLES `invoice` WRITE;
+/*!40000 ALTER TABLE `invoice` DISABLE KEYS */;
+
+INSERT INTO `invoice` (`id`, `user_id`, `order_id`, `margin`, `sub_total`, `tax`, `total`, `date_paid`, `email`, `state`, `invoice_type_id`, `created_at`, `updated_at`)
+VALUES
+	(1,1,1,0.00,262.29,0.00,262.29,NULL,'shad6ster@gmail.com','created',NULL,'2011-09-30 12:15:19','2011-09-30 12:15:19');
+
+/*!40000 ALTER TABLE `invoice` ENABLE KEYS */;
+UNLOCK TABLES;
 
 
 # Dump of table invoice_item
 # ------------------------------------------------------------
 
+LOCK TABLES `invoice_item` WRITE;
+/*!40000 ALTER TABLE `invoice_item` DISABLE KEYS */;
+
+INSERT INTO `invoice_item` (`id`, `invoice_id`, `description`, `total`, `created_at`, `updated_at`)
+VALUES
+	(1,1,'FREEPAID000VOD275',262.29,'2011-09-30 12:15:19','2011-09-30 12:15:19');
+
+/*!40000 ALTER TABLE `invoice_item` ENABLE KEYS */;
+UNLOCK TABLES;
 
 
 # Dump of table invoice_type
@@ -291,7 +318,7 @@ LOCK TABLES `order` WRITE;
 
 INSERT INTO `order` (`id`, `supplier_id`, `client_id`, `user_id`, `number`, `item_total`, `customer_total`, `billing_total`, `full_total`, `email`, `mobile_number`, `customer_name`, `created_at`, `updated_at`, `completed_at`, `state`, `token`, `adjustment_total`, `credit_total`)
 VALUES
-	(1,NULL,NULL,1,'R828380663',262.29,262.29,262.29,262.29,'','','','2011-09-30 11:12:33','2011-09-30 11:12:56',NULL,'confirm',NULL,0.00,0.00);
+	(1,NULL,NULL,1,'R828380663',262.29,262.29,262.29,262.29,'','','','2011-09-30 11:12:33','2011-09-30 12:15:15','2011-09-30 12:15:15','complete',NULL,0.00,0.00);
 
 /*!40000 ALTER TABLE `order` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -305,7 +332,7 @@ LOCK TABLES `order_item` WRITE;
 
 INSERT INTO `order_item` (`id`, `order_id`, `product_id`, `variant_id`, `quantity`, `customer_price`, `billing_price`, `full_price`, `created_at`, `updated_at`)
 VALUES
-	(1,1,NULL,8,1,262.29,262.29,0.00,'2011-09-30 11:12:33','2011-09-30 11:12:33');
+	(1,1,1,8,1,262.29,262.29,0.00,'2011-09-30 11:12:33','2011-09-30 12:15:13');
 
 /*!40000 ALTER TABLE `order_item` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -314,6 +341,15 @@ UNLOCK TABLES;
 # Dump of table package
 # ------------------------------------------------------------
 
+LOCK TABLES `package` WRITE;
+/*!40000 ALTER TABLE `package` DISABLE KEYS */;
+
+INSERT INTO `package` (`id`, `order_item_id`, `payload`, `permalink`, `created_at`, `updated_at`)
+VALUES
+	(1,1,'PIN: 250319204526, SERIAL: 2673648775',NULL,'2011-09-30 12:15:15','2011-09-30 12:15:15');
+
+/*!40000 ALTER TABLE `package` ENABLE KEYS */;
+UNLOCK TABLES;
 
 
 # Dump of table payment
@@ -375,8 +411,8 @@ LOCK TABLES `product_source` WRITE;
 
 INSERT INTO `product_source` (`id`, `supplier_id`, `name`, `description`, `clazz`, `deleted_at`, `created_at`, `updated_at`)
 VALUES
-	(1,NULL,'ESET','ESET SOAP Gateway','eset_helper',NULL,'2011-09-01 02:06:50','2011-09-01 02:06:50'),
-	(2,NULL,'Freepaid','Freepaid Airtime API','freepaid_helper',NULL,'2011-09-01 02:06:50','2011-09-01 02:06:50');
+	(1,NULL,'ESET','ESET SOAP Gateway','Eset',NULL,'2011-09-01 02:06:50','2011-09-01 02:06:50'),
+	(2,NULL,'Freepaid','Freepaid Airtime API','Freepaid',NULL,'2011-09-01 02:06:50','2011-09-01 02:06:50');
 
 /*!40000 ALTER TABLE `product_source` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -407,6 +443,17 @@ UNLOCK TABLES;
 # Dump of table state_event
 # ------------------------------------------------------------
 
+LOCK TABLES `state_event` WRITE;
+/*!40000 ALTER TABLE `state_event` DISABLE KEYS */;
+
+INSERT INTO `state_event` (`id`, `order_id`, `user_id`, `name`, `created_at`, `updated_at`, `previous_state`, `next_state`)
+VALUES
+	(1,1,1,'order','2011-09-30 12:15:19','2011-09-30 12:15:19','cart','complete'),
+	(2,NULL,1,'invoice','2011-09-30 12:15:19','2011-09-30 12:15:19','created','mailed'),
+	(3,1,1,'invoice','2011-09-30 12:15:19','2011-09-30 12:15:19','processing','unpaid');
+
+/*!40000 ALTER TABLE `state_event` ENABLE KEYS */;
+UNLOCK TABLES;
 
 
 # Dump of table supplier
