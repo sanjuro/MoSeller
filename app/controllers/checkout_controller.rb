@@ -18,6 +18,7 @@ class CheckoutController < ApplicationController
       
       
       if @order.state == "delivery"
+        logger.info params
         @order.customer_name = params[:customer_name]
         @order.email = params[:email]
         @order.mobile_number = params[:mobile_number]

@@ -40,7 +40,7 @@ class VirtualProductSource::Freepaid < VirtualProductSource
       :sell_value => Integer(variant.full_price)
     }    
     
-    logger.info "CALLING NEWPRODUCT FROM FREEPAID "
+    logger.info "CALLING NEWPRODUCT FROM FREEPAID"
       
     # Create a Freepaid Voucher 
     productOut = FreepaidGetVoucher(transaction_options);
