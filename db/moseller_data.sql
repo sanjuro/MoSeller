@@ -7,7 +7,7 @@
 #
 # Host: 127.0.0.1 (MySQL 5.5.14)
 # Database: moseller
-# Generation Time: 2011-09-16 08:10:14 +0200
+# Generation Time: 2011-09-30 13:30:22 +0200
 # ************************************************************
 
 
@@ -286,15 +286,34 @@ UNLOCK TABLES;
 # Dump of table order
 # ------------------------------------------------------------
 
+LOCK TABLES `order` WRITE;
+/*!40000 ALTER TABLE `order` DISABLE KEYS */;
+
+INSERT INTO `order` (`id`, `supplier_id`, `client_id`, `user_id`, `number`, `item_total`, `customer_total`, `billing_total`, `full_total`, `email`, `mobile_number`, `customer_name`, `created_at`, `updated_at`, `completed_at`, `state`, `token`, `adjustment_total`, `credit_total`)
+VALUES
+	(1,NULL,NULL,1,'R828380663',262.29,262.29,262.29,262.29,'','','','2011-09-30 11:12:33','2011-09-30 11:12:56',NULL,'confirm',NULL,0.00,0.00);
+
+/*!40000 ALTER TABLE `order` ENABLE KEYS */;
+UNLOCK TABLES;
 
 
 # Dump of table order_item
 # ------------------------------------------------------------
 
+LOCK TABLES `order_item` WRITE;
+/*!40000 ALTER TABLE `order_item` DISABLE KEYS */;
+
+INSERT INTO `order_item` (`id`, `order_id`, `product_id`, `variant_id`, `quantity`, `customer_price`, `billing_price`, `full_price`, `created_at`, `updated_at`)
+VALUES
+	(1,1,NULL,8,1,262.29,262.29,0.00,'2011-09-30 11:12:33','2011-09-30 11:12:33');
+
+/*!40000 ALTER TABLE `order_item` ENABLE KEYS */;
+UNLOCK TABLES;
 
 
 # Dump of table package
 # ------------------------------------------------------------
+
 
 
 # Dump of table payment
@@ -366,6 +385,24 @@ UNLOCK TABLES;
 # Dump of table schema_migrations
 # ------------------------------------------------------------
 
+LOCK TABLES `schema_migrations` WRITE;
+/*!40000 ALTER TABLE `schema_migrations` DISABLE KEYS */;
+
+INSERT INTO `schema_migrations` (`version`)
+VALUES
+	('20110725150933'),
+	('20110725150934'),
+	('20110725150935'),
+	('20110725150936'),
+	('20110824084915'),
+	('20110905213434'),
+	('20110905233449'),
+	('20110905233450'),
+	('20110930103738');
+
+/*!40000 ALTER TABLE `schema_migrations` ENABLE KEYS */;
+UNLOCK TABLES;
+
 
 # Dump of table state_event
 # ------------------------------------------------------------
@@ -394,9 +431,11 @@ UNLOCK TABLES;
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
 
-INSERT INTO `user` (`id`, `client_id`, `email`, `encrypted_password`, `reset_password_token`, `reset_password_sent_at`, `remember_created_at`, `sign_in_count`, `current_sign_in_at`, `last_sign_in_at`, `current_sign_in_ip`, `last_sign_in_ip`, `name`, `created_at`, `updated_at`)
+INSERT INTO `user` (`id`, `client_id`, `email`, `encrypted_password`, `reset_password_token`, `reset_password_sent_at`, `remember_created_at`, `sign_in_count`, `current_sign_in_at`, `last_sign_in_at`, `current_sign_in_ip`, `last_sign_in_ip`, `name`, `created_at`, `updated_at`, `username`)
 VALUES
-	(1,NULL,'shad6ster@gmail.com','$2a$10$dUtGGLLqMRbvR/N.ZuwP7uxD9q.1bYw50ariaEoLDarZF.bEC5wLS',NULL,NULL,NULL,1,'2011-09-03 17:37:34','2011-09-03 17:37:34','127.0.0.1','127.0.0.1','shadley','2011-09-01 02:06:50','2011-09-03 17:37:34');
+	(1,NULL,'shad6ster@gmail.com','$2a$10$dUtGGLLqMRbvR/N.ZuwP7uxD9q.1bYw50ariaEoLDarZF.bEC5wLS',NULL,NULL,NULL,24,'2011-09-30 11:10:37','2011-09-30 10:46:45','127.0.0.1','127.0.0.1','shadley','2011-09-01 02:06:50','2011-09-30 11:10:37','sanjuro'),
+	(2,NULL,'shadley@eset.co.za','$2a$10$dUtGGLLqMRbvR/N.ZuwP7uxD9q.1bYw50ariaEoLDarZF.bEC5wLS',NULL,NULL,NULL,2,'2011-09-27 09:46:43','2011-09-18 19:53:15','127.0.0.1','127.0.0.1','shadley','2011-09-01 02:06:50','2011-09-27 09:46:43','shadley'),
+	(3,NULL,'uzair.dramat@gmail.com','$2a$10$dUtGGLLqMRbvR/N.ZuwP7uxD9q.1bYw50ariaEoLDarZF.bEC5wLS',NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,'uzair','2011-09-01 02:06:50',NULL,'uzzy');
 
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
