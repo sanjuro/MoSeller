@@ -14,7 +14,7 @@
     <% @invoice.invoice_items.each do |item| %>
       <tr data-hook="invoice_details_line_item_row">
         <td width="300"><%= item.description %></td>
-        <td class="price"><%= number_to_currency item.total %></td>
+        <td class="price"><%= number_to_currency(item.total, :unit => "R") %></td>
       </tr>
     <% end %>
     </table>
@@ -22,10 +22,10 @@
     <table>
     <% @order.order_items.each do |order_item| %>
       <tr data-hook="invoice_line_item_row">
-      		<td width="100">SubTotal: <%= number_to_currency @invoice.sub_total %></td>
+      		<td width="100">SubTotal: <%= number_to_currency(@invoice.sub_total, :unit => "R") %></td>
       </tr>
        <tr data-hook="invoice_line_item_row">
-      		<td width="100">Total: <%= number_to_currency @invoice.total %></td>
+      		<td width="100">Total: <%= number_to_currency(@invoice.total, :unit => "R") %></td>
       </tr>
     <% end %>
     </table>    

@@ -1,7 +1,8 @@
 class Order < ActiveRecord::Base
   attr_accessible :order_items, :bill_address_attributes, :payments_attributes,
                   :order_items_attributes, :use_billing, :special_instructions,
-                  :email, :customer_name, :mobile_number, :completed_at
+                  :item_total, :customer_total, :full_total,
+                  :email, :customer_name, :mobile_number, :completed_at, :updated_at
                  
   belongs_to :client, :foreign_key => "client_id", :class_name => "Client"
   belongs_to :user, :foreign_key => "user_id", :class_name => "User"

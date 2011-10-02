@@ -7,9 +7,9 @@ Succceful purchase, Order Number: <%= @order.number %>
 
     <% @order.order_items.each do |item| %>
         <%=item.variant.product.name%>>
-        <%= number_to_currency item.customer_price %>
+        <%= number_to_currency(item.customer_price, :unit => "R") %>
         <%=item.quantity%>
-        <%= number_to_currency (item.customer_price * item.quantity)%>
+        <%= number_to_currency((item.customer_price * item.quantity), :unit => "R") %>
     <% end %>
     
     <% @order.order_items.each do |order_item| %>
