@@ -7,7 +7,7 @@
 #
 # Host: 127.0.0.1 (MySQL 5.5.14)
 # Database: moseller
-# Generation Time: 2011-09-30 14:17:13 +0200
+# Generation Time: 2011-10-02 19:07:51 +0200
 # ************************************************************
 
 
@@ -28,7 +28,16 @@ LOCK TABLES `account_item` WRITE;
 
 INSERT INTO `account_item` (`id`, `user_id`, `account_item_type_id`, `credit`, `debit`, `account_status_id`, `created_at`, `updated_at`)
 VALUES
-	(1,1,1,0.00,262.29,'1','2011-09-30 12:15:20','2011-09-30 12:15:20');
+	(1,1,1,0.00,262.29,'1','2011-09-30 12:15:20','2011-09-30 12:15:20'),
+	(2,1,1,0.00,105.00,'1','2011-10-02 08:06:39','2011-10-02 08:06:39'),
+	(3,1,1,0.00,27.50,'1','2011-10-02 11:36:28','2011-10-02 11:36:28'),
+	(4,1,1,0.00,4.80,'1','2011-10-02 11:40:09','2011-10-02 11:40:09'),
+	(5,1,1,0.00,4.80,'1','2011-10-02 11:41:28','2011-10-02 11:41:28'),
+	(6,1,1,0.00,4.80,'1','2011-10-02 11:47:05','2011-10-02 11:47:05'),
+	(7,1,1,0.00,172.78,'1','2011-10-02 16:33:16','2011-10-02 16:33:16'),
+	(8,1,1,0.00,47.00,'1','2011-10-02 16:46:08','2011-10-02 16:46:08'),
+	(9,1,1,0.00,76.20,'1','2011-10-02 16:47:53','2011-10-02 16:47:53'),
+	(10,1,1,0.00,76.20,'1','2011-10-02 16:49:00','2011-10-02 16:49:00');
 
 /*!40000 ALTER TABLE `account_item` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -80,10 +89,7 @@ LOCK TABLES `category` WRITE;
 
 INSERT INTO `category` (`id`, `title`)
 VALUES
-	(1,'airtime'),
-	(2,'antivirus'),
-	(3,'electricity'),
-	(4,'bandwidth');
+	(1,'airtime');
 
 /*!40000 ALTER TABLE `category` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -163,7 +169,16 @@ LOCK TABLES `invoice` WRITE;
 
 INSERT INTO `invoice` (`id`, `user_id`, `order_id`, `margin`, `sub_total`, `tax`, `total`, `date_paid`, `email`, `state`, `invoice_type_id`, `created_at`, `updated_at`)
 VALUES
-	(1,1,1,0.00,262.29,0.00,262.29,NULL,'shad6ster@gmail.com','created',NULL,'2011-09-30 12:15:19','2011-09-30 12:15:19');
+	(1,1,1,0.00,262.29,0.00,262.29,NULL,'shad6ster@gmail.com','created',NULL,'2011-09-30 12:15:19','2011-09-30 12:15:19'),
+	(2,1,2,0.00,105.00,0.00,105.00,NULL,'shad6ster@gmail.com','created',NULL,'2011-10-02 08:06:38','2011-10-02 08:06:38'),
+	(3,1,3,0.00,27.50,0.00,27.50,NULL,'shad6ster@gmail.com','created',NULL,'2011-10-02 11:36:28','2011-10-02 11:36:28'),
+	(4,1,4,0.00,4.80,0.00,4.80,NULL,'shad6ster@gmail.com','created',NULL,'2011-10-02 11:40:09','2011-10-02 11:40:09'),
+	(5,1,5,0.00,4.80,0.00,4.80,NULL,'shad6ster@gmail.com','created',NULL,'2011-10-02 11:41:28','2011-10-02 11:41:28'),
+	(6,1,6,0.00,4.80,0.00,4.80,NULL,'shad6ster@gmail.com','created',NULL,'2011-10-02 11:47:05','2011-10-02 11:47:05'),
+	(7,1,7,0.00,172.78,0.00,172.78,NULL,'shad6ster@gmail.com','created',NULL,'2011-10-02 16:33:16','2011-10-02 16:33:16'),
+	(8,1,8,0.00,47.00,0.00,47.00,NULL,'shad6ster@gmail.com','created',NULL,'2011-10-02 16:46:08','2011-10-02 16:46:08'),
+	(9,1,9,0.00,76.20,0.00,76.20,NULL,'shad6ster@gmail.com','created',NULL,'2011-10-02 16:47:52','2011-10-02 16:47:52'),
+	(10,1,10,0.00,76.20,0.00,76.20,NULL,'shad6ster@gmail.com','created',NULL,'2011-10-02 16:49:00','2011-10-02 16:49:00');
 
 /*!40000 ALTER TABLE `invoice` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -177,7 +192,16 @@ LOCK TABLES `invoice_item` WRITE;
 
 INSERT INTO `invoice_item` (`id`, `invoice_id`, `description`, `total`, `created_at`, `updated_at`)
 VALUES
-	(1,1,'FREEPAID000VOD275',262.29,'2011-09-30 12:15:19','2011-09-30 12:15:19');
+	(1,1,'FREEPAID000VOD275',262.29,'2011-09-30 12:15:19','2011-09-30 12:15:19'),
+	(2,2,'FREEPAID000VOD110',105.00,'2011-10-02 08:06:38','2011-10-02 08:06:38'),
+	(3,3,'FREEPAID0000VOD29',27.50,'2011-10-02 11:36:28','2011-10-02 11:36:28'),
+	(4,4,'FREEPAID00000VOD5',4.80,'2011-10-02 11:40:09','2011-10-02 11:40:09'),
+	(5,5,'FREEPAID00000VOD5',4.80,'2011-10-02 11:41:28','2011-10-02 11:41:28'),
+	(6,6,'FREEPAID00000VOD5',4.80,'2011-10-02 11:47:05','2011-10-02 11:47:05'),
+	(7,7,'FREEPAID000MTN180',172.78,'2011-10-02 16:33:16','2011-10-02 16:33:16'),
+	(8,8,'FREEPAID0000CELL50',47.00,'2011-10-02 16:46:08','2011-10-02 16:46:08'),
+	(9,9,'FREEPAID00000VIR80',76.20,'2011-10-02 16:47:52','2011-10-02 16:47:52'),
+	(10,10,'FREEPAID00000VIR80',76.20,'2011-10-02 16:49:00','2011-10-02 16:49:00');
 
 /*!40000 ALTER TABLE `invoice_item` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -318,7 +342,16 @@ LOCK TABLES `order` WRITE;
 
 INSERT INTO `order` (`id`, `supplier_id`, `client_id`, `user_id`, `number`, `item_total`, `customer_total`, `billing_total`, `full_total`, `email`, `mobile_number`, `customer_name`, `created_at`, `updated_at`, `completed_at`, `state`, `token`, `adjustment_total`, `credit_total`)
 VALUES
-	(1,NULL,NULL,1,'R828380663',262.29,262.29,262.29,262.29,'','','','2011-09-30 11:12:33','2011-09-30 12:15:15','2011-09-30 12:15:15','complete',NULL,0.00,0.00);
+	(1,NULL,NULL,1,'R828380663',262.29,262.29,262.29,262.29,'','','','2011-09-30 11:12:33','2011-09-30 12:15:15','2011-09-30 12:15:15','complete',NULL,0.00,0.00),
+	(2,NULL,NULL,1,'R215556475',105.00,105.00,105.00,105.00,'shad6ster@gmail.com','0833908314','TEst Guy','2011-10-02 08:06:08','2011-10-02 08:06:35','2011-10-02 08:06:35','complete',NULL,0.00,0.00),
+	(3,NULL,NULL,1,'R240858217',27.50,27.50,27.50,27.50,'shad6ster@gmail.com','','Shsdley Wentzel','2011-10-02 11:36:02','2011-10-02 11:36:27','2011-10-02 11:36:27','complete',NULL,0.00,0.00),
+	(4,NULL,NULL,1,'R015772833',4.80,4.80,4.80,4.80,'','','','2011-10-02 11:39:54','2011-10-02 11:40:07','2011-10-02 11:40:07','complete',NULL,0.00,0.00),
+	(5,NULL,NULL,1,'R108567510',4.80,4.80,4.80,4.80,'','','','2011-10-02 11:40:52','2011-10-02 11:41:27','2011-10-02 11:41:27','complete',NULL,0.00,0.00),
+	(6,NULL,NULL,1,'R154166652',4.80,4.80,4.80,4.80,'','','','2011-10-02 11:46:51','2011-10-02 11:47:05','2011-10-02 11:47:05','complete',NULL,0.00,0.00),
+	(7,NULL,NULL,1,'R833283183',172.78,172.78,172.78,172.78,'shad6ster@gmail.com','','shad','2011-10-02 16:32:55','2011-10-02 16:33:15','2011-10-02 16:33:15','complete',NULL,0.00,0.00),
+	(8,NULL,NULL,1,'R538203735',47.00,47.00,47.00,47.00,'','','','2011-10-02 16:37:27','2011-10-02 16:46:07','2011-10-02 16:46:07','complete',NULL,0.00,0.00),
+	(9,NULL,NULL,1,'R244474254',76.20,76.20,76.20,76.20,'','','','2011-10-02 16:47:35','2011-10-02 16:47:52','2011-10-02 16:47:52','complete',NULL,0.00,0.00),
+	(10,NULL,NULL,1,'R806608600',76.20,76.20,76.20,76.20,'shad6ster@gmail.com','0833908314','Test','2011-10-02 16:48:37','2011-10-02 16:48:59','2011-10-02 16:48:59','complete',NULL,0.00,0.00);
 
 /*!40000 ALTER TABLE `order` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -332,7 +365,16 @@ LOCK TABLES `order_item` WRITE;
 
 INSERT INTO `order_item` (`id`, `order_id`, `product_id`, `variant_id`, `quantity`, `customer_price`, `billing_price`, `full_price`, `created_at`, `updated_at`)
 VALUES
-	(1,1,1,8,1,262.29,262.29,0.00,'2011-09-30 11:12:33','2011-09-30 12:15:13');
+	(1,1,1,8,1,262.29,262.29,0.00,'2011-09-30 11:12:33','2011-09-30 12:15:13'),
+	(2,2,1,7,1,105.00,105.00,0.00,'2011-10-02 08:06:09','2011-10-02 08:06:33'),
+	(3,3,1,5,1,27.50,27.50,0.00,'2011-10-02 11:36:03','2011-10-02 11:36:26'),
+	(4,4,1,2,1,4.80,4.80,0.00,'2011-10-02 11:39:54','2011-10-02 11:40:05'),
+	(5,5,1,2,1,4.80,4.80,0.00,'2011-10-02 11:40:52','2011-10-02 11:41:26'),
+	(6,6,1,2,1,4.80,4.80,0.00,'2011-10-02 11:46:51','2011-10-02 11:47:03'),
+	(7,7,2,15,1,172.78,172.78,0.00,'2011-10-02 16:32:55','2011-10-02 16:33:14'),
+	(8,8,3,20,1,47.00,47.00,0.00,'2011-10-02 16:37:27','2011-10-02 16:46:06'),
+	(9,9,4,26,1,76.20,76.20,0.00,'2011-10-02 16:47:35','2011-10-02 16:47:50'),
+	(10,10,4,26,1,76.20,76.20,0.00,'2011-10-02 16:48:38','2011-10-02 16:48:58');
 
 /*!40000 ALTER TABLE `order_item` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -346,7 +388,16 @@ LOCK TABLES `package` WRITE;
 
 INSERT INTO `package` (`id`, `order_item_id`, `payload`, `permalink`, `created_at`, `updated_at`)
 VALUES
-	(1,1,'PIN: 250319204526, SERIAL: 2673648775',NULL,'2011-09-30 12:15:15','2011-09-30 12:15:15');
+	(1,1,'PIN: 250319204526, SERIAL: 2673648775',NULL,'2011-09-30 12:15:15','2011-09-30 12:15:15'),
+	(2,2,'PIN: 502520276701, SERIAL: 2983772664',NULL,'2011-10-02 08:06:35','2011-10-02 08:06:35'),
+	(3,3,'PIN: 251740628115, SERIAL: 813827757',NULL,'2011-10-02 11:36:27','2011-10-02 11:36:27'),
+	(4,4,'PIN: 263635352640, SERIAL: 038813706',NULL,'2011-10-02 11:40:07','2011-10-02 11:40:07'),
+	(5,5,'PIN: 090040534225, SERIAL: 075175443',NULL,'2011-10-02 11:41:27','2011-10-02 11:41:27'),
+	(6,6,'PIN: 424246259175, SERIAL: 459972426',NULL,'2011-10-02 11:47:05','2011-10-02 11:47:05'),
+	(7,7,'PIN: 1909824872305453, SERIAL: 349102792655',NULL,'2011-10-02 16:33:15','2011-10-02 16:33:15'),
+	(11,8,'PIN: 1699686219636, SERIAL: 367272133349',NULL,'2011-10-02 16:46:07','2011-10-02 16:46:07'),
+	(12,9,'PIN: -, SERIAL: -',NULL,'2011-10-02 16:47:52','2011-10-02 16:47:52'),
+	(13,10,'PIN: -, SERIAL: -',NULL,'2011-10-02 16:48:59','2011-10-02 16:48:59');
 
 /*!40000 ALTER TABLE `package` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -388,9 +439,9 @@ LOCK TABLES `product` WRITE;
 
 INSERT INTO `product` (`id`, `category_id`, `product_source_id`, `name`, `description`, `cost_price`, `customer_price`, `permalink`, `available_on`, `deleted_at`, `meta_description`, `meta_keywords`, `created_at`, `updated_at`)
 VALUES
-	(1,1,2,'Vodacom','Vodacom Airtime vouchers',4.56,4.80,'vodacom_5',NULL,NULL,NULL,NULL,'2011-09-01 02:06:49','2011-09-01 02:06:49'),
-	(2,1,2,'MTN','MTN Airtime Vouchers',4.61,4.85,'mtn_5',NULL,NULL,NULL,NULL,'2011-09-01 02:06:49','2011-09-01 02:06:49'),
-	(3,1,2,'CellC','Cell C Airtime vouchers',4.55,4.81,'cellc_5',NULL,NULL,NULL,NULL,'2011-09-01 02:06:49','2011-09-01 02:06:49'),
+	(1,1,2,'Vodacom','Vodacom Airtime\n',4.56,4.80,'vodacom_5',NULL,NULL,NULL,NULL,'2011-09-01 02:06:49','2011-09-01 02:06:49'),
+	(2,1,2,'MTN','MTN Airtime',4.61,4.85,'mtn_5',NULL,NULL,NULL,NULL,'2011-09-01 02:06:49','2011-09-01 02:06:49'),
+	(3,1,2,'CellC','Cell C Airtime',4.55,4.81,'cellc_5',NULL,NULL,NULL,NULL,'2011-09-01 02:06:49','2011-09-01 02:06:49'),
 	(4,1,2,'Virgin','Virgin Mobile Airtime',13.73,14.37,'virgin_15',NULL,NULL,NULL,NULL,'2011-09-01 02:06:49','2011-09-01 02:06:49'),
 	(5,1,2,'Heita','Heita Airtime',4.58,4.82,'heita_5',NULL,NULL,NULL,NULL,'2011-09-01 02:06:49','2011-09-01 02:06:49');
 
@@ -450,7 +501,34 @@ INSERT INTO `state_event` (`id`, `order_id`, `user_id`, `name`, `created_at`, `u
 VALUES
 	(1,1,1,'order','2011-09-30 12:15:19','2011-09-30 12:15:19','cart','complete'),
 	(2,NULL,1,'invoice','2011-09-30 12:15:19','2011-09-30 12:15:19','created','mailed'),
-	(3,1,1,'invoice','2011-09-30 12:15:19','2011-09-30 12:15:19','processing','unpaid');
+	(3,1,1,'invoice','2011-09-30 12:15:19','2011-09-30 12:15:19','processing','unpaid'),
+	(4,2,1,'order','2011-10-02 08:06:38','2011-10-02 08:06:38','cart','complete'),
+	(5,NULL,1,'invoice','2011-10-02 08:06:38','2011-10-02 08:06:38','created','mailed'),
+	(6,2,1,'invoice','2011-10-02 08:06:39','2011-10-02 08:06:39','processing','unpaid'),
+	(7,3,1,'order','2011-10-02 11:36:28','2011-10-02 11:36:28','cart','complete'),
+	(8,NULL,1,'invoice','2011-10-02 11:36:28','2011-10-02 11:36:28','created','mailed'),
+	(9,3,1,'invoice','2011-10-02 11:36:28','2011-10-02 11:36:28','processing','unpaid'),
+	(10,4,1,'order','2011-10-02 11:40:08','2011-10-02 11:40:08','cart','complete'),
+	(11,NULL,1,'invoice','2011-10-02 11:40:09','2011-10-02 11:40:09','created','mailed'),
+	(12,4,1,'invoice','2011-10-02 11:40:09','2011-10-02 11:40:09','processing','unpaid'),
+	(13,5,1,'order','2011-10-02 11:41:27','2011-10-02 11:41:27','cart','complete'),
+	(14,NULL,1,'invoice','2011-10-02 11:41:28','2011-10-02 11:41:28','created','mailed'),
+	(15,5,1,'invoice','2011-10-02 11:41:28','2011-10-02 11:41:28','processing','unpaid'),
+	(16,6,1,'order','2011-10-02 11:47:05','2011-10-02 11:47:05','cart','complete'),
+	(17,NULL,1,'invoice','2011-10-02 11:47:05','2011-10-02 11:47:05','created','mailed'),
+	(18,6,1,'invoice','2011-10-02 11:47:05','2011-10-02 11:47:05','processing','unpaid'),
+	(19,7,1,'order','2011-10-02 16:33:16','2011-10-02 16:33:16','cart','complete'),
+	(20,NULL,1,'invoice','2011-10-02 16:33:16','2011-10-02 16:33:16','created','mailed'),
+	(21,7,1,'invoice','2011-10-02 16:33:16','2011-10-02 16:33:16','processing','unpaid'),
+	(22,8,1,'order','2011-10-02 16:46:08','2011-10-02 16:46:08','cart','complete'),
+	(23,NULL,1,'invoice','2011-10-02 16:46:08','2011-10-02 16:46:08','created','mailed'),
+	(24,8,1,'invoice','2011-10-02 16:46:08','2011-10-02 16:46:08','processing','unpaid'),
+	(25,9,1,'order','2011-10-02 16:47:52','2011-10-02 16:47:52','cart','complete'),
+	(26,NULL,1,'invoice','2011-10-02 16:47:52','2011-10-02 16:47:52','created','mailed'),
+	(27,9,1,'invoice','2011-10-02 16:47:53','2011-10-02 16:47:53','processing','unpaid'),
+	(28,10,1,'order','2011-10-02 16:49:00','2011-10-02 16:49:00','cart','complete'),
+	(29,NULL,1,'invoice','2011-10-02 16:49:00','2011-10-02 16:49:00','created','mailed'),
+	(30,10,1,'invoice','2011-10-02 16:49:00','2011-10-02 16:49:00','processing','unpaid');
 
 /*!40000 ALTER TABLE `state_event` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -480,7 +558,7 @@ LOCK TABLES `user` WRITE;
 
 INSERT INTO `user` (`id`, `client_id`, `email`, `encrypted_password`, `reset_password_token`, `reset_password_sent_at`, `remember_created_at`, `sign_in_count`, `current_sign_in_at`, `last_sign_in_at`, `current_sign_in_ip`, `last_sign_in_ip`, `name`, `created_at`, `updated_at`, `username`)
 VALUES
-	(1,NULL,'shad6ster@gmail.com','$2a$10$dUtGGLLqMRbvR/N.ZuwP7uxD9q.1bYw50ariaEoLDarZF.bEC5wLS',NULL,NULL,NULL,24,'2011-09-30 11:10:37','2011-09-30 10:46:45','127.0.0.1','127.0.0.1','shadley','2011-09-01 02:06:50','2011-09-30 11:10:37','sanjuro'),
+	(1,NULL,'shad6ster@gmail.com','$2a$10$dUtGGLLqMRbvR/N.ZuwP7uxD9q.1bYw50ariaEoLDarZF.bEC5wLS',NULL,NULL,NULL,27,'2011-10-02 16:32:42','2011-10-02 08:01:41','127.0.0.1','127.0.0.1','shadley','2011-09-01 02:06:50','2011-10-02 16:32:42','sanjuro'),
 	(2,NULL,'shadley@eset.co.za','$2a$10$dUtGGLLqMRbvR/N.ZuwP7uxD9q.1bYw50ariaEoLDarZF.bEC5wLS',NULL,NULL,NULL,2,'2011-09-27 09:46:43','2011-09-18 19:53:15','127.0.0.1','127.0.0.1','shadley','2011-09-01 02:06:50','2011-09-27 09:46:43','shadley'),
 	(3,NULL,'uzair.dramat@gmail.com','$2a$10$dUtGGLLqMRbvR/N.ZuwP7uxD9q.1bYw50ariaEoLDarZF.bEC5wLS',NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,'uzair','2011-09-01 02:06:50',NULL,'uzzy');
 
@@ -525,7 +603,13 @@ VALUES
 	(27,4,'FREEPAID00000VIR99',90.59,95.60,99.00,NULL,0),
 	(28,4,'FREEPAID0000VIR120',109.80,115.00,120.00,NULL,0),
 	(29,4,'FREEPAID0000VIR180',166.50,174.00,180.00,NULL,0),
-	(30,5,'FREEPAID000000HEI5',4.58,4.82,5.00,NULL,1);
+	(30,5,'FREEPAID000000HEI5',4.58,4.82,5.00,NULL,1),
+	(31,5,'FREEPAID00000HEI10\n',9.15,9.60,10.00,NULL,0),
+	(32,5,'FREEPAID00000HEI20\n',18.30,19.10,20.00,NULL,0),
+	(33,5,'FREEPAID00000HEI30\n',27.45,28.76,30.00,NULL,0),
+	(34,5,'FREEPAID00000HEI50',45.75,47.88,50.00,NULL,0),
+	(35,5,'FREEPAID0000HEI100\n',91.50,95.75,100.00,NULL,0),
+	(36,5,'FREEPAID0000HEI250',228.75,240.00,250.00,NULL,0);
 
 /*!40000 ALTER TABLE `variant` ENABLE KEYS */;
 UNLOCK TABLES;
