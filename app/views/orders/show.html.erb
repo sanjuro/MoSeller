@@ -1,14 +1,18 @@
 <h1><%= @order.number %></h1>
 
 <div id="order" data-hook>
-  <% if params.has_key? :checkout_complete %>
-  	<h3><%= t('thank_you_for_your_order') %></h3>
-  <% end %>
-  <%= render :partial => 'shared/order_details', :locals => {:order => @order} %>
-  <p data-hook="links">
-    <%= link_to t('back_to_store'), root_path %>
-  </p>
+	<% if params.has_key? :checkout_complete %>
+		<h3><%= t('thank_you_for_your_order') %></h3>
+	<% end %>
+	<%= render :partial => 'shared/order_details', :locals => {:order => @order} %>
+  
+	<h3><%= t(:order_packages) %></h3>
+	<%= render :partial => 'shared/package_details', :locals => {:order => @order} %>  
+ 
+	<h3><%= t(:delivery) %></h3>
+	<%= render :partial => 'shared/delivery_details', :locals => {:order => @order} %> 
+  
+	<p data-hook="links">
+		<%= link_to t('back_to_store'), root_path %>
+	</p>
 </div>
-
-<h3><%= t(:order_packages) %></h3>
-<%= render :partial => 'shared/package_details', :locals => {:order => @order} %>

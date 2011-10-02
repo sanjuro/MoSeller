@@ -77,7 +77,7 @@ class CreateMoSales < ActiveRecord::Migration
       t.decimal "customer_total", :precision => 8, :scale => 2, :default => 0.0, :null => false
       t.decimal "billing_total", :precision => 8, :scale => 2, :default => 0.0, :null => false
       t.decimal "full_total", :precision => 8, :scale => 2, :default => 0.0, :null => false
-      t.string "email", :limit => 15
+      t.string "email", :limit => 30
       t.string "mobile_number", :limit => 15
       t.string   "customer_name", :limit => 20
       t.datetime "created_at"
