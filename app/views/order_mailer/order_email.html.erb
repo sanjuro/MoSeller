@@ -6,10 +6,6 @@
   <body>
     <h1>Succceful purchase, Order Number: <%= @order.number %></h1>
 
-    <p>
-      Succceful purchase, Order Number: <%= @order.number %>
-    </p>
-
     <table>
     <% @order.order_items.each do |order_item| %>
       <tr data-hook="package_details_line_item_row">
@@ -23,6 +19,7 @@
 	      	</table>
       	</td>   		
       </tr>
+      <tr><td></td></tr>
     <% end %>
     </table>    
     

@@ -3,10 +3,9 @@ class InvoiceMailer < ActionMailer::Base
   def invoice_email(invoice, order)
     @invoice = invoice
     @order = order
-    @url  = "http://localhost:3000/invoices/" + invoice.id.to_s()
     mail( :to => invoice.email, 
           :from => "headhancho@moseller.com",
-          :subject => "Your invoice for Order Number "  + order.number)
+          :subject => "Invoice for Order Number "  + order.number)
   end
   
 end
