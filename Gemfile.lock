@@ -1,3 +1,12 @@
+GIT
+  remote: git://github.com/plataformatec/devise.git
+  revision: 59f2767345a1666f4745c02b231fe876712461e2
+  specs:
+    devise (1.5.0.dev)
+      bcrypt-ruby (~> 3.0)
+      orm_adapter (~> 0.0.3)
+      warden (~> 1.0.3)
+
 GEM
   remote: http://rubygems.org/
   specs:
@@ -51,10 +60,6 @@ GEM
       net-ssh (>= 2.0.14)
       net-ssh-gateway (>= 1.1.0)
     cocaine (0.2.0)
-    devise (1.4.7)
-      bcrypt-ruby (~> 3.0)
-      orm_adapter (~> 0.0.3)
-      warden (~> 1.0.3)
     diff-lcs (1.1.2)
     erubis (2.6.6)
       abstract (>= 1.0.0)
@@ -183,7 +188,7 @@ DEPENDENCIES
   activeadmin
   acts_as_list (>= 0.1.0)
   capistrano
-  devise (= 1.4.7)
+  devise!
   fb_graph
   gravatar_image_tag (= 1.0.0.pre2)
   gritter (= 0.6.2)
