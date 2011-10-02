@@ -5,25 +5,11 @@
   </head>
   <body>
     <h1>Succceful purchase, Order Number: <%= @order.number %></h1>
-    <p>
-      You have successfully made a purchase from MoSeller.
-      <br/>
-    </p>
+
     <p>
       Succceful purchase, Order Number: <%= @order.number %>
     </p>
-    
-    <table>
-    <% @order.order_items.each do |item| %>
-      <tr data-hook="order_details_line_item_row">
-        <td width="300"><%=item.product.name%></td>
-        <td class="price"><%= number_to_currency(item.customer_price, :unit => "R") %></td>
-        <td class="qty"><%=item.quantity%></td>
-        <td class="total"><span><%= number_to_currency((item.customer_price * item.quantity), :unit => "R") %></span></td>
-      </tr>
-    <% end %>
-    </table>
-    
+
     <table>
     <% @order.order_items.each do |order_item| %>
       <tr data-hook="package_details_line_item_row">
