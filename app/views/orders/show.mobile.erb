@@ -14,5 +14,8 @@
 	</div>
 	<br>
 	<%= render :partial => 'shared/package_details', :locals => {:order => @order} %>
-
+ 
+	<h3><%= t(:delivery) %></h3>
+	<%= render :partial => 'shared/delivery_details', :locals => {:order => @order} %> 
+  
 </div>
