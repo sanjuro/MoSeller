@@ -1,7 +1,7 @@
 module FreepaidHelper
 
-  # SERVICE_WSDL = 'http://pi.dynalias.net:3088/airtime/' 
-  SERVICE_WSDL = 'https://matrix.dynalias.net:40443/airtime/'
+  SERVICE_WSDL = 'http://pi.dynalias.net:3088/airtime/' 
+  # SERVICE_WSDL = 'https://matrix.dynalias.net:40443/airtime/'
   
   def FreepaidGetVoucher(transaction_options)
     # Setting up a Savon::Client representing a SOAP service.

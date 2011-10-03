@@ -1,10 +1,10 @@
 class Freepaid < ProductSource
   include FreepaidHelper # Get Freepaid Interface
   
-  # SERIVCE_USERNAME = '1416266'
-  # SERVICE_PASSOWRD = '123456'
-  SERVICE_USERNAME = '1952645'
-  SERVICE_PASSOWRD = 'rad6hia'
+  SERIVCE_USERNAME = '1416266'
+  SERVICE_PASSOWRD = '123456'
+  # SERVICE_USERNAME = '1952645'
+  # SERVICE_PASSOWRD = 'rad6hia'
   
   def provider_class
     self.class
