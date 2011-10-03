@@ -1,15 +1,18 @@
 module FreepaidHelper
+
+  # SERVICE_WSDL = 'http://pi.dynalias.net:3088/airtime/' 
+  SERVICE_WSDL = 'https://matrix.dynalias.net:40443/airtime/'
   
   def FreepaidGetVoucher(transaction_options)
     # Setting up a Savon::Client representing a SOAP service.
     client = Savon::Client.new do
-      wsdl.document = "http://pi.dynalias.net:3088/airtime/?wsdl"
+      wsdl.document = SERVICE_WSDL + '?wsdl'
     end
     
     # Executing a SOAP request to call a "getVoucher" action.
     begin
       response = client.request :wsdl,  :getVoucher do
-        soap.input = ["getVoucher", {"xmlns" => "http://pi.dynalias.net:3088/airtime/"}]
+        soap.input = ["getVoucher", {"xmlns" => SERVICE_WSDL}]
         soap.body = { :request => {           
             :user => transaction_options[:user], 
             :pass => transaction_options[:pass], 
@@ -20,7 +23,7 @@ module FreepaidHelper
           :attributes! => { :request => { 'xsi:type' => 'tns:getVoucherIn' } }
         }
         soap.element_form_default = :unqualified
-        http.headers['SOAPAction'] = "http://pi.dynalias.net:3088/airtime/getVoucher"
+        http.headers['SOAPAction'] = SERVICE_WSDL + "getVoucher"
       end
     rescue Savon::SOAP::Fault => fault
       puts fault.to_s

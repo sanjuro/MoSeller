@@ -1,10 +1,10 @@
 class Freepaid < ProductSource
   include FreepaidHelper # Get Freepaid Interface
   
-  SERIVCE_USERNAME =  '1416266'
-  SERIVCE_PASSOWRD =  '123456'
-  # SERIVCE_USERNAME = ENV['freepaid_service_username']
-  # SERIVCE_PASSOWRD = ENV['freepaid_service_password']
+  # SERIVCE_USERNAME = '1416266'
+  # SERVICE_PASSOWRD = '123456'
+  SERVICE_USERNAME = '1952645'
+  SERVICE_PASSOWRD = 'rad6hia'
   
   def provider_class
     self.class
@@ -28,8 +28,8 @@ class Freepaid < ProductSource
     
     # Build Transaction options for the call to the Licensing server
     transaction_options = {
-      :user => SERIVCE_USERNAME,
-      :pass => SERIVCE_PASSOWRD,
+      :user => SERVICE_USERNAME,
+      :pass => SERVICE_PASSOWRD,
       :ref_no => order.number,
       :network => product.name.downcase!,
       :sell_value => Integer(variant.full_price)
