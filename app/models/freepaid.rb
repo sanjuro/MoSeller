@@ -1,11 +1,6 @@
 class Freepaid < ProductSource
   include FreepaidHelper # Get Freepaid Interface
   
-  SERIVCE_USERNAME = '1416266'
-  SERVICE_PASSOWRD = '123456'
-  # SERVICE_USERNAME = '1952645'
-  # SERVICE_PASSOWRD = 'rad6hia'
-  
   def provider_class
     self.class
   end
@@ -28,14 +23,12 @@ class Freepaid < ProductSource
     
     # Build Transaction options for the call to the Licensing server
     transaction_options = {
-      :user => SERVICE_USERNAME,
-      :pass => SERVICE_PASSOWRD,
       :ref_no => order.number,
       :network => product.name.downcase!,
       :sell_value => Integer(variant.full_price)
     }    
     
-    logger.info "CALLING NEWPRODUCT FROM FREEPAID "
+    logger.info "CALLING NEWPRODUCT FROM FREEPAID"
       
     # Create a Freepaid Voucher 
     productOut = FreepaidGetVoucher(transaction_options);

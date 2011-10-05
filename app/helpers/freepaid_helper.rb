@@ -1,21 +1,31 @@
 module FreepaidHelper
 
-  SERVICE_WSDL = 'http://pi.dynalias.net:3088/airtime/' 
-  # SERVICE_WSDL = 'https://matrix.dynalias.net:40443/airtime/'
+  # @@SERIVCE_USERNAME = '1416266'
+  # @@SERVICE_PASSOWRD = '123456'
+  @@SERVICE_USERNAME = '1952645'
+  @@SERVICE_PASSOWRD = 'rad6hia'  
+  # @@SERVICE_WSDL = 'http://pi.dynalias.net:3088/airtime/' 
+  @@SERVICE_WSDL = 'https://matrix.dynalias.net:40443/airtime/'
   
   def FreepaidGetVoucher(transaction_options)
+    
+    logger.info "CALLING FREEPAIDGETVOUCHER"
     # Setting up a Savon::Client representing a SOAP service.
     client = Savon::Client.new do
-      wsdl.document = SERVICE_WSDL + '?wsdl'
+      wsdl.document = @@SERVICE_WSDL + '?wsdl'
+      # http.auth.ssl.cert_key_file = 'cert.key'
+      # http.auth.ssl.cert_key_password = 'C3rtP@ssw0rd'
+      # http.auth.ssl.cert_file = 'cert.crt'
+      http.auth.ssl.verify_mode = :none
     end
-    
-    # Executing a SOAP request to call a "getVoucher" action.
+
+    logger.info "CREATED SOAP CALL TO FREEAPID"
     begin
       response = client.request :wsdl,  :getVoucher do
-        soap.input = ["getVoucher", {"xmlns" => SERVICE_WSDL}]
+        soap.input = ["getVoucher", {"xmlns" => @@SERVICE_WSDL}]
         soap.body = { :request => {           
-            :user => transaction_options[:user], 
-            :pass => transaction_options[:pass], 
+            :user => @@SERVICE_USERNAME, 
+            :pass => @@SERVICE_PASSOWRD, 
             :refno => transaction_options[:ref_no],
             :network => transaction_options[:network],
             :sellvalue => transaction_options[:sell_value] 
@@ -23,7 +33,7 @@ module FreepaidHelper
           :attributes! => { :request => { 'xsi:type' => 'tns:getVoucherIn' } }
         }
         soap.element_form_default = :unqualified
-        http.headers['SOAPAction'] = SERVICE_WSDL + "getVoucher"
+        http.headers['SOAPAction'] = @@SERVICE_WSDL + "getVoucher"
       end
     rescue Savon::SOAP::Fault => fault
       puts fault.to_s
