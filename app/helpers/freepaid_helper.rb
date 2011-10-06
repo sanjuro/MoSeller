@@ -1,11 +1,11 @@
 module FreepaidHelper
 
-  # @@SERIVCE_USERNAME = '1416266'
-  # @@SERVICE_PASSOWRD = '123456'
-  @@SERVICE_USERNAME = '1952645'
-  @@SERVICE_PASSOWRD = 'rad6hia'  
-  # @@SERVICE_WSDL = 'http://pi.dynalias.net:3088/airtime/' 
-  @@SERVICE_WSDL = 'https://matrix.dynalias.net:40443/airtime/'
+  @@SERVICE_USERNAME = '1416266'
+  @@SERVICE_PASSOWRD = '123456'
+  @@SERVICE_WSDL = 'http://pi.dynalias.net:3088/airtime/' 
+  # @@SERVICE_USERNAME = '1952645'
+  # @@SERVICE_PASSOWRD = 'rad6hia'  
+  # @@SERVICE_WSDL = 'https://matrix.dynalias.net:40443/airtime/'
   
   def FreepaidGetVoucher(transaction_options)
     

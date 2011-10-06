@@ -23,7 +23,7 @@ class User < ActiveRecord::Base
   has_many :orders
   has_many :invoices
   
-  scope :recent_by_sign_in, order("users.last_sign_in_at")   
+  scope :recent_by_sign_in, order("user.last_sign_in_at")   
   
   def self.current
     Thread.current[:user]
