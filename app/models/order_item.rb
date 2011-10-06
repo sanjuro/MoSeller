@@ -27,11 +27,21 @@ class OrderItem < ActiveRecord::Base
 
   def process!
     
-    update_attribute(:product_id, variant.product_id)
-    
-    (1..self.quantity).each do |k|
-      ret = variant.product_source.new_product(variant, self)
+    # Check stock level
+    if variant.inventory_level.check_level(self)
+      update_attribute(:product_id, variant.product_id)
+      
+      # get a package for the quantity
+      (1..self.quantity).each do |k|
+        ret = variant.product_source.new_product(variant, self)
+      end
+      
+      # Upate stock level    
+      variant.inventory_level.decrease(self)
+    else
+      InventoryMailer.low_inventory_email(self).deliver
     end
+    
   end
   
   def increment_quantity

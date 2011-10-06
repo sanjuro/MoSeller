@@ -14,6 +14,7 @@ class DeviseCreateUser < ActiveRecord::Migration
       # t.token_authenticatable
 
       t.string :name
+      t.string :username
 
       t.timestamps
     end
@@ -24,15 +25,9 @@ class DeviseCreateUser < ActiveRecord::Migration
     # add_index :user, :unlock_token,         :unique => true
     # add_index :user, :authentication_token, :unique => true
     
-    create_table(:admin_user) do |t|
-      t.string :name
-
-      t.timestamps
-    end
   end
 
   def self.down
     drop_table :user
-    drop_table :admin_user
   end
 end
