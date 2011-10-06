@@ -5,10 +5,10 @@ class FreepaidInventory < InventoryLevel
   end  
   
   def check_level(order_item)
-    if self.amount - (order_item.quantity * order_item.billing_price)
+    if self.stock_level - (order_item.quantity * order_item.billing_price) > 1000000
       return true
     else  
-      return true
+      return false
     end
   end
   

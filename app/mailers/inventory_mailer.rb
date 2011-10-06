@@ -1,10 +1,10 @@
-class InventortMailer < ActionMailer::Base
+class InventoryMailer < ActionMailer::Base
 
-  def low_inventory_email(order)
-    @order = order
-    mail( :to => order.email, 
+  def low_inventory_email(product_source)
+    @product_source = product_source
+    mail( :to => 'shad6ster@gmail.com', 
           :from => "headhancho@moseller.com",
-          :subject => "Your order has been processed")
+          :subject => "Stock is running low for " + product_source.description)
   end
   
 end

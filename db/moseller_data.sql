@@ -151,7 +151,7 @@ LOCK TABLES `inventory_level` WRITE;
 
 INSERT INTO `inventory_level` (`id`, `product_source_id`, `clazz`, `stock_level`, `deleted_at`, `created_at`, `updated_at`)
 VALUES
-	(1,2,NULL,955.51,NULL,'2011-09-01 02:06:50','2011-10-07 02:06:50');
+	(1,2,'FreepaidInventory',955.51,NULL,'2011-09-01 02:06:50','2011-10-07 02:06:50');
 
 /*!40000 ALTER TABLE `inventory_level` ENABLE KEYS */;
 UNLOCK TABLES;

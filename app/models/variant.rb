@@ -2,7 +2,6 @@ class Variant < ActiveRecord::Base
   belongs_to :product
   # delegate_belongs_to :product, :name, :description, :meta_description, :meta_keywords
   delegate_attribute :name, :description, :meta_description, :meta_keywords, :to => :product
-  delegate_attribute :stock_level, :to => :inventory_level
 
   has_many :order_items
   has_and_belongs_to_many :option_values
@@ -10,7 +9,6 @@ class Variant < ActiveRecord::Base
   has_many :images, :as => :viewable, :order => :position, :dependent => :destroy
   
   has_one :product_source, :through => :product
-  has_one :inventory_level, :through => :product_source
 
   validates :cost_price, :presence => true
   validates :customer_price, :presence => true

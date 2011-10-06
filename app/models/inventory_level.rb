@@ -18,7 +18,8 @@ class InventoryLevel < ActiveRecord::Base
   end  
   
   def check_level(order_item)
-    raise "You must implement check_level method for this inventory level."
+    logger.error "CALLING INVENTORY CHECK LEVEL"
+    ret = provider.check_level(order_item)
   end
   
   def increase

@@ -27,8 +27,9 @@ class OrderItem < ActiveRecord::Base
 
   def process!
     
+    logger.info 'PROCESS ORDER ITEM'
     # Check stock level
-    if variant.inventory_level.check_level(self)
+    if product.inventory_level.check_level(self)
       update_attribute(:product_id, variant.product_id)
       
       # get a package for the quantity
@@ -37,9 +38,9 @@ class OrderItem < ActiveRecord::Base
       end
       
       # Upate stock level    
-      variant.inventory_level.decrease(self)
+      product.inventory_level.decrease(self)
     else
-      InventoryMailer.low_inventory_email(self).deliver
+      InventoryMailer.low_inventory_email(variant.product_source).deliver
     end
     
   end
