@@ -1,12 +1,14 @@
 class Product < ActiveRecord::Base
   belongs_to :product_source
-  belongs_to :category
+  belongs_to :category 
   
   has_many :product_option_types, :dependent => :destroy
   has_many :option_types, :through => :product_option_types
   has_many :product_properties, :dependent => :destroy
   has_many :properties, :through => :product_properties
   has_many :images, :as => :viewable, :order => :position, :dependent => :destroy
+  
+  has_one :inventory_level, :through => :product_source
   
   has_one :master,
     :class_name => 'Variant',
@@ -17,7 +19,7 @@ class Product < ActiveRecord::Base
   delegate_belongs_to :master, :cost_price if Variant.table_exists? && Variant.column_names.include?("cost_price")  
   
   after_create :set_master_variant_defaults
-  before_update :sanitize_permalink
+  # before_update :sanitize_permalink
   after_save :save_master
 
   has_many :variants,

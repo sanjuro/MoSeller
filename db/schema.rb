@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110930103738) do
+ActiveRecord::Schema.define(:version => 20110905233450) do
 
   create_table "account_item", :force => true do |t|
     t.integer  "user_id"
@@ -42,9 +42,6 @@ ActiveRecord::Schema.define(:version => 20110930103738) do
   add_index "active_admin_comments", ["resource_type", "resource_id"], :name => "index_admin_notes_on_resource_type_and_resource_id"
 
   create_table "admin_user", :force => true do |t|
-    t.string   "name"
-    t.datetime "created_at"
-    t.datetime "updated_at"
     t.string   "email",                                 :default => "", :null => false
     t.string   "encrypted_password",     :limit => 128, :default => "", :null => false
     t.string   "reset_password_token"
@@ -55,6 +52,8 @@ ActiveRecord::Schema.define(:version => 20110930103738) do
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "admin_user", ["email"], :name => "index_admin_user_on_email", :unique => true
@@ -139,6 +138,15 @@ ActiveRecord::Schema.define(:version => 20110930103738) do
     t.datetime "updated_at"
   end
 
+  create_table "inventory_level", :force => true do |t|
+    t.integer  "product_source_id"
+    t.string   "clazz"
+    t.decimal  "stock_level",       :precision => 8, :scale => 2, :default => 0.0, :null => false
+    t.datetime "deleted_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "invoice", :force => true do |t|
     t.integer  "user_id"
     t.integer  "order_id"
@@ -215,7 +223,7 @@ ActiveRecord::Schema.define(:version => 20110930103738) do
     t.decimal  "customer_total",                 :precision => 8, :scale => 2, :default => 0.0, :null => false
     t.decimal  "billing_total",                  :precision => 8, :scale => 2, :default => 0.0, :null => false
     t.decimal  "full_total",                     :precision => 8, :scale => 2, :default => 0.0, :null => false
-    t.string   "email",            :limit => 15
+    t.string   "email",            :limit => 30
     t.string   "mobile_number",    :limit => 15
     t.string   "customer_name",    :limit => 20
     t.datetime "created_at"
@@ -346,9 +354,9 @@ ActiveRecord::Schema.define(:version => 20110930103738) do
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
     t.string   "name"
+    t.string   "username"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "username"
   end
 
   add_index "user", ["email"], :name => "index_user_on_email", :unique => true

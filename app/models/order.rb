@@ -175,7 +175,13 @@ class Order < ActiveRecord::Base
   end
   
   def process_order_items!
-    ret = order_items.each(&:process!)
+    # ret = order_items.each(&:process!)
+    
+    order_items.each do |item|
+      ret = item.process!
+      self.order_items.delete(item) if ret == false
+    end
+    
   end
   
   # Finalizes an in progress order after checkout is complete.

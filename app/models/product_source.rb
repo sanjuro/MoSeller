@@ -12,6 +12,7 @@
 #
 class ProductSource < ActiveRecord::Base
   has_many :products
+  has_one :inventory_level
   
   attr_accessible :name, :description, :clazz  
   

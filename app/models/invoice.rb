@@ -42,7 +42,7 @@ class Invoice < ActiveRecord::Base
 
     before_transition :to => 'unpaid' do |invoice|
       # order.process_payments! # process payments
-      order.process_order_items! # fetch products
+      # order.process_order_items! # fetch products
     end
 
     after_transition :to => 'paid' do |invoice|
@@ -72,10 +72,12 @@ class Invoice < ActiveRecord::Base
     
     logger.info 'UPDATE INVOICE'    
     
+    # mail the invoice and log the state
     self.mail!
     
     logger.info 'MAIL INVOICE'
     
+    # create the related account item
     self.add_account_item!
     
     logger.info 'CREATED ACCOUNT ITEM'    

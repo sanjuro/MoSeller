@@ -7,7 +7,7 @@
 #
 # Host: 127.0.0.1 (MySQL 5.5.14)
 # Database: moseller
-# Generation Time: 2011-10-02 19:18:39 +0200
+# Generation Time: 2011-10-07 00:14:47 +0200
 # ************************************************************
 
 
@@ -23,25 +23,6 @@
 # Dump of table account_item
 # ------------------------------------------------------------
 
-LOCK TABLES `account_item` WRITE;
-/*!40000 ALTER TABLE `account_item` DISABLE KEYS */;
-
-INSERT INTO `account_item` (`id`, `user_id`, `account_item_type_id`, `credit`, `debit`, `account_status_id`, `created_at`, `updated_at`)
-VALUES
-	(1,1,1,0.00,262.29,'1','2011-09-30 12:15:20','2011-09-30 12:15:20'),
-	(2,1,1,0.00,105.00,'1','2011-10-02 08:06:39','2011-10-02 08:06:39'),
-	(3,1,1,0.00,27.50,'1','2011-10-02 11:36:28','2011-10-02 11:36:28'),
-	(4,1,1,0.00,4.80,'1','2011-10-02 11:40:09','2011-10-02 11:40:09'),
-	(5,1,1,0.00,4.80,'1','2011-10-02 11:41:28','2011-10-02 11:41:28'),
-	(6,1,1,0.00,4.80,'1','2011-10-02 11:47:05','2011-10-02 11:47:05'),
-	(7,1,1,0.00,172.78,'1','2011-10-02 16:33:16','2011-10-02 16:33:16'),
-	(8,1,1,0.00,47.00,'1','2011-10-02 16:46:08','2011-10-02 16:46:08'),
-	(9,1,1,0.00,76.20,'1','2011-10-02 16:47:53','2011-10-02 16:47:53'),
-	(10,1,1,0.00,76.20,'1','2011-10-02 16:49:00','2011-10-02 16:49:00'),
-	(11,1,1,0.00,9.60,'1','2011-10-02 17:17:38','2011-10-02 17:17:38');
-
-/*!40000 ALTER TABLE `account_item` ENABLE KEYS */;
-UNLOCK TABLES;
 
 
 # Dump of table account_item_type
@@ -60,9 +41,9 @@ UNLOCK TABLES;
 LOCK TABLES `admin_user` WRITE;
 /*!40000 ALTER TABLE `admin_user` DISABLE KEYS */;
 
-INSERT INTO `admin_user` (`id`, `name`, `created_at`, `updated_at`, `email`, `encrypted_password`, `reset_password_token`, `reset_password_sent_at`, `remember_created_at`, `sign_in_count`, `current_sign_in_at`, `last_sign_in_at`, `current_sign_in_ip`, `last_sign_in_ip`)
+INSERT INTO `admin_user` (`id`, `email`, `encrypted_password`, `reset_password_token`, `reset_password_sent_at`, `remember_created_at`, `sign_in_count`, `current_sign_in_at`, `last_sign_in_at`, `current_sign_in_ip`, `last_sign_in_ip`, `created_at`, `updated_at`)
 VALUES
-	(1,'shadley','2011-09-01 02:06:50','2011-09-03 17:37:34','shad6ster@gmail.com','$2a$10$dUtGGLLqMRbvR/N.ZuwP7uxD9q.1bYw50ariaEoLDarZF.bEC5wLS',NULL,NULL,NULL,1,'2011-09-03 17:37:34','2011-09-03 17:37:34','127.0.0.1','127.0.0.1');
+	(1,'shad6ster@gmail.com','$2a$10$dUtGGLLqMRbvR/N.ZuwP7uxD9q.1bYw50ariaEoLDarZF.bEC5wLS',NULL,NULL,NULL,1,'2011-09-03 17:37:34','2011-09-03 17:37:34','127.0.0.1','127.0.0.1','2011-09-01 02:06:50','2011-09-03 17:37:34');
 
 /*!40000 ALTER TABLE `admin_user` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -162,52 +143,28 @@ UNLOCK TABLES;
 
 
 
+# Dump of table inventory_level
+# ------------------------------------------------------------
+
+LOCK TABLES `inventory_level` WRITE;
+/*!40000 ALTER TABLE `inventory_level` DISABLE KEYS */;
+
+INSERT INTO `inventory_level` (`id`, `product_source_id`, `clazz`, `stock_level`, `deleted_at`, `created_at`, `updated_at`)
+VALUES
+	(1,2,'FreepaidInventory',955.51,NULL,'2011-09-01 02:06:50','2011-10-07 02:06:50');
+
+/*!40000 ALTER TABLE `inventory_level` ENABLE KEYS */;
+UNLOCK TABLES;
+
+
 # Dump of table invoice
 # ------------------------------------------------------------
 
-LOCK TABLES `invoice` WRITE;
-/*!40000 ALTER TABLE `invoice` DISABLE KEYS */;
-
-INSERT INTO `invoice` (`id`, `user_id`, `order_id`, `margin`, `sub_total`, `tax`, `total`, `date_paid`, `email`, `state`, `invoice_type_id`, `created_at`, `updated_at`)
-VALUES
-	(1,1,1,0.00,262.29,0.00,262.29,NULL,'shad6ster@gmail.com','created',NULL,'2011-09-30 12:15:19','2011-09-30 12:15:19'),
-	(2,1,2,0.00,105.00,0.00,105.00,NULL,'shad6ster@gmail.com','created',NULL,'2011-10-02 08:06:38','2011-10-02 08:06:38'),
-	(3,1,3,0.00,27.50,0.00,27.50,NULL,'shad6ster@gmail.com','created',NULL,'2011-10-02 11:36:28','2011-10-02 11:36:28'),
-	(4,1,4,0.00,4.80,0.00,4.80,NULL,'shad6ster@gmail.com','created',NULL,'2011-10-02 11:40:09','2011-10-02 11:40:09'),
-	(5,1,5,0.00,4.80,0.00,4.80,NULL,'shad6ster@gmail.com','created',NULL,'2011-10-02 11:41:28','2011-10-02 11:41:28'),
-	(6,1,6,0.00,4.80,0.00,4.80,NULL,'shad6ster@gmail.com','created',NULL,'2011-10-02 11:47:05','2011-10-02 11:47:05'),
-	(7,1,7,0.00,172.78,0.00,172.78,NULL,'shad6ster@gmail.com','created',NULL,'2011-10-02 16:33:16','2011-10-02 16:33:16'),
-	(8,1,8,0.00,47.00,0.00,47.00,NULL,'shad6ster@gmail.com','created',NULL,'2011-10-02 16:46:08','2011-10-02 16:46:08'),
-	(9,1,9,0.00,76.20,0.00,76.20,NULL,'shad6ster@gmail.com','created',NULL,'2011-10-02 16:47:52','2011-10-02 16:47:52'),
-	(10,1,10,0.00,76.20,0.00,76.20,NULL,'shad6ster@gmail.com','created',NULL,'2011-10-02 16:49:00','2011-10-02 16:49:00'),
-	(11,1,11,0.00,9.60,0.00,9.60,NULL,'shad6ster@gmail.com','created',NULL,'2011-10-02 17:17:37','2011-10-02 17:17:38');
-
-/*!40000 ALTER TABLE `invoice` ENABLE KEYS */;
-UNLOCK TABLES;
 
 
 # Dump of table invoice_item
 # ------------------------------------------------------------
 
-LOCK TABLES `invoice_item` WRITE;
-/*!40000 ALTER TABLE `invoice_item` DISABLE KEYS */;
-
-INSERT INTO `invoice_item` (`id`, `invoice_id`, `description`, `total`, `created_at`, `updated_at`)
-VALUES
-	(1,1,'FREEPAID000VOD275',262.29,'2011-09-30 12:15:19','2011-09-30 12:15:19'),
-	(2,2,'FREEPAID000VOD110',105.00,'2011-10-02 08:06:38','2011-10-02 08:06:38'),
-	(3,3,'FREEPAID0000VOD29',27.50,'2011-10-02 11:36:28','2011-10-02 11:36:28'),
-	(4,4,'FREEPAID00000VOD5',4.80,'2011-10-02 11:40:09','2011-10-02 11:40:09'),
-	(5,5,'FREEPAID00000VOD5',4.80,'2011-10-02 11:41:28','2011-10-02 11:41:28'),
-	(6,6,'FREEPAID00000VOD5',4.80,'2011-10-02 11:47:05','2011-10-02 11:47:05'),
-	(7,7,'FREEPAID000MTN180',172.78,'2011-10-02 16:33:16','2011-10-02 16:33:16'),
-	(8,8,'FREEPAID0000CELL50',47.00,'2011-10-02 16:46:08','2011-10-02 16:46:08'),
-	(9,9,'FREEPAID00000VIR80',76.20,'2011-10-02 16:47:52','2011-10-02 16:47:52'),
-	(10,10,'FREEPAID00000VIR80',76.20,'2011-10-02 16:49:00','2011-10-02 16:49:00'),
-	(11,11,'FREEPAID00000HEI10\n',9.60,'2011-10-02 17:17:38','2011-10-02 17:17:38');
-
-/*!40000 ALTER TABLE `invoice_item` ENABLE KEYS */;
-UNLOCK TABLES;
 
 
 # Dump of table invoice_type
@@ -348,73 +305,16 @@ UNLOCK TABLES;
 # Dump of table order
 # ------------------------------------------------------------
 
-LOCK TABLES `order` WRITE;
-/*!40000 ALTER TABLE `order` DISABLE KEYS */;
-
-INSERT INTO `order` (`id`, `supplier_id`, `client_id`, `user_id`, `number`, `item_total`, `customer_total`, `billing_total`, `full_total`, `email`, `mobile_number`, `customer_name`, `created_at`, `updated_at`, `completed_at`, `state`, `token`, `adjustment_total`, `credit_total`)
-VALUES
-	(1,NULL,NULL,1,'R828380663',262.29,262.29,262.29,262.29,'','','','2011-09-30 11:12:33','2011-09-30 12:15:15','2011-09-30 12:15:15','complete',NULL,0.00,0.00),
-	(2,NULL,NULL,1,'R215556475',105.00,105.00,105.00,105.00,'shad6ster@gmail.com','0833908314','TEst Guy','2011-10-02 08:06:08','2011-10-02 08:06:35','2011-10-02 08:06:35','complete',NULL,0.00,0.00),
-	(3,NULL,NULL,1,'R240858217',27.50,27.50,27.50,27.50,'shad6ster@gmail.com','','Shsdley Wentzel','2011-10-02 11:36:02','2011-10-02 11:36:27','2011-10-02 11:36:27','complete',NULL,0.00,0.00),
-	(4,NULL,NULL,1,'R015772833',4.80,4.80,4.80,4.80,'','','','2011-10-02 11:39:54','2011-10-02 11:40:07','2011-10-02 11:40:07','complete',NULL,0.00,0.00),
-	(5,NULL,NULL,1,'R108567510',4.80,4.80,4.80,4.80,'','','','2011-10-02 11:40:52','2011-10-02 11:41:27','2011-10-02 11:41:27','complete',NULL,0.00,0.00),
-	(6,NULL,NULL,1,'R154166652',4.80,4.80,4.80,4.80,'','','','2011-10-02 11:46:51','2011-10-02 11:47:05','2011-10-02 11:47:05','complete',NULL,0.00,0.00),
-	(7,NULL,NULL,1,'R833283183',172.78,172.78,172.78,172.78,'shad6ster@gmail.com','','shad','2011-10-02 16:32:55','2011-10-02 16:33:15','2011-10-02 16:33:15','complete',NULL,0.00,0.00),
-	(8,NULL,NULL,1,'R538203735',47.00,47.00,47.00,47.00,'','','','2011-10-02 16:37:27','2011-10-02 16:46:07','2011-10-02 16:46:07','complete',NULL,0.00,0.00),
-	(9,NULL,NULL,1,'R244474254',76.20,76.20,76.20,76.20,'','','','2011-10-02 16:47:35','2011-10-02 16:47:52','2011-10-02 16:47:52','complete',NULL,0.00,0.00),
-	(10,NULL,NULL,1,'R806608600',76.20,76.20,76.20,76.20,'shad6ster@gmail.com','0833908314','Test','2011-10-02 16:48:37','2011-10-02 16:48:59','2011-10-02 16:48:59','complete',NULL,0.00,0.00),
-	(11,NULL,NULL,1,'R222260081',9.60,9.60,9.60,9.60,'shad6ster@gmail.com','0833908314','shadley','2011-10-02 17:17:11','2011-10-02 17:17:37','2011-10-02 17:17:37','complete',NULL,0.00,0.00);
-
-/*!40000 ALTER TABLE `order` ENABLE KEYS */;
-UNLOCK TABLES;
 
 
 # Dump of table order_item
 # ------------------------------------------------------------
 
-LOCK TABLES `order_item` WRITE;
-/*!40000 ALTER TABLE `order_item` DISABLE KEYS */;
-
-INSERT INTO `order_item` (`id`, `order_id`, `product_id`, `variant_id`, `quantity`, `customer_price`, `billing_price`, `full_price`, `created_at`, `updated_at`)
-VALUES
-	(1,1,1,8,1,262.29,262.29,0.00,'2011-09-30 11:12:33','2011-09-30 12:15:13'),
-	(2,2,1,7,1,105.00,105.00,0.00,'2011-10-02 08:06:09','2011-10-02 08:06:33'),
-	(3,3,1,5,1,27.50,27.50,0.00,'2011-10-02 11:36:03','2011-10-02 11:36:26'),
-	(4,4,1,2,1,4.80,4.80,0.00,'2011-10-02 11:39:54','2011-10-02 11:40:05'),
-	(5,5,1,2,1,4.80,4.80,0.00,'2011-10-02 11:40:52','2011-10-02 11:41:26'),
-	(6,6,1,2,1,4.80,4.80,0.00,'2011-10-02 11:46:51','2011-10-02 11:47:03'),
-	(7,7,2,15,1,172.78,172.78,0.00,'2011-10-02 16:32:55','2011-10-02 16:33:14'),
-	(8,8,3,20,1,47.00,47.00,0.00,'2011-10-02 16:37:27','2011-10-02 16:46:06'),
-	(9,9,4,26,1,76.20,76.20,0.00,'2011-10-02 16:47:35','2011-10-02 16:47:50'),
-	(10,10,4,26,1,76.20,76.20,0.00,'2011-10-02 16:48:38','2011-10-02 16:48:58'),
-	(11,11,5,31,1,9.60,9.60,0.00,'2011-10-02 17:17:11','2011-10-02 17:17:35');
-
-/*!40000 ALTER TABLE `order_item` ENABLE KEYS */;
-UNLOCK TABLES;
 
 
 # Dump of table package
 # ------------------------------------------------------------
 
-LOCK TABLES `package` WRITE;
-/*!40000 ALTER TABLE `package` DISABLE KEYS */;
-
-INSERT INTO `package` (`id`, `order_item_id`, `payload`, `permalink`, `created_at`, `updated_at`)
-VALUES
-	(1,1,'PIN: 250319204526, SERIAL: 2673648775',NULL,'2011-09-30 12:15:15','2011-09-30 12:15:15'),
-	(2,2,'PIN: 502520276701, SERIAL: 2983772664',NULL,'2011-10-02 08:06:35','2011-10-02 08:06:35'),
-	(3,3,'PIN: 251740628115, SERIAL: 813827757',NULL,'2011-10-02 11:36:27','2011-10-02 11:36:27'),
-	(4,4,'PIN: 263635352640, SERIAL: 038813706',NULL,'2011-10-02 11:40:07','2011-10-02 11:40:07'),
-	(5,5,'PIN: 090040534225, SERIAL: 075175443',NULL,'2011-10-02 11:41:27','2011-10-02 11:41:27'),
-	(6,6,'PIN: 424246259175, SERIAL: 459972426',NULL,'2011-10-02 11:47:05','2011-10-02 11:47:05'),
-	(7,7,'PIN: 1909824872305453, SERIAL: 349102792655',NULL,'2011-10-02 16:33:15','2011-10-02 16:33:15'),
-	(11,8,'PIN: 1699686219636, SERIAL: 367272133349',NULL,'2011-10-02 16:46:07','2011-10-02 16:46:07'),
-	(12,9,'PIN: -, SERIAL: -',NULL,'2011-10-02 16:47:52','2011-10-02 16:47:52'),
-	(13,10,'PIN: -, SERIAL: -',NULL,'2011-10-02 16:48:59','2011-10-02 16:48:59'),
-	(14,11,'PIN: 3655563676070346, SERIAL: 623541251287805563',NULL,'2011-10-02 17:17:37','2011-10-02 17:17:37');
-
-/*!40000 ALTER TABLE `package` ENABLE KEYS */;
-UNLOCK TABLES;
 
 
 # Dump of table payment
@@ -495,11 +395,11 @@ VALUES
 	('20110725150934'),
 	('20110725150935'),
 	('20110725150936'),
+	('20110725150937'),
 	('20110824084915'),
-	('20110905213434'),
+	('20110824084916'),
 	('20110905233449'),
-	('20110905233450'),
-	('20110930103738');
+	('20110905233450');
 
 /*!40000 ALTER TABLE `schema_migrations` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -573,11 +473,11 @@ UNLOCK TABLES;
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
 
-INSERT INTO `user` (`id`, `client_id`, `email`, `encrypted_password`, `reset_password_token`, `reset_password_sent_at`, `remember_created_at`, `sign_in_count`, `current_sign_in_at`, `last_sign_in_at`, `current_sign_in_ip`, `last_sign_in_ip`, `name`, `created_at`, `updated_at`, `username`)
+INSERT INTO `user` (`id`, `client_id`, `email`, `encrypted_password`, `reset_password_token`, `reset_password_sent_at`, `remember_created_at`, `sign_in_count`, `current_sign_in_at`, `last_sign_in_at`, `current_sign_in_ip`, `last_sign_in_ip`, `name`, `username`, `created_at`, `updated_at`)
 VALUES
-	(1,NULL,'shad6ster@gmail.com','$2a$10$dUtGGLLqMRbvR/N.ZuwP7uxD9q.1bYw50ariaEoLDarZF.bEC5wLS',NULL,NULL,NULL,27,'2011-10-02 16:32:42','2011-10-02 08:01:41','127.0.0.1','127.0.0.1','shadley','2011-09-01 02:06:50','2011-10-02 16:32:42','sanjuro'),
-	(2,NULL,'shadley@eset.co.za','$2a$10$dUtGGLLqMRbvR/N.ZuwP7uxD9q.1bYw50ariaEoLDarZF.bEC5wLS',NULL,NULL,NULL,2,'2011-09-27 09:46:43','2011-09-18 19:53:15','127.0.0.1','127.0.0.1','shadley','2011-09-01 02:06:50','2011-09-27 09:46:43','shadley'),
-	(3,NULL,'uzair.dramat@gmail.com','$2a$10$dUtGGLLqMRbvR/N.ZuwP7uxD9q.1bYw50ariaEoLDarZF.bEC5wLS',NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,'uzair','2011-09-01 02:06:50',NULL,'uzzy');
+	(1,NULL,'shad6ster@gmail.com','$2a$10$dUtGGLLqMRbvR/N.ZuwP7uxD9q.1bYw50ariaEoLDarZF.bEC5wLS',NULL,NULL,NULL,27,'2011-10-02 16:32:42','2011-10-02 08:01:41','127.0.0.1','127.0.0.1','shadley','sanjuro','2011-09-01 02:06:50','2011-10-02 16:32:42'),
+	(2,NULL,'shadley@eset.co.za','$2a$10$dUtGGLLqMRbvR/N.ZuwP7uxD9q.1bYw50ariaEoLDarZF.bEC5wLS',NULL,NULL,NULL,2,'2011-09-27 09:46:43','2011-09-18 19:53:15','127.0.0.1','127.0.0.1','shadley','shadley','2011-09-01 02:06:50','2011-09-27 09:46:43'),
+	(3,NULL,'uzair.dramat@gmail.com','$2a$10$dUtGGLLqMRbvR/N.ZuwP7uxD9q.1bYw50ariaEoLDarZF.bEC5wLS',NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,'uzair','uzzy','2011-09-01 02:06:50',NULL);
 
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;

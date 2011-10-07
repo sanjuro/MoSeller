@@ -26,11 +26,28 @@ class OrderItem < ActiveRecord::Base
   end
 
   def process!
-    
-    update_attribute(:product_id, variant.product_id)
-    
-    (1..self.quantity).each do |k|
-      ret = variant.product_source.new_product(variant, self)
+    begin
+      logger.info 'PROCESS ORDER ITEM'
+      # Check stock level
+      if product.inventory_level.check_level(self)
+        update_attribute(:product_id, variant.product_id)
+        
+        # get a package for the quantity
+        (1..self.quantity).each do |k|
+          ret = variant.product_source.new_product(variant, self)
+        end
+        
+        # Update stock level    
+        decrease_stock_level
+        
+      else
+        logger.info 'INVENTORY LEVEL LOW ' + variant.product_source.description
+        self.destroy();
+        InventoryMailer.low_inventory_email(variant.product_source).deliver
+        raise "Stock Level Error"
+      end
+    rescue Exception => e
+      puts "#{ e } (#{ e.class })!"
     end
   end
   
@@ -66,6 +83,10 @@ class OrderItem < ActiveRecord::Base
       # update the order totals, etc.
       order.update!
     end
+    
+    def decrease_stock_level
+      product.inventory_level.decrease_level(self)
+    end    
 
     def ensure_not_shipped
       if order.try(:inventory_units).to_a.any?{|unit| unit.variant_id == variant_id && unit.shipped?}
