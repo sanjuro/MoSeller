@@ -4,24 +4,20 @@ class FreepaidInventory < InventoryLevel
     self.class
   end  
   
-  def check_level(order_item)
-    if self.stock_level - (order_item.quantity * order_item.billing_price) > 1000000
+  def check_level(order_item, stock_level)
+    if stock_level - (order_item.quantity * order_item.billing_price) > 0
       return true
     else  
       return false
     end
   end
   
-  def decrease(amount)
-    update_attributes_without_callbacks({
-      :level => self.level - amount
-    })  
+  def current_stock_level(product_source)
+    product_source.inventory_level.stock_level
   end   
   
-  def increase(quantity)
-    update_attributes_without_callbacks({
-      :level => self.level + amount
-    })  
-  end   
+  def decrease_level(order_item, stock_level)
+    stock_level - (order_item.quantity * order_item.billing_price)
+  end     
   
 end

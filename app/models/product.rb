@@ -19,7 +19,7 @@ class Product < ActiveRecord::Base
   delegate_belongs_to :master, :cost_price if Variant.table_exists? && Variant.column_names.include?("cost_price")  
   
   after_create :set_master_variant_defaults
-  before_update :sanitize_permalink
+  # before_update :sanitize_permalink
   after_save :save_master
 
   has_many :variants,
