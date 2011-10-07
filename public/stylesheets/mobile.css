@@ -5,8 +5,9 @@ header
 }
 
 header img {
+	float: left;
 	height: 60px;
-	width: 100%;	
+	width: 60px%;	
 }
 
 #logo {
