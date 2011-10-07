@@ -173,7 +173,7 @@ input.continue {
     text-shadow: 0 1px 0 #925B33;	
 }
 
- a.continue, a.checkout, button.large {
+ a.continue, a.checkout, button.large, input#user_submit {
     background-color: #F79923;
     background-image: -moz-linear-gradient(center top , #F79923, #F27016);
     border: 1px solid #925B33;
