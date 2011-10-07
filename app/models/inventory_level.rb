@@ -20,7 +20,7 @@ class InventoryLevel < ActiveRecord::Base
   def check_level(order_item)
     logger.error "CALLING INVENTORY CHECK LEVEL"
     current_level = self.current_stock_level!
-    ret = provider.check_level(order_item, current_level)
+    provider.check_level(order_item, current_level)
   end
     
   def current_stock_level!
