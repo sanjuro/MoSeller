@@ -1,11 +1,8 @@
 module FreepaidHelper
 
-  # @@SERVICE_USERNAME = '1416266'
-  # @@SERVICE_PASSOWRD = '123456'
-  # @@SERVICE_WSDL = 'http://pi.dynalias.net:3088/airtime/' 
-  @@SERVICE_USERNAME = '1952645'
-  @@SERVICE_PASSOWRD = 'rad6hia'  
-  @@SERVICE_WSDL = 'https://matrix.dynalias.net:40443/airtime/'
+  @@SERVICE_USERNAME = AppConfig.instance.freepaid_username
+  @@SERVICE_PASSOWRD = AppConfig.instance.freepaid_password
+  @@SERVICE_WSDL = AppConfig.instance.freepaid_wsdl
   
   def FreepaidGetVoucher(transaction_options)
     
