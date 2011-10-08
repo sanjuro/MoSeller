@@ -1,8 +1,8 @@
 class ESET < ProductSource
   include EsetHelper # Get ESET Interface 
   
-  SERIVCE_USERNAME =  'stanford'
-  SERIVCE_PASSOWRD =  'rE2a6REm'
+  SERIVCE_USERNAME = AppConfig.instance.eset_username
+  SERIVCE_PASSOWRD = AppConfig.instance.eset_password
 
   def provider_class
     self.class
