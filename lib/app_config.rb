@@ -15,7 +15,7 @@ class AppConfig
 
   def method_missing(methId)
     instance_sym = ("@" + methId.id2name).to_sym
-    instance_variable_set(instance_sym, @parser.send(methId)) unless     instance_variable_get(instance_sym)
+    instance_variable_set(instance_sym, @parser.send(methId)) unless instance_variable_get(instance_sym)
     instance_variable_get(instance_sym)
   end
 end
