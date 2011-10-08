@@ -1,8 +1,8 @@
 class ESET < ProductSource
   include EsetHelper # Get ESET Interface 
   
-  SERIVCE_USERNAME = AppConfig.instance.eset_username
-  SERIVCE_PASSOWRD = AppConfig.instance.eset_password
+  @@SERIVCE_USERNAME = AppConfig.instance.eset_username
+  @@SERIVCE_PASSOWRD = AppConfig.instance.eset_password
 
   def provider_class
     self.class
@@ -21,7 +21,7 @@ class ESET < ProductSource
   
   def new_product!(variant, order)
     # Login to the ESET License Server
-    login = ESETLogin(SERIVCE_USERNAME, PASSWORD);
+    login = ESETLogin(@@SERIVCE_USERNAME, @@SERVICE_PASSWORD);
     
     # Build Transaction options for the call to the Licensing server
     transaction_options = {
