@@ -2,11 +2,14 @@ module EsetHelper
   
   Gyoku.convert_symbols_to :none
   Savon.env_namespace = :soap
+  
+  @@LICENSE_SERVICE_WSDL_URL = AppConfig.instance.eset_license_service_wsdl_url
+  @@SECURITY_SERVICE_WSDL_URL = AppConfig.instance.eset_security_service_wsdl_url
  
   def ESETLogin(username, password)
     # Setting up a Savon::Client representing a SOAP service.
     client = Savon::Client.new do
-      wsdl.document = SECURITY_SERVICE_WSDL_URL
+      wsdl.document = @@SECURITY_SERVICE_WSDL_URL
     end
       
       
@@ -40,7 +43,7 @@ module EsetHelper
   def ESETCreateLicense(transaction_options)
     # Setting up a Savon::Client representing a SOAP service.
     client = Savon::Client.new do
-      wsdl.document = LICENSE_SERVICE_WSDL_URL
+      wsdl.document = @@LICENSE_SERVICE_WSDL_URL
     end
 
       
@@ -86,9 +89,4 @@ module EsetHelper
     licenseDetails = { 'username' => username, 'password' => password, 'expirationDate' => expirationDate, 'price' => price, 'error' => error }
   end
   
-  private
-
-  LICENSE_SERVICE_WSDL_URL = "https://dextertest.eset.com/DexterDev/Services/LicenceService.asmx?WSDL"
-  SECURITY_SERVICE_WSDL_URL = "https://dextertest.eset.com/DexterDev/Services/SecurityService.asmx?WSDL"
- 
 end
