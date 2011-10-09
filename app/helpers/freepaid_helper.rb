@@ -9,7 +9,7 @@ module FreepaidHelper
     logger.info "CALLING FREEPAIDGETVOUCHER"
     # Setting up a Savon::Client representing a SOAP service.
     client = Savon::Client.new do
-      wsdl.document = @@SERVICE_WSDL + '?wsdl'
+      wsdl.document = @@SERVICE_WSDL
       # http.auth.ssl.cert_key_file = 'cert.key'
       # http.auth.ssl.cert_key_password = 'C3rtP@ssw0rd'
       # http.auth.ssl.cert_file = 'cert.crt'
