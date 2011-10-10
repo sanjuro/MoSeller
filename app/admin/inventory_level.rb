@@ -22,5 +22,13 @@ ActiveAdmin.register InventoryLevel do
     end
     default_actions
   end
+  
+  form do |f|
+    f.inputs "Details" do
+      f.input :clazz
+      f.input :stock_level
+    end
+    f.buttons
+  end  
 
 end

@@ -19,4 +19,14 @@ ActiveAdmin.register User do
     default_actions
   end
 
+  form do |f|
+    f.inputs "Details" do
+      f.input :email
+      f.input :name
+      f.input :username
+      f.input :password
+    end
+    f.buttons
+  end
+  
 end

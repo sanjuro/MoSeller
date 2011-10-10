@@ -24,5 +24,15 @@ ActiveAdmin.register AccountItem do
     end
     default_actions
   end
+  
+  form do |f|
+    f.inputs "Details" do
+      f.input :user
+      f.input :debit
+      f.input :credit
+      f.input :created_at
+    end
+    f.buttons
+  end    
 
 end

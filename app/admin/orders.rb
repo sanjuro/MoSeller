@@ -25,5 +25,28 @@ ActiveAdmin.register Order do
     end
     default_actions
   end
+  
+  form do |f|
+    f.inputs "Details" do
+      f.input :user
+      f.input :number
+      f.input :created_at
+      f.input :updated_at
+      f.input :completed_at
+      f.input :state
+    end
+    f.inputs "Customer" do
+      f.input :customer_name  
+      f.input :email  
+      f.input :mobile_number  
+    end
+    f.inputs "Totals" do
+      f.input :item_total
+      f.input :customer_total
+      f.input :billing_total
+      f.input :full_total
+    end
+    f.buttons
+  end  
 
 end

@@ -23,4 +23,18 @@ ActiveAdmin.register Invoice do
     default_actions
   end
 
+  form do |f|
+    f.inputs "Details" do
+      f.input :user
+      f.input :margin
+      f.input :sub_total
+      f.input :tax
+      f.input :total
+      f.input :email  
+      f.input :date_paid
+      f.input :state
+    end
+    f.buttons
+  end   
+  
 end
