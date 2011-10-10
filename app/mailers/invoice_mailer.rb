@@ -4,7 +4,7 @@ class InvoiceMailer < ActionMailer::Base
     @invoice = invoice
     @order = order
     mail( :to => invoice.email, 
-          :from => "headhancho@moseller.com",
+          :from => AppConfig.instance.admin_email,
           :subject => "Invoice for Order Number "  + order.number)
   end
   
