@@ -35,7 +35,7 @@ header img {
 
 .container {
 	margin: 0 auto;
- 	width: 710px;
+ 	width: 900px;
 }
 
 section {
@@ -173,7 +173,7 @@ input.continue {
     text-shadow: 0 1px 0 #925B33;	
 }
 
- a.continue, a.checkout, button.large, input#user_submit {
+a.continue, a.checkout, button.large, input#user_submit {
     background-color: #F79923;
     background-image: -moz-linear-gradient(center top , #F79923, #F27016);
     border: 1px solid #925B33;
@@ -194,6 +194,7 @@ input.continue:hover,  a.continue:hover,  a.checkout:hover, button.large:hover, 
     box-shadow: 0 1px 0 rgba(255, 255, 255, 0.4), 0 1px 0 #FAC781 inset;
     text-shadow: 0 -1px 0 #A56739;
 }
+
 /* Sign up button */
 
 a.signup_button {

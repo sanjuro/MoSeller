@@ -37,6 +37,7 @@ gem 'will_paginate', '3.0.pre2'
 gem "paperclip" 
 
 gem 'state_machine'
+gem 'ruby-graphviz', :require => 'graphviz' # Optional: only required for graphing
 
 # Active Record Plugins
 gem 'acts_as_list', '>= 0.1.0'
@@ -44,7 +45,6 @@ gem 'acts_as_list', '>= 0.1.0'
 gem 'fb_graph'
 
 gem "gritter", "0.6.2"
-
 
 # Bundle gems for the local environment. Make sure to
 # put test-only gems in this group so their generators
