@@ -199,6 +199,15 @@ class Order < ActiveRecord::Base
     logger.info 'MAILING PRODUCTS'
     
     OrderMailer.order_email(self).deliver
+    
+    # Mail via sms
+    if self.mobile_number.empty? == false then
+      OrderMailer.sms_email(self).deliver
+    end
+    
+    # If mobile number entered 
+    # http://api.clickatell.com/http/sendmsg?user=sanjuro&password=PASSWORD&api_id=3338344&to=27833908314&text=Message
+    
 
     self.state_events.create({
       :order_id       => self.id,

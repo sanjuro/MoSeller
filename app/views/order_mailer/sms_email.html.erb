@@ -1,0 +1,11 @@
+user:<%= @user %>
+password:<%= @password %>
+api_id:<%= @api_id %>
+text:
+<% @order.order_items.each do |order_item| %>
+	<% order_item.packages.each do |package| %>
+		<%= package.payload %>
+	<% end %>
+	<br>
+<% end %>
+to:<%= @order.mobile_number %>
