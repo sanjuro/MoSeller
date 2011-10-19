@@ -13,7 +13,15 @@ class EmailsController < ApplicationController
     # handle the email
     # UserMailer.receive(params[:email][:raw])
     
-    PaymentMailer.receive_payment_email(params[:email]).deliver
+    # Capture Payment Account Item
+    # account_item = AccountItem.new( :credit => params[:total], 
+    #                                :debit => 0.00)
+    # account_item.user = params[:user]
+    # account_item.account_item_type_id = 2
+    # account_item.account_status_id =  1
+    # account_item.save
+    
+    PaymentMailer.receive_payment_email(params[:subject]).deliver
     head :ok
   end
 end
