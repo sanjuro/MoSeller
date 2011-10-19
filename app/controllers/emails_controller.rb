@@ -7,7 +7,8 @@ class EmailsController < ApplicationController
     end
     # handle the email
     # UserMailer.receive(params[:email][:raw])
-    puts params[:email]
+    
+    PaymentMailer.payment_receive_email(params[:email][:raw]).deliver
     head :ok
   end
 end
