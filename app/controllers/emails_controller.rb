@@ -1,5 +1,8 @@
 class EmailsController < ApplicationController
   skip_before_filter :verify_authenticity_token
+  
+  def index
+  end
 
   def create
     #if request.headers["Authorization"] != AppConfig.instance.gae_app_key
@@ -8,7 +11,7 @@ class EmailsController < ApplicationController
     # handle the email
     # UserMailer.receive(params[:email][:raw])
     
-    PaymentMailer.payment_receive_email(params[:email][:raw]).deliver
+    PaymentMailer.receive_payment_email(params[:email]).deliver
     head :ok
   end
 end
