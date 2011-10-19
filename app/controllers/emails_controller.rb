@@ -7,9 +7,9 @@ class EmailsController < ApplicationController
   end
 
   def create
-    #if request.headers["Authorization"] != AppConfig.instance.gae_app_key
-    #  return head(:unauthorized)
-    #end
+    if request.headers["Authorization"] != AppConfig.instance.gae_app_key
+      return head(:unauthorized)
+    end
     # handle the email
     # UserMailer.receive(params[:email][:raw])
     
