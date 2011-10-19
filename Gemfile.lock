@@ -159,7 +159,6 @@ GEM
       activesupport (~> 3.0)
       railties (~> 3.0)
       rspec (~> 2.6.0)
-    ruby-graphviz (1.0.0)
     sass (3.1.8)
     savon (0.9.7)
       akami (~> 1.0)
@@ -201,7 +200,6 @@ DEPENDENCIES
   rails (= 3.0.9)
   remail!
   rspec-rails (= 2.6.1)
-  ruby-graphviz
   savon
   state_machine
   webrat (= 0.7.1)
