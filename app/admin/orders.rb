@@ -10,6 +10,7 @@ ActiveAdmin.register Order do
   filter :number
   
   # filter :order_items, :as => :select, :collection => lambda{ Order.order_items }
+  filter :user
   filter :item_total
   filter :customer_total
   filter :billing_total

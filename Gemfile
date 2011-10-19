@@ -37,7 +37,6 @@ gem 'will_paginate', '3.0.pre2'
 gem "paperclip" 
 
 gem 'state_machine'
-gem 'ruby-graphviz', :require => 'graphviz' # Optional: only required for graphing
 
 # Active Record Plugins
 gem 'acts_as_list', '>= 0.1.0'
