@@ -7,7 +7,7 @@ class AppConfig
   include Singleton
 
   # This file is used to set the configuration options for the application.
-  CONFIG_FILE = "#{RAILS_ROOT}/config/config.yml"
+  CONFIG_FILE = "#{Rails.root.to_s}/config/config.yml"
 
   def initialize
     @parser = YamlAppConfigParser.new(CONFIG_FILE)

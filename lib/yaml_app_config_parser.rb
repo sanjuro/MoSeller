@@ -8,8 +8,8 @@ class YamlAppConfigParser
   end
 
   def method_missing(methId)
-    if @yaml[RAILS_ENV] && @yaml[RAILS_ENV][methId.id2name]
-      @yaml[RAILS_ENV][methId.id2name]
+    if @yaml[Rails.env] && @yaml[Rails.env][methId.id2name]
+      @yaml[Rails.env][methId.id2name]
     else
       @yaml['default'][methId.id2name]
     end
