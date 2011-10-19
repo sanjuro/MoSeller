@@ -1,7 +1,7 @@
 class EmailsController < ApplicationController
   skip_before_filter :verify_authenticity_token
 
-  def create
+  def new
     if request.headers["Authorization"] != AppConfig.instance.gae_app_key
       return head(:unauthorized)
     end
