@@ -1,3 +1,5 @@
+# curl -d "email=asdasd" http://www.moseller.com:3000/emails/
+
 class EmailsController < ApplicationController
   skip_before_filter :verify_authenticity_token
   
