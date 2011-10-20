@@ -21,7 +21,7 @@ class EmailsController < ApplicationController
     # account_item.account_status_id =  1
     # account_item.save
     
-    PaymentMailer.receive_payment_email(params[:email]).deliver
+    PaymentMailer.receive_payment_email(params).deliver
     head :ok
   end
 end
