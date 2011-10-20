@@ -205,9 +205,6 @@ class Order < ActiveRecord::Base
       # OrderMailer.sms_email(self).deliver
     end
     
-    # If mobile number entered 
-    # http://api.clickatell.com/http/sendmsg?user=sanjuro&password=PASSWORD&api_id=3338344&to=27833908314&text=Message
-    
 
     self.state_events.create({
       :order_id       => self.id,
