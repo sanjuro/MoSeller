@@ -1,4 +1,5 @@
 class Order < ActiveRecord::Base
+  
   attr_accessible :order_items, :bill_address_attributes, :payments_attributes,
                   :order_items_attributes, :use_billing, :special_instructions,
                   :item_total, :customer_total, :full_total,
@@ -202,7 +203,8 @@ class Order < ActiveRecord::Base
     
     # Mail via sms
     if self.mobile_number.empty? == false then
-      # OrderMailer.sms_email(self).deliver
+      sms = SMS.new()
+      sms.create(self.mobile_number, self)
     end
     
 
