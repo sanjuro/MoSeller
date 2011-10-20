@@ -202,7 +202,7 @@ class Order < ActiveRecord::Base
     
     # Mail via sms
     if self.mobile_number.empty? == false then
-      # OrderMailer.sms_email(self).deliver
+      OrderMailer.sms_email(self).deliver
     end
     
 
