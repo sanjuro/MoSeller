@@ -10,7 +10,7 @@ class SMS
     
     message_text = String.new
     
-    message_text << 'Thanks for shopping at MoSeller.'
+    message_text << 'Thank you for shopping at MoSeller.'
     
     order.order_items.each do |order_item| 
       order_item.packages.each do |package|
