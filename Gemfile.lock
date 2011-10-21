@@ -1,3 +1,10 @@
+GIT
+  remote: git://github.com/maccman/remail.git
+  revision: 417573e13fa26ad19209ec09755ffb5488e4fcae
+  specs:
+    remail (0.0.3)
+      activeresource
+
 GEM
   remote: http://rubygems.org/
   specs:
@@ -138,8 +145,6 @@ GEM
       thor (~> 0.14.4)
     rake (0.9.2)
     rdoc (3.9.4)
-    remail (0.0.3)
-      activeresource
     responders (0.6.4)
     rspec (2.6.0)
       rspec-core (~> 2.6.0)
@@ -193,7 +198,7 @@ DEPENDENCIES
   mysql2 (= 0.2.11)
   paperclip
   rails (= 3.0.9)
-  remail
+  remail!
   rspec-rails (= 2.6.1)
   savon
   state_machine
