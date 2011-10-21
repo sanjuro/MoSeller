@@ -29,6 +29,7 @@ ActiveAdmin.register Order do
     column :created_at
     default_actions
   end
+   
   
   form do |f|
     f.inputs "Details" do
@@ -50,6 +51,7 @@ ActiveAdmin.register Order do
       f.input :billing_total
       f.input :full_total
     end
+    f.inputs :name => 'Order Item #%i', :for => :order_items
     f.buttons
   end  
 

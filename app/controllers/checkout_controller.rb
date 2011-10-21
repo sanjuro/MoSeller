@@ -14,8 +14,7 @@ class CheckoutController < ApplicationController
       
       if @order.respond_to?(:coupon_code) && @order.coupon_code.present?
         # fire_event('moseller.checkout.coupon_code_added', :coupon_code => @order.coupon_code)
-      end
-      
+      end     
       
       if @order.state == "delivery"
         logger.info params

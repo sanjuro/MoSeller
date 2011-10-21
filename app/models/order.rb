@@ -201,6 +201,9 @@ class Order < ActiveRecord::Base
     
     OrderMailer.order_email(self).deliver
     
+    # Update user's cap usage
+    User.current.update_cap(self.billing_total)
+    
     # Mail via sms
     if self.mobile_number.empty? == false then
       sms = SMS.new()

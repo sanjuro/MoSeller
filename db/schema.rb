@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110905233450) do
+ActiveRecord::Schema.define(:version => 20111021225800) do
 
   create_table "account_item", :force => true do |t|
     t.integer  "user_id"
@@ -52,6 +52,7 @@ ActiveRecord::Schema.define(:version => 20110905233450) do
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
+    t.string   "username"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -343,12 +344,12 @@ ActiveRecord::Schema.define(:version => 20110905233450) do
 
   create_table "user", :force => true do |t|
     t.integer  "client_id"
-    t.string   "email",                                 :default => "", :null => false
-    t.string   "encrypted_password",     :limit => 128, :default => "", :null => false
+    t.string   "email",                                                               :default => "",  :null => false
+    t.string   "encrypted_password",     :limit => 128,                               :default => "",  :null => false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",                         :default => 0
+    t.integer  "sign_in_count",                                                       :default => 0
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
@@ -357,6 +358,8 @@ ActiveRecord::Schema.define(:version => 20110905233450) do
     t.string   "username"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.decimal  "cap_left",                              :precision => 8, :scale => 2, :default => 0.0, :null => false
+    t.decimal  "cap_limit",                             :precision => 8, :scale => 2, :default => 0.0, :null => false
   end
 
   add_index "user", ["email"], :name => "index_user_on_email", :unique => true
