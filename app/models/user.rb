@@ -12,8 +12,12 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, 
          :recoverable, :rememberable, :trackable, :validatable
 
+  # To facilitate username or email login
+  attr_accessor :login
+         
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :id, :name, :username, :email, :password, :password_confirmation, :remember_me
+  attr_accessible :id, :name, :username, :email, :password, :password_confirmation, 
+                  :remember_me
   
   validates :name,  :presence => true
   validates :email,  :presence => true
@@ -32,5 +36,12 @@ class User < ActiveRecord::Base
   def self.current=(user)
     Thread.current[:user] = user
   end
-
+  
+  # Overrides the devise method find_for_authentication
+  # Allow users to Sign In using their username or email address
+  def self.find_for_authentication(conditions)
+    login = conditions.delete(:login)
+    where(conditions).where(["username = :value OR email = :value", { :value => login }]).first
+  end
+  
 end

@@ -15,15 +15,18 @@ ActiveAdmin.register Order do
   filter :customer_total
   filter :billing_total
   filter :full_total
+  filter :state
   filter :created_at
 
   # Customize columns displayed on the index screen in the table
   index do
     column :number
+    column :state
     column :user
     column "Total", :sortable => :customer_total do |order|
       format_price order.customer_total
     end
+    column :created_at
     default_actions
   end
   
