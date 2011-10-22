@@ -9,7 +9,8 @@ class OrderItem < ActiveRecord::Base
   before_validation :copy_price
 
   validates :variant, :presence => true
-  validates :quantity, :numericality => { :only_integer => true, :message => I18n.t("validation.must_be_int") }
+  validates :quantity, :presence => true, 
+                       :numericality => { :only_integer => true, :message => I18n.t("validation.must_be_int"), :less_than => 5 }
   validates :customer_price, :numericality => true
   # validate :meta_validation_of_quantities
 
