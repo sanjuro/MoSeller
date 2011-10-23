@@ -1,6 +1,9 @@
 class OrdersController < ApplicationController
-
-  rescue_from ActiveRecord::RecordNotFound, :with => :render_404  
+ 
+  # Declare exception to handler methods
+  rescue_from Exception, :with => :show_error 
+  rescue_from ActiveRecord::RecordNotFound, :with => :render_404 
+  
   helper :base  
   helper :products
   
@@ -37,8 +40,7 @@ class OrdersController < ApplicationController
   end
   
   def update
-    @order = current_order   
-    
+    @order = current_order
     if @order.update_attributes(params[:order])
       @order.order_items = @order.order_items.select {|li| li.quantity > 0 }
       # fire_event('moseller.order.contents_changed')
@@ -55,20 +57,7 @@ class OrdersController < ApplicationController
   
   # Shows the current incomplete order from the session
   def edit
-    @order = current_order(true)
-    
-    if current_user.has_low_cap(@order.billing_total)
-      flash[:error] = I18n.t(:order_low_cap)
-      gflash :error => I18n.t(:order_low_cap)
-      
-      respond_to do |format|
-        format.mobile { redirect_to contactpage_path }
-        format.html { redirect_to contactpage_path }
-        format.xml  { render :xml => @order }
-        format.json  { render :json => @order }
-      end
-    end 
-    
+    @order = current_order(true) 
   end
   
   # Adds a new item to the order (creating a new order if none already exists)
@@ -128,6 +117,12 @@ class OrdersController < ApplicationController
       format.html { redirect_to(orders_url) }
       format.xml  { head :ok }
     end
-  end   
+  end  
+  
+  def show_error(exception)
+    flash[:error] = exception.message
+    gflash :error => exception.message
+    redirect_to homepage_path
+  end 
   
 end

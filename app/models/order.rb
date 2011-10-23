@@ -13,8 +13,8 @@ class Order < ActiveRecord::Base
 
   has_many :state_events, :as => :stateful
   has_many :order_items, :dependent => :destroy
-  has_many :payments, :dependent => :destroy
-  has_many :packages, :dependent => :destroy
+  has_many :payments
+  has_many :packages
 
   accepts_nested_attributes_for :order_items
   accepts_nested_attributes_for :payments
@@ -88,6 +88,11 @@ class Order < ActiveRecord::Base
     end   
 
     before_transition :to => 'complete' do |order|
+      
+      if User.current.has_low_cap(order.billing_total)
+        raise Exception, I18n.t(:order_low_cap)
+      end
+      
       # order.process_payments! # process payments
       order.process_order_items! # fetch products
     end

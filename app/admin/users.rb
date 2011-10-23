@@ -26,6 +26,10 @@ ActiveAdmin.register User do
       f.input :username
       f.input :password
     end
+    f.inputs "Buying" do
+      f.input :cap_left
+      f.input :cap_limit
+    end
     f.buttons
   end
   

@@ -1,5 +1,9 @@
 class CheckoutController < ApplicationController
-
+  
+  # Declare exception to handler methods
+  rescue_from Exception, :with => :show_error 
+  rescue_from ActiveRecord::RecordNotFound, :with => :render_404 
+  
   helper :base  
   
   before_filter :load_order, :authenticate_user!, :set_current_user
@@ -100,5 +104,11 @@ class CheckoutController < ApplicationController
     flash[:error] = t('moseller_gateway_error_flash_for_checkout')
     render :edit
   end
+  
+  def show_error(exception)
+    flash[:error] = exception.message
+    gflash :error => exception.message
+    redirect_to homepage_path
+  end  
 
 end
