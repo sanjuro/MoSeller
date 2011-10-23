@@ -13,6 +13,8 @@ class AccountItemsController < ApplicationController
     
     @account_balance = debit - credit  
     
+    @buying_cap_left = current_user.cap_left
+    
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @account_items }
