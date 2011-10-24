@@ -1,5 +1,5 @@
 # app/admin/users.rb
-ActiveAdmin.register User do
+ActiveAdmin.register User do  
 
   # Create sections on the index screen
   scope :all, :default => true
@@ -16,7 +16,7 @@ ActiveAdmin.register User do
     column :email
     column :created_at
     column :last_sign_in_at
-    default_actions
+    default_actions   
   end
 
   form do |f|
@@ -28,5 +28,19 @@ ActiveAdmin.register User do
     end
     f.buttons
   end
+  
+  action_item :only => :show do 
+    link_to('Send Statement', statement_admin_users_path(user))
+  end 
+  
+  # /admin/users/:id/statement
+  member_action :statement do
+    @user = User.find(params[:id])
+    @orders = Order.unpaid(@user.id)
+    @order_total = Order.unpaid(@user.id).sum("billing_total")
+    OrderMailer.statement_email(@user, @orders, @order_total).deliver
+    flash[:notice] = "Statement sent successfully!"
+    redirect_to :action => :show, :notice => "Statement sent successfully!"
+  end  
   
 end

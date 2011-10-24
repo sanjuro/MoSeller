@@ -51,6 +51,6 @@ ActiveAdmin.register Order do
       f.input :full_total
     end
     f.buttons
-  end  
+  end   
 
 end
