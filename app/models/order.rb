@@ -13,11 +13,11 @@ class Order < ActiveRecord::Base
 
   has_many :state_events, :as => :stateful
   has_many :order_items, :dependent => :destroy
-  has_many :payments, :dependent => :destroy
-  has_many :packages, :dependent => :destroy
+  # has_many :payments, :dependent => :destroy
+  # has_many :packages, :dependent => :destroy
 
   accepts_nested_attributes_for :order_items
-  accepts_nested_attributes_for :payments
+  # accepts_nested_attributes_for :payments
   
   # before_create :create_client
   before_create :generate_order_number  
