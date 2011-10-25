@@ -14,7 +14,7 @@ ActiveAdmin.register User do
     column :id
     column :name
     column :email
-    column :created_at
+    column :cap_left
     column :last_sign_in_at
     default_actions   
   end
@@ -25,6 +25,8 @@ ActiveAdmin.register User do
       f.input :name
       f.input :username
       f.input :password
+      f.input :cap_left
+      f.input :cap_limit
     end
     f.inputs "Buying" do
       f.input :cap_left
