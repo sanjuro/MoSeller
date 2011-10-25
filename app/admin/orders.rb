@@ -53,6 +53,6 @@ ActiveAdmin.register Order do
     end
     f.inputs :name => 'Order Item #%i', :for => :order_items
     f.buttons
-  end  
+  end   
 
 end

@@ -4,16 +4,20 @@
  
 <table> 
 <thead>
-	<th width="200px">Order Number</th>
+	<th width="200px" align="left">Order Number</th>
+	<th width="200px">Customer</th>
+	<th width="200px">Mobile</th>
 	<th width="200px" text-align="right">Price</th>
 	<th width="200px">Order Date</th>
 </thead>
 <tbody>
 <% @orders.each do |order| %>
   <tr>
-    <td><%= link_to order.number , order %></td>
-    <td text-align="right"><%= format_price(order.customer_total) %></td>
-    <td><%= order.created_at %></td>
+    <td><%= link_to order.number, order %></td>
+    <td align="center"><%= order.customer_name %></td>
+    <td align="center"><%= order.mobile_number %></td>
+    <td align="center"><%= format_price(order.customer_total) %></td>
+    <td><%= order.created_at.strftime('%Y-%m-%d %H:%m') %></td>
   </tr>
 <% end %>
 </tbody>

@@ -11,7 +11,7 @@
 	 	<li>
 	 		<h3><%= link_to order.number , order %></h3>
 	 		<p>
-	 			<%= order.created_at %>
+	 			<%= order.created_at.strftime('%Y-%m-%d %H:%m') %>
 	 			<br>
 	 			Price: <%= format_price(order.customer_total) %>
 	 		</p>
