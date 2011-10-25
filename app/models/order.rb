@@ -13,11 +13,11 @@ class Order < ActiveRecord::Base
 
   has_many :state_events, :as => :stateful
   has_many :order_items, :dependent => :destroy
-  has_many :payments
-  has_many :packages
+  # has_many :payments, :dependent => :destroy
+  # has_many :packages, :dependent => :destroy
 
   accepts_nested_attributes_for :order_items
-  accepts_nested_attributes_for :payments
+  # accepts_nested_attributes_for :payments
   
   # before_create :create_client
   before_create :generate_order_number  
@@ -53,7 +53,7 @@ class Order < ActiveRecord::Base
 
   # Is this a free order in which case the payment step should be skipped
   def payment_required?
-    full_total.to_f > 0.0
+    billing_total.to_f > 0.0
   end
 
   # Indicates the number of items in the order
@@ -88,11 +88,6 @@ class Order < ActiveRecord::Base
     end   
 
     before_transition :to => 'complete' do |order|
-      
-      if User.current.has_low_cap(order.billing_total)
-        raise Exception, I18n.t(:order_low_cap)
-      end
-      
       # order.process_payments! # process payments
       order.process_order_items! # fetch products
     end
@@ -206,9 +201,6 @@ class Order < ActiveRecord::Base
     
     OrderMailer.order_email(self).deliver
     
-    # Update user's cap usage
-    User.current.update_cap(self.billing_total)
-    
     # Mail via sms
     if self.mobile_number.empty? == false then
       sms = SMS.new()
@@ -274,10 +266,10 @@ class Order < ActiveRecord::Base
   #
   # The +payment_state+ value helps with reporting, etc. since it provides a quick and easy way to locate Orders needing attention.
   def update_payment_state
-    if round_money(payment_total) < round_money(total)
+    if round_money(payment_total) < round_money(billing_total)
       self.payment_state = "balance_due"
       self.payment_state = "failed" if payments.present? and payments.last.state == "failed"
-    elsif round_money(payment_total) > round_money(total)
+    elsif round_money(payment_total) > round_money(billing_total)
       self.payment_state = "credit_owed"
     else
       self.payment_state = "paid"
