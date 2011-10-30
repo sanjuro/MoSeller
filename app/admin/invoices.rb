@@ -6,6 +6,7 @@ ActiveAdmin.register Invoice do
 
   # Filterable attributes on the index screen
   filter :id
+  filter :user
   
   # filter :order_items, :as => :select, :collection => lambda{ Order.order_items }
   filter :state
@@ -26,6 +27,7 @@ ActiveAdmin.register Invoice do
   form do |f|
     f.inputs "Details" do
       f.input :user
+      f.input :order_id
       f.input :margin
       f.input :sub_total
       f.input :tax

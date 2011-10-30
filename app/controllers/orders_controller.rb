@@ -7,7 +7,7 @@ class OrdersController < ApplicationController
   before_filter :authenticate_user!, :set_current_user
   
   def index
-    @orders = Order.find_all_by_user_id(current_user.id).paginate(:page => params[:page])
+    @orders = Order.by_user_id(current_user.id).order('order.created_at DESC').paginate(:page => params[:page])
    
     respond_to do |format|
       format.html # index.html.erb

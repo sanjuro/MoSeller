@@ -9,7 +9,7 @@
   <tbody id='line-items' data-hook>
     <% @account_items.each do |item| %>
       <tr data-hook="order_details_line_item_row">
-        <td><%= item.created_at %></td>
+        <td><%= l(item.created_at, :format => :long) %></td>
         <td><%= format_price item.debit %></td>
         <td><%= format_price item.credit %></td>
       </tr>

@@ -6,6 +6,7 @@ class AccountItem < ActiveRecord::Base
   has_many :state_events, :as => :stateful  
   
   scope :by_user, lambda {|user| joins(:users).where("users.id =?", user)}
+  scope :by_user_id, lambda {|user_id| where("account_item.user_id =?", user_id)}
   
   # order state machine (see http://github.com/pluginaweek/state_machine/tree/master for details)
   state_machine :initial => 'created', :use_transactions => false do

@@ -27,6 +27,7 @@ class Order < ActiveRecord::Base
   scope :recent, order("order.created_at")
   scope :between, lambda {|*dates| where("order.created_at between ? and ?", dates.first.to_date, dates.last.to_date)}
   scope :by_customer, lambda {|customer| joins(:clients).where("clients.email =?", customer)}
+  scope :by_user_id, lambda {|user_id| where("order.user_id =?", user_id)}
   scope :complete, where("order.completed_at IS NOT NULL")
   scope :incomplete, where("order.completed_at IS NULL")
   

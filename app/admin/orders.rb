@@ -30,6 +30,37 @@ ActiveAdmin.register Order do
     default_actions
   end
   
+  show do
+    panel "Order Details" do
+      attributes_table_for order do
+        row("Status") { status_tag(order.state) }
+        row("Number") { order.number }
+        row("Customer Total") { order.customer_total }
+        row("Billing Total") { order.billing_total }
+        row("Full Total") { order.full_total }          
+        row("Created At") { order.created_at }
+        row("Completed At") { order.completed_at }
+      end
+    end
+    
+    panel "User Details" do
+      attributes_table_for order do
+        row("User Name") { order.user.username }
+        row("User Email") { order.user.email }
+      end
+    end   
+    
+    panel "Order Items" do
+      render('/admin/orders/order_items', :order_items => 'order.order_items')
+    end  
+     
+    panel "Package Items" do
+      render('/admin/orders/package_items', :order_items => 'order.order_items')
+    end   
+   
+    active_admin_comments
+  end 
+  
   form do |f|
     f.inputs "Details" do
       f.input :user
