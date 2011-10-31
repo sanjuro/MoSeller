@@ -82,6 +82,19 @@ ActiveAdmin.register Order do
       f.input :full_total
     end
     f.buttons
-  end   
+  end  
+  
+  action_item :only => :show do 
+    link_to('Pay Order', pay_admin_orders_path(order))
+  end  
+  
+  # /admin/users/:id/statement
+  member_action :pay do
+    @order = Order.find(params[:id])
+    @order.pay_order!
+    
+    flash[:notice] = "Order Paid successfully!"
+    redirect_to :action => :show, :notice => "Order Paid successfully!"
+  end  
 
 end

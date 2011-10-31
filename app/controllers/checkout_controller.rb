@@ -25,6 +25,13 @@ class CheckoutController < ApplicationController
         @order.save
       end
 
+      if @order.state == "payment"
+        logger.info "PAYMENT"
+        if @order.payment_not_required?
+          @order.next
+        end
+      end
+      
       if @order.next
         state_callback(:after)
       else

@@ -2,7 +2,7 @@ class Order < ActiveRecord::Base
   
   attr_accessible :order_items, :bill_address_attributes, :payments_attributes,
                   :order_items_attributes, :use_billing, :special_instructions,
-                  :item_total, :customer_total, :full_total,
+                  :item_total, :customer_total, :full_total, :state, :payment_total, :payment_state,
                   :email, :customer_name, :mobile_number, :completed_at, :updated_at
                  
   belongs_to :client, :foreign_key => "client_id", :class_name => "Client"
@@ -68,8 +68,10 @@ class Order < ActiveRecord::Base
     event :next do
       transition :from => 'cart',     :to => 'delivery'
       transition :from => 'delivery', :to => 'confirm'
-      transition :from => 'confirm',  :to => 'complete'
-
+      transition :from => 'confirm', :to => 'complete',
+                                      :if => :payment_not_required?    
+      transition :from => 'confirm',  :to => 'payment'
+      transition :from => 'payment', :to => 'complete'
 
       # note: some payment methods will not support a confirm step
       # transition :from => 'payment', :to => 'confirm',
@@ -77,7 +79,7 @@ class Order < ActiveRecord::Base
 
       # transition :from => 'payment', :to => 'complete'
     end
-
+   
     event :cancel do
       transition :to => 'canceled', :if => :allow_cancel?
     end
@@ -93,7 +95,7 @@ class Order < ActiveRecord::Base
       order.process_order_items! # fetch products
     end
 
-    after_transition :to => 'complete' do |order|
+    after_transition :to => 'payment' do |order|
       # do account and product stuff here   
       order.finalize! 
       
@@ -106,24 +108,34 @@ class Order < ActiveRecord::Base
 
   end 
   
+  def pay_order!
+    update_attributes_without_callbacks({
+      :payment_total => self.billing_total
+    })
+        
+    payment = Payment.new(:source_id => 2, :source_type => "Cash", :payment_method => 2, :amount => self.billing_total)
+    payment.order = self
+    payment.save
+    logger.info 'CREATED PAYMENT'
+
+  end  
+  
   # This is a multi-purpose method for processing logic related to changes in the Order. It is meant to be called from
   # various observers so that the Order is aware of changes that affect totals and other values stored in the Order.
   # This method should never do anything to the Order that results in a save call on the object (otherwise you will end
   # up in an infinite recursion as the associations try to save and then in turn try to call +update!+ again.)
   def update!
     update_totals
-    # update_payment_state
+    update_payment_state
     # update_adjustments
     # update totals a second time in case updated adjustments have an effect on the total
     # update_totals
     
     update_attributes_without_callbacks({
-      :item_total => item_total,
-      :customer_total => customer_total,
-      :full_total => full_total
+      :state => "complete"
     })    
-
-    update_hooks.each { |hook| self.send hook }
+    logger.info 'UPDATED ORDER'
+    # update_hooks.each { |hook| self.send hook }
   end 
   
   def allow_cancel?
@@ -136,6 +148,11 @@ class Order < ActiveRecord::Base
     return false if state_events.empty? || state_events.last.previous_state.nil?
     true
   end  
+  
+  def payment_not_required?
+    # check for payment
+    true
+  end    
   
   def add_variant(variant, quantity = 1)
     current_item = contains?(variant)
@@ -267,24 +284,23 @@ class Order < ActiveRecord::Base
   #
   # The +payment_state+ value helps with reporting, etc. since it provides a quick and easy way to locate Orders needing attention.
   def update_payment_state
-    if round_money(payment_total) < round_money(total)
+    if round_money(payment_total) < round_money(billing_total)
       self.payment_state = "balance_due"
-      self.payment_state = "failed" if payments.present? and payments.last.state == "failed"
-    elsif round_money(payment_total) > round_money(total)
+      # self.payment_state = "failed" if payments.present? and payments.last.state == "failed"
+    elsif round_money(payment_total) > round_money(billing_total)
       self.payment_state = "credit_owed"
     else
       self.payment_state = "paid"
     end
 
-    if old_payment_state = self.changed_attributes["payment_state"]
-      self.state_events.create({
+    self.state_events.create({
         :order_id       => self.id,
-        :previous_state => old_payment_state,
+        :previous_state => "balance_due",
         :next_state => self.payment_state,
         :name => "payment",
         :user_id => (User.respond_to?(:current) && User.current && User.current.id) || self.user_id
       })
-    end
+
   end
   
     def round_money(n)
