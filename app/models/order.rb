@@ -56,6 +56,15 @@ class Order < ActiveRecord::Base
   def payment_required?
     billing_total.to_f > 0.0
   end
+  
+  def payment_not_required?
+    # check for payment
+    true
+  end 
+  
+  def is_paid
+    payment_state == "paid"
+  end
 
   # Indicates the number of items in the order
   def item_count
@@ -146,12 +155,7 @@ class Order < ActiveRecord::Base
     # we shouldn't allow resume for legacy orders b/c we lack the information necessary to restore to a previous state
     return false if state_events.empty? || state_events.last.previous_state.nil?
     true
-  end  
-  
-  def payment_not_required?
-    # check for payment
-    true
-  end    
+  end     
   
   def add_variant(variant, quantity = 1)
     current_item = contains?(variant)

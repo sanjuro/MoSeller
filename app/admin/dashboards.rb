@@ -7,30 +7,22 @@ ActiveAdmin::Dashboards.build do
   # == Simple Dashboard Section
   # Here is an example of a simple dashboard section
      
-    section "Recent Orders", :priority => 1 do
+  section "Recent Orders", :priority => 1 do
       table_for Order.order('id desc').limit(10) do
         column("Number") {|order| link_to(order.number, admin_order_path(order)) }
         column("State") {|order| status_tag(order.state) }
+        column("Payment") {|order| status_tag(order.payment_state, order.is_paid ? :ok : :error) }
         column("Customer"){|order| link_to(order.user.username, admin_user_path(order.user)) }
         column("Total") {|order| format_price order.billing_total }
         column("Date") {|order| order.completed_at? ? l(order.completed_at, :format => :long) : '-' } 
       end
-    end    
+  end       
     
-  section "Recent Invoice", :priority => 2 do
-    table_for Invoice.order('id desc').limit(10) do
-      column("State") {|invoice| status_tag(invoice.state) }
-      column("Customer"){|invoice| link_to(invoice.user.username, admin_user_path(invoice.user)) }
-      column("Total") {|invoice| format_price invoice.total }
-      column("Date") {|invoice| invoice.created_at? ? l(invoice.created_at, :format => :long) : '-' }
-    end
-  end        
-    
-    section "Recent Users", :priority => 3  do
+  section "Recent Users", :priority => 3  do
       table_for User.order('last_sign_in_at desc').limit(10) do
         column("User") {|user| link_to(user.name, admin_user_path(user)) + ' ' + 'signed in at' + ' ' + l(user.last_sign_in_at, :format => :long) }
       end     
-    end
+  end
 
   
   # == Render Partial Section
