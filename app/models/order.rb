@@ -13,7 +13,7 @@ class Order < ActiveRecord::Base
 
   has_many :state_events, :as => :stateful
   has_many :order_items, :dependent => :destroy
-  # has_many :payments, :dependent => :destroy
+  has_many :payments, :dependent => :destroy
   # has_many :packages, :dependent => :destroy
 
   accepts_nested_attributes_for :order_items
@@ -108,16 +108,12 @@ class Order < ActiveRecord::Base
 
   end 
   
-  def pay_order!
-    update_attributes_without_callbacks({
-      :payment_total => self.billing_total
-    })
-        
-    payment = Payment.new(:source_id => 2, :source_type => "Cash", :payment_method => 2, :amount => self.billing_total)
+  def pay_order! 
+    payment = Payment.new(:source_id => 2, :source_type => "Cash", :amount => self.billing_total)
     payment.order = self
+    payment.state = "completed"
     payment.save
     logger.info 'CREATED PAYMENT'
-
   end  
   
   # This is a multi-purpose method for processing logic related to changes in the Order. It is meant to be called from
@@ -129,11 +125,12 @@ class Order < ActiveRecord::Base
     update_payment_state
     # update_adjustments
     # update totals a second time in case updated adjustments have an effect on the total
-    # update_totals
+    update_totals
     
     update_attributes_without_callbacks({
       :state => "complete"
     })    
+    
     logger.info 'UPDATED ORDER'
     # update_hooks.each { |hook| self.send hook }
   end 
@@ -225,7 +222,6 @@ class Order < ActiveRecord::Base
       sms.create(self.mobile_number, self)
     end
     
-
     self.state_events.create({
       :order_id       => self.id,
       :previous_state => "cart",
@@ -315,7 +311,7 @@ class Order < ActiveRecord::Base
     # +total+ The so-called "order total." This is equivalent to +item_total+ plus +adjustment_total+.
     def update_totals
       # update_adjustments
-      # self.payment_total = payments.completed.map(&:amount).sum
+      self.payment_total = payments.completed.map(&:amount).sum
       
       self.item_total = order_items.map(&:amount).sum
       self.billing_total = order_items.map(&:cost).sum
