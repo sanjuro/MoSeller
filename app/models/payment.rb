@@ -37,7 +37,7 @@ class Payment < ActiveRecord::Base
     end
     # With card payments this represents completing a purchase or capture transaction
     event :complete do
-      transition :from => ['processing', 'pending'], :to => 'completed'
+      transition :from => ['checkout', 'processing', 'pending'], :to => 'completed'
     end
     event :void do
       transition :from => ['pending', 'completed'], :to => 'void'
@@ -108,7 +108,8 @@ class Payment < ActiveRecord::Base
     end
 
     def update_order
-      # order.payments.reload
+      order.payments.reload
+      
       order.update!
     end
 

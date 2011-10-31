@@ -35,6 +35,7 @@ ActiveAdmin.register Order do
     panel "Order Details" do
       attributes_table_for order do
         row("Status") { status_tag(order.state) }
+        row("Payment") { status_tag(order.payment_state) }
         row("Number") { order.number }
         row("Customer Total") { order.customer_total }
         row("Billing Total") { order.billing_total }
@@ -58,6 +59,10 @@ ActiveAdmin.register Order do
     panel "Package Items" do
       render('/admin/orders/package_items', :order_items => 'order.order_items')
     end   
+    
+    panel "Payments" do
+      render('/admin/orders/payment_items', :payment_items => 'order.payments')
+    end    
    
     active_admin_comments
   end 
