@@ -1,0 +1,13 @@
+<table class="index" data-hook="order_details" style="width:100%;">
+  <tbody id='package-items' data-hook>
+
+    <% @order.payments.each do |payment| %>
+      <tr data-hook="package_details_line_item_row">
+      		<td width="20%"><%= l(payment.created_at, :format => :long) %></td>
+      		<td width="10%"><%= status_tag(payment.state) %></td>
+      		<td width="20px"><%= format_price(payment.amount) %></td>
+     </tr>
+      <br>
+    <% end %>
+  </tbody>
+</table>
