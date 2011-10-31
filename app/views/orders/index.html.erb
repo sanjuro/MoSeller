@@ -5,6 +5,7 @@
 <table> 
 <thead>
 	<th width="200px" align="left">Order Number</th>
+	<th width="200px">Payment</th>
 	<th width="200px">Customer</th>
 	<th width="200px">Mobile</th>
 	<th width="200px" text-align="right">Price</th>
@@ -12,8 +13,15 @@
 </thead>
 <tbody>
 <% @orders.each do |order| %>
-  <tr>
+  <tr style="height:40px;">
     <td><%= link_to order.number, order %></td>
+    <td align="center">
+    <% if order.is_paid %>
+	   <span class="status success">Paid</span>
+	<% else %>
+	    <span class="status error">Balance Due</span>
+	<% end %>
+    </td>
     <td align="center"><%= order.customer_name %></td>
     <td align="center"><%= order.mobile_number %></td>
     <td align="center"><%= format_price(order.customer_total) %></td>
