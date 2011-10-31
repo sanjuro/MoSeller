@@ -9,4 +9,9 @@
 </p>
 
 <h3><%= t(:account_items) %></h3>
+
+<%= will_paginate %> 
+
 <%= render :partial => 'shared/account_items', :locals => {:account_items => @account_items} %>
+
+<%= will_paginate %> 

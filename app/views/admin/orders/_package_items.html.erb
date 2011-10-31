@@ -5,8 +5,8 @@
       <tr data-hook="package_details_line_item_row">
       		<td width="20px"><%= order_item.variant.product.name %></td>
       		<td width="20"><%= format_price(order_item.variant.full_price) %></td>
-      </tr>
-      <tr>
+     </tr>
+     <tr>
      	<td>
       			<table>
       				<% order_item.packages.each do |package| %>
@@ -15,8 +15,8 @@
       				</tr>
       				<% end %>
       			</table>
-       	</td>
-       </tr>
+      	</td>
+      </tr>
       <br>
     <% end %>
   </tbody>

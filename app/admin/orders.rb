@@ -31,6 +31,37 @@ ActiveAdmin.register Order do
   end
    
   
+  show do
+    panel "Order Details" do
+      attributes_table_for order do
+        row("Status") { status_tag(order.state) }
+        row("Number") { order.number }
+        row("Customer Total") { order.customer_total }
+        row("Billing Total") { order.billing_total }
+        row("Full Total") { order.full_total }          
+        row("Created At") { order.created_at }
+        row("Completed At") { order.completed_at }
+      end
+    end
+    
+    panel "User Details" do
+      attributes_table_for order do
+        row("User Name") { order.user.username }
+        row("User Email") { order.user.email }
+      end
+    end   
+    
+    panel "Order Items" do
+      render('/admin/orders/order_items', :order_items => 'order.order_items')
+    end  
+     
+    panel "Package Items" do
+      render('/admin/orders/package_items', :order_items => 'order.order_items')
+    end   
+   
+    active_admin_comments
+  end 
+  
   form do |f|
     f.inputs "Details" do
       f.input :user
@@ -53,6 +84,19 @@ ActiveAdmin.register Order do
     end
     f.inputs :name => 'Order Item #%i', :for => :order_items
     f.buttons
-  end   
+  end  
+  
+  action_item :only => :show do 
+    link_to('Pay Order', pay_admin_orders_path(order))
+  end  
+  
+  # /admin/users/:id/statement
+  member_action :pay do
+    @order = Order.find(params[:id])
+    @order.pay_order!
+    
+    flash[:notice] = "Order Paid successfully!"
+    redirect_to :action => :show, :notice => "Order Paid successfully!"
+  end  
 
 end

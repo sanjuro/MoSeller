@@ -74,6 +74,7 @@ class CreateMoSales < ActiveRecord::Migration
       t.references "user"
       t.string "number", :limit => 15
       t.decimal "item_total", :precision => 8, :scale => 2, :default => 0.0, :null => false
+      t.decimal "payment_total", :precision => 8, :scale => 2, :default => 0.0, :null => false
       t.decimal "customer_total", :precision => 8, :scale => 2, :default => 0.0, :null => false
       t.decimal "billing_total", :precision => 8, :scale => 2, :default => 0.0, :null => false
       t.decimal "full_total", :precision => 8, :scale => 2, :default => 0.0, :null => false
