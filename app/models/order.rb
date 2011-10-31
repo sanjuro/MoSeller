@@ -93,14 +93,16 @@ class Order < ActiveRecord::Base
     before_transition :to => 'complete' do |order|
       # order.process_payments! # process payments
       order.process_order_items! # fetch products
-    end
-
-    after_transition :to => 'payment' do |order|
+      
       # do account and product stuff here   
       order.finalize! 
       
       # do billing for order this needs to be dynamic as the system might not have MoAccount
       order.billing!
+    end
+
+    after_transition :to => 'payment' do |order|
+
     end
     
     # after_transition :to => 'delivery', :do => :create_tax_charge!
@@ -212,9 +214,11 @@ class Order < ActiveRecord::Base
     # OrderMailer.confirm_email(self).deliver
     
     # Mail products
+    OrderMailer.order_email(self).deliver
     logger.info 'MAILING PRODUCTS'
     
-    OrderMailer.order_email(self).deliver
+    User.current.update_cap(self.billing_total)
+    logger.info 'UPDATE BUYER CAP'
     
     # Mail via sms
     if self.mobile_number.empty? == false then

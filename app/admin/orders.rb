@@ -52,6 +52,13 @@ ActiveAdmin.register Order do
       end
     end   
     
+    panel "Delivery Details" do
+      attributes_table_for order do
+        row("Customer Name") { order.customer_name }
+        row("Customer Mobile") { order.mobile_number }
+      end
+    end      
+    
     panel "Order Items" do
       render('/admin/orders/order_items', :order_items => 'order.order_items')
     end  

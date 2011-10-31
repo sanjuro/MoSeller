@@ -57,7 +57,24 @@ class OrdersController < ApplicationController
   
   # Shows the current incomplete order from the session
   def edit
-    @order = current_order(true) 
+    # Shows the current incomplete order from the session
+    @order = current_order(true)
+    
+    if current_user.has_low_cap(@order.billing_total)
+      
+      flash[:error] = I18n.t(:order_low_cap)
+      gflash :error => I18n.t(:order_low_cap)
+      
+      respond_to do |format|
+        format.mobile { redirect_to contactpage_path }
+        format.html { redirect_to contactpage_path }
+        format.xml  { render :xml => @order }
+        format.json  { render :json => @order }
+      end
+      
+    end
+    
+    # @order = current_order(true) 
   end
   
   # Adds a new item to the order (creating a new order if none already exists)
