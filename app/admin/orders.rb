@@ -21,7 +21,8 @@ ActiveAdmin.register Order do
   # Customize columns displayed on the index screen in the table
   index do
     column :number
-    column :state
+    column("state")  {|order| status_tag(order.state) }
+    column("payment_state")  {|order| status_tag(order.payment_state, order.is_paid ? :ok : :error) }
     column :user
     column "Total", :sortable => :customer_total do |order|
       format_price order.customer_total
