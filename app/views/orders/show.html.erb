@@ -1,4 +1,11 @@
-<h1><%= @order.number %></h1>
+<h1>
+	<%= @order.number %>
+   	<% if @order.is_paid %>
+			   <span class="status success">Paid</span>
+	<% else %>
+			    <span class="status error">Balance Due</span>
+	<% end %>
+</h1>
 
 <div id="order" data-hook>
 	<% if params.has_key? :checkout_complete %>
@@ -6,11 +13,14 @@
 	<% end %>
 	<%= render :partial => 'shared/order_details', :locals => {:order => @order} %>
   
-	<h3><%= t(:order_packages) %></h3>
+	<h1><%= t(:order_packages) %></h1>
 	<%= render :partial => 'shared/package_details', :locals => {:order => @order} %>  
  
-	<h3><%= t(:delivery) %></h3>
+	<h1><%= t(:delivery) %></h1>
 	<%= render :partial => 'shared/delivery_details', :locals => {:order => @order} %> 
+  
+  	<h1><%= t(:payment) %></h1>
+	<%= render :partial => 'shared/payment_details', :locals => {:order => @order} %> 
   
 	<p data-hook="links">
 		<%= link_to t('back_to_store'), root_path %>

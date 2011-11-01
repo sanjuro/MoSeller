@@ -245,7 +245,10 @@ td.sidebar {
 	float:right;	
 }
 /* Flash Messages */
-
+h1 span.success, h1 span.error {
+	padding: 0.1em 0.4em;
+	}
+	
 td span.error {
 	padding: 0.2em;
 	}
@@ -253,6 +256,7 @@ td span.error {
 td span.success {
 	padding: 0.2em;
 	}	
+	
 	
 .error, .alert, .notice, .success, .info, #error_explanation {padding:0.8em;margin-bottom:1em;border:2px solid #ddd;}
 .error, .alert, #error_explanation {background:#fbe3e4;color:#8a1f11;border-color:#fbc2c4;}

@@ -5,5 +5,8 @@ class PagesController < ApplicationController
 
   def contact
   end
+  
+  def news
+  end
 
 end
