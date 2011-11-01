@@ -1,14 +1,13 @@
 class Payment < ActiveRecord::Base
   belongs_to :order
   belongs_to :source, :polymorphic => true
-  belongs_to :payment_method
 
   has_many :offsets, :class_name => 'Payment', :foreign_key => 'source_id', :conditions => "source_type = 'Payment' AND amount < 0 AND state = 'completed'"
   has_many :log_entries, :as => :source
   
   attr_accessible :source_id, :source_type, :order_id, :state, :amount
 
-  after_save :create_payment_profile, :if => :profiles_supported?
+  # after_save :create_payment_profile, :if => :profiles_supported?
 
   # update the order totals, etc.
   after_save :update_order
@@ -56,6 +55,10 @@ class Payment < ActiveRecord::Base
   def can_credit?
     credit_allowed > 0
   end
+  
+  def is_complete
+    state == "completed"
+  end  
 
   def credit(amount)
     return if amount > credit_allowed

@@ -40,7 +40,8 @@ ActiveAdmin.register Order do
         row("Number") { order.number }
         row("Customer Total") { order.customer_total }
         row("Billing Total") { order.billing_total }
-        row("Full Total") { order.full_total }          
+        row("Full Total") { order.full_total } 
+        row("Payment Total") { order.payment_total }           
         row("Created At") { order.created_at }
         row("Completed At") { order.completed_at }
       end
@@ -94,6 +95,7 @@ ActiveAdmin.register Order do
       f.input :customer_total
       f.input :billing_total
       f.input :full_total
+      f.input :payment_total
     end
     f.inputs :name => 'Order Item #%i', :for => :order_items
     f.buttons
