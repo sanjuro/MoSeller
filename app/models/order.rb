@@ -120,7 +120,7 @@ class Order < ActiveRecord::Base
   end 
   
   def pay_order! 
-    payment = Payment.new(:source_id => 2, :source_type => "Cash", :amount => self.billing_total)
+    payment = Payment.new(:source_id => 2, :source_type => "Cash", :amount => self.customer_total)
     payment.order = self
     payment.state = "completed"
     payment.save
@@ -166,7 +166,7 @@ class Order < ActiveRecord::Base
       current_item = OrderItem.new(:quantity => quantity)
       current_item.variant = variant
       current_item.customer_price = variant.customer_price
-      current_item.billing_price = variant.customer_price
+      current_item.billing_price = variant.cost_price
       self.order_items << current_item
     end
 
@@ -221,7 +221,7 @@ class Order < ActiveRecord::Base
     OrderMailer.order_email(self).deliver
     logger.info 'MAILING PRODUCTS'
     
-    User.current.update_cap(self.billing_total)
+    User.current.update_cap(self.customer_total)
     logger.info 'UPDATE BUYER CAP'
     
     # Mail via sms

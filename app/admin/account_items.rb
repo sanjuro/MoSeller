@@ -19,9 +19,7 @@ ActiveAdmin.register AccountItem do
     column :user
     column :debit
     column :credit
-    column :created_at, :sortable => :created_at do |account_item|
-      account_item.created_at
-    end
+    column :created_at
     default_actions
   end
   
