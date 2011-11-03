@@ -288,10 +288,10 @@ class Order < ActiveRecord::Base
   #
   # The +payment_state+ value helps with reporting, etc. since it provides a quick and easy way to locate Orders needing attention.
   def update_payment_state
-    if round_money(payment_total) < round_money(billing_total)
+    if round_money(payment_total) < round_money(customer_total)
       self.payment_state = "balance_due"
       # self.payment_state = "failed" if payments.present? and payments.last.state == "failed"
-    elsif round_money(payment_total) > round_money(billing_total)
+    elsif round_money(payment_total) > round_money(customer_total)
       self.payment_state = "credit_owed"
     else
       self.payment_state = "paid"

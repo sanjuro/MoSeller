@@ -84,6 +84,7 @@ ActiveAdmin.register Order do
       f.input :updated_at
       f.input :completed_at
       f.input :state
+      f.input :payment_state
     end
     f.inputs "Customer" do
       f.input :customer_name  
