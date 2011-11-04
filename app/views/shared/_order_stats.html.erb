@@ -1,0 +1,12 @@
+<table> 
+<thead>
+	<th width="200px">Total Sales</th>
+	<th width="200px">Customer Total</th>
+	<th width="200px">Full Total</th>
+</thead>
+<tbody>
+    <td align="center"><%= order_volume %></td>
+    <td align="center"><%= format_price(order_customer_value) %></td>
+    <td align="center"><%= format_price(order_full_value) %></td>
+</tbody>
+</table>
