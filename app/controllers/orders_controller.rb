@@ -12,9 +12,10 @@ class OrdersController < ApplicationController
   def index
     @orders = Order.by_user_id(current_user.id).order('order.created_at DESC').paginate(:page => params[:page])
       
-    @order_customer_value = @orders.map(&:customer_total).sum
-    @order_full_value = @orders.map(&:full_total).sum
-    @order_volume = @orders.size
+    @orders_all = Order.by_user_id(current_user.id).order('order.created_at DESC')
+    @order_customer_value = @orders_all.map(&:customer_total).sum
+    @order_full_value = @orders_all.map(&:full_total).sum
+    @order_volume = @orders_all.size
    
     respond_to do |format|
       format.html # index.html.erb
