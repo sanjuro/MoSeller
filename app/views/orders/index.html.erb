@@ -1,5 +1,9 @@
 <h2>Orders</h2>
  
+<%= render :partial => 'shared/order_stats', :locals => {:order_volume => @order_volume, :order_customer_value => @order_customer_value, :order_full_value => @order_full_value} %> 
+ 
+<br><br> 
+ 
 <%= will_paginate %> 
  
 <table> 
@@ -8,7 +12,8 @@
 	<th width="200px">Payment</th>
 	<th width="200px">Customer</th>
 	<th width="200px">Mobile</th>
-	<th width="200px" text-align="right">Price</th>
+	<th width="200px" text-align="right">You Pay</th>
+	<th width="200px" text-align="right">Full Price</th>
 	<th width="200px">Order Date</th>
 </thead>
 <tbody>
@@ -25,6 +30,7 @@
     <td align="center"><%= order.customer_name %></td>
     <td align="center"><%= order.mobile_number %></td>
     <td align="center"><%= format_price(order.customer_total) %></td>
+    <td align="center"><%= format_price(order.full_total) %></td>
     <td><%= order.created_at.strftime('%Y-%m-%d %H:%m') %></td>
   </tr>
 <% end %>

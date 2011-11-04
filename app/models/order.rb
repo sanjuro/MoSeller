@@ -167,6 +167,7 @@ class Order < ActiveRecord::Base
       current_item.variant = variant
       current_item.customer_price = variant.customer_price
       current_item.billing_price = variant.cost_price
+      current_item.full_price = variant.full_price
       self.order_items << current_item
     end
 
@@ -324,7 +325,7 @@ class Order < ActiveRecord::Base
       self.item_total = order_items.map(&:amount).sum
       self.billing_total = order_items.map(&:cost).sum
       self.customer_total = item_total
-      self.full_total = item_total
+      self.full_total = order_items.map(&:full).sum
     end
     
     # Updates each of the Order adjustments. This is intended to be called from an Observer so that the Order can

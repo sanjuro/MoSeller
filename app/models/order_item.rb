@@ -69,6 +69,11 @@ class OrderItem < ActiveRecord::Base
     self.billing_price * self.quantity
   end
   alias total cost
+  
+  def full
+    self.full_price * self.quantity
+  end
+  alias total full  
 
   def adjust_quantity
     self.quantity = 0 if self.quantity.nil? || self.quantity < 0

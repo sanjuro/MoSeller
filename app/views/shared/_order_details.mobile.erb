@@ -25,7 +25,7 @@
   <tbody id='order-total' data-hook="order_details_total">
     <tr class="total">
       <td colspan="3"><b><%= t('order_total') %>:</b></td>
-      <td class="total"><span id="order_total"><%= format_price @order.full_total %></span></td>
+      <td class="total"><span id="order_total"><%= format_price @order.customer_total %></span></td>
     </tr>
   </tbody>
 </table>
