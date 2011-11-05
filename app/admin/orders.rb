@@ -44,7 +44,7 @@ ActiveAdmin.register Order do
         row("Customer Total") { order.customer_total }
         row("Billing Total") { order.billing_total }
         row("Full Total") { order.full_total } 
-        row("Payment Total") { order.payment_total }           
+        row("Payment Total") { order.payment_total }          
         row("Created At") { order.created_at }
         row("Completed At") { order.completed_at }
       end
