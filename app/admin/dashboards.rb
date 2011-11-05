@@ -13,7 +13,9 @@ ActiveAdmin::Dashboards.build do
         column("State") {|order| status_tag(order.state) }
         column("Payment") {|order| status_tag(order.payment_state, order.is_paid ? :ok : :error) }
         column("Customer"){|order| link_to(order.user.username, admin_user_path(order.user)) }
-        column("Total") {|order| format_price order.billing_total }
+        column("Billing") {|order| format_price order.billing_total }
+        column("Customer") {|order| format_price order.customer_total }
+        column("Profit") {|order| format_price order.customer_total - order.billing_total  }
         column("Date") {|order| order.completed_at? ? l(order.completed_at, :format => :long) : '-' } 
       end
   end       
