@@ -24,7 +24,10 @@ ActiveAdmin.register Order do
     column("state")  {|order| status_tag(order.state) }
     column("payment_state")  {|order| status_tag(order.payment_state, order.is_paid ? :ok : :error) }
     column :user
-    column "Total", :sortable => :customer_total do |order|
+    column "Billing", :sortable => :customer_total do |order|
+      format_price order.billing_total
+    end    
+    column "Customer", :sortable => :customer_total do |order|
       format_price order.customer_total
     end
     column :created_at
@@ -36,7 +39,7 @@ ActiveAdmin.register Order do
     panel "Order Details" do
       attributes_table_for order do
         row("Status") { status_tag(order.state) }
-        row("Payment") { status_tag(order.payment_state) }
+        row("Payment") { status_tag(order.payment_state, order.is_paid ? :ok : :error) }
         row("Number") { order.number }
         row("Customer Total") { order.customer_total }
         row("Billing Total") { order.billing_total }
