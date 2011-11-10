@@ -22,7 +22,6 @@ class Order < ActiveRecord::Base
   # before_create :create_client
   before_create :generate_order_number  
   
-  scope :unpaid, lambda {|user_id| where("order.completed_at IS NOT NULL AND state != 'paid' AND order.user_id = ?", user_id)}
   scope :by_number, lambda {|number| where("order.number = ?", number)}
   scope :recent, order("order.created_at")
   scope :between, lambda {|*dates| where("order.created_at between ? and ?", dates.first.to_date, dates.last.to_date)}
@@ -30,6 +29,8 @@ class Order < ActiveRecord::Base
   scope :by_user_id, lambda {|user_id| where("order.user_id =?", user_id)}
   scope :complete, where("order.completed_at IS NOT NULL")
   scope :incomplete, where("order.completed_at IS NULL")
+  scope :paid, where("order.completed_at IS NOT NULL AND order.payment_state = 'paid'")
+  scope :unpaid, lambda {|user_id| where("order.completed_at IS NOT NULL AND order.payment_state != 'paid' AND order.user_id = ?", user_id)}
   
   # make_permalink :field => :number  
   

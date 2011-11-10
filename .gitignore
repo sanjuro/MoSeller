@@ -1,5 +1,6 @@
 .bundle
 db/moseller_live.sql
+db/stats.sql
 config
 db/*.sqlite3
 log/*.log

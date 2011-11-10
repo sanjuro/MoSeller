@@ -3,6 +3,7 @@ ActiveAdmin.register Order do
 
   # Create sections on the index screen
   scope :all, :default => true
+  scope :paid
   scope :complete
   scope :incomplete
 

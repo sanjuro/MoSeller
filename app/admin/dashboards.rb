@@ -8,7 +8,7 @@ ActiveAdmin::Dashboards.build do
   # Here is an example of a simple dashboard section
      
   section "Recent Orders", :priority => 1 do
-      table_for Order.order('id desc').limit(10) do
+      table_for Order.order('id desc').limit(15) do
         column("Number") {|order| link_to(order.number, admin_order_path(order)) }
         column("State") {|order| status_tag(order.state) }
         column("Payment") {|order| status_tag(order.payment_state, order.is_paid ? :ok : :error) }
