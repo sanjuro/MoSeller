@@ -71,7 +71,15 @@ a:hover {
   text-decoration: underline;
 }
 
+#logo a {
+	color: #FFF;
+}
 
+#logo a:hover {
+  text-decoration: none;
+  text-shadow: 0 4px 4px #000;	
+  -moz-transition: opacity 0.25s linear 0s;
+}
 
 /* Navigation */
 
