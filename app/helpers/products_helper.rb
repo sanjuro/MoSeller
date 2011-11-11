@@ -3,7 +3,7 @@ module ProductsHelper
   # the variant price if no master price was supplied)
   def variant_price_diff(variant)
     return product_price(variant) unless variant.product.master.customer_price
-    diff = product_price(variant, :format_as_currency => false) - variant.cost_price
+    diff = variant.full_price - product_price(variant, :format_as_currency => false)
     if diff > 0
       "(#{t("you_save")}: #{format_price diff.abs})"
     else

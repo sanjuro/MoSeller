@@ -33,6 +33,7 @@ header img {
 }
 
 
+
 .container {
 	margin: 0 auto;
  	width: 900px;
@@ -49,6 +50,21 @@ section h1 {
  
 }
 
+section.column {
+	font-size: 14px/18px;
+}
+
+.inner {
+	font-size: 80%;
+	padding: 20px 10px;
+    width: 400px;	
+}
+
+em{
+    color: #00A0D1;
+    font-style: normal;
+}
+
 #logo {
     color: #FFFFFF;
     float: left;
@@ -61,7 +77,6 @@ section h1 {
 }
 
 /* Links */
-
 a {
   color: #069;
   text-decoration: none;
@@ -82,7 +97,6 @@ a:hover {
 }
 
 /* Navigation */
-
 nav {
   float: right;
 }
@@ -119,7 +133,6 @@ nav ul li a:hover {
 }
 
 /* Footer */
-
 footer {
   text-align: center;
   margin-top: 10px;
@@ -141,7 +154,6 @@ footer a:visited {
 }
 
 /* Sign Up Form */
-
 label {
     font-weight: bold;
     line-height: 1.75em;
@@ -204,7 +216,6 @@ input.continue:hover,  a.continue:hover,  a.checkout:hover, button.large:hover, 
 }
 
 /* Sign up button */
-
 a.signup_button {
   margin-left: auto;
   margin-right: auto;
@@ -219,7 +230,6 @@ a.signup_button {
 }
 
 /* Round corners */
-
 .round {
   -moz-border-radius:    10px;
   -webkit-border-radius: 10px;
@@ -227,7 +237,6 @@ a.signup_button {
 }
 
 /* User show page */
-
 table.profile {
   width: 100%;
   margin-bottom: 0;
@@ -252,6 +261,7 @@ td.sidebar {
 .links {
 	float:right;	
 }
+
 /* Flash Messages */
 h1 span.success, h1 span.error {
 	padding: 0.1em 0.4em;
@@ -264,8 +274,15 @@ td span.error {
 td span.success {
 	padding: 0.2em;
 	}	
-	
-	
+
+/* Specific */
+.airtime {
+	font-size: 100%;
+	padding: 0px 20px;	
+}
+
+
+/* All Purpose */
 .error, .alert, .notice, .success, .info, #error_explanation {padding:0.8em;margin-bottom:1em;border:2px solid #ddd;}
 .error, .alert, #error_explanation {background:#fbe3e4;color:#8a1f11;border-color:#fbc2c4;}
 .notice {background:#fff6bf;color:#514721;border-color:#ffd324;}
@@ -275,3 +292,5 @@ td span.success {
 .notice a {color:#514721;}
 .success a {color:#264409;}
 .info a {color:#205791;}
+.clearer {clear:both;}
+.column{float: left;'}
