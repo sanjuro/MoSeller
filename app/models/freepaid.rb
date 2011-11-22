@@ -34,7 +34,7 @@ class Freepaid < ProductSource
     productOut = FreepaidGetVoucher(transaction_options);
     logger.error productOut
     
-    package = Package.new(:payload => "PIN: " + productOut[:pin] + ", SERIAL: " + productOut[:serial])
+    package = Package.new(:payload => "PIN: " + productOut[:pin])
     package.save
     
     order_item.add_package(package)

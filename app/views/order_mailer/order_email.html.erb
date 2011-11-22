@@ -10,6 +10,7 @@
     <% @order.order_items.each do |order_item| %>
       <tr data-hook="package_details_line_item_row">
       	<td width="100">
+      		<%= order_item.variant.product.name %> (<%= number_to_currency(order_item.variant.full_price, :unit => "R", :separator => ".", :delimiter => ",") %>)
 	      	<table>
 	      		<% order_item.packages.each do |package| %>
 	      		<tr data-hook="package_details_line_item_row">

@@ -1,4 +1,6 @@
 class OrderMailer < ActionMailer::Base
+  
+  helper :base  
 
   def order_email(order)
     @order = order

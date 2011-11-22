@@ -1,6 +1,7 @@
 class SMS
   
   require 'clickatell'
+  include ActionView::Helpers
 
   @@SERVICE_USERNAME = AppConfig.instance.clickatell_user
   @@SERVICE_PASSOWRD = AppConfig.instance.clickatell_password
@@ -11,13 +12,13 @@ class SMS
     message_text = String.new
     
     message_text << 'Thank you for shopping at MoSeller.'
-    
     order.order_items.each do |order_item| 
+      message_text << order_item.variant.product.name + '(' + number_to_currency(order_item.variant.full_price, :unit => "R", :separator => ".", :delimiter => ",") + '):'
       order_item.packages.each do |package|
         message_text << package.payload
       end
     end
-    
+
     if Rails.env == 'production'
       api.send_message(recipient, message_text)
     end
