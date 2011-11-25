@@ -24,6 +24,8 @@ gem 'capistrano'
 # gem 'sqlite3-ruby', :require => 'sqlite3'
 # gem 'aws-s3', :require => 'aws/s3'
 
+gem 'jquery-rails'
+
 gem 'remail', :git => 'git://github.com/maccman/remail.git'
 
 gem 'activeadmin'

@@ -6,11 +6,14 @@ class OrdersController < ApplicationController
   
   helper :base  
   helper :products
+  helper_method :sort_column, :sort_direction
   
   before_filter :authenticate_user!, :set_current_user
   
   def index
-    @orders = Order.by_user_id(current_user.id).order('order.created_at DESC').paginate(:page => params[:page])
+    # @orders = Order.by_user_id(current_user.id).order('order.created_at DESC').paginate(:page => params[:page])
+
+    @orders = Order.by_user_id(current_user.id).search(params[:search],params[:fieldtype]).order(sort_column + " " + sort_direction).order('order.created_at DESC').paginate(:per_page => 15, :page => params[:page])
       
     @orders_all = Order.by_user_id(current_user.id).order('order.created_at DESC')
     @order_customer_value = @orders_all.map(&:customer_total).sum
@@ -146,5 +149,15 @@ class OrdersController < ApplicationController
     gflash :error => exception.message
     redirect_to homepage_path
   end 
+  
+  private
+  
+  def sort_column
+    Order.column_names.include?(params[:sort]) ? params[:sort] : "created_at"
+  end
+  
+  def sort_direction
+    %w[asc desc].include?(params[:direction]) ? params[:direction] : "desc"
+  end  
   
 end

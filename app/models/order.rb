@@ -34,6 +34,23 @@ class Order < ActiveRecord::Base
   
   # make_permalink :field => :number  
   
+  def self.search(search,type)
+    if search
+      case type
+                  when "customer_name"
+                          where('customer_name LIKE ?', "%#{search}%")
+                  when "mobile_number"                                
+                          where('mobile_number LIKE ?', "%#{search}%")
+                  when "number"
+                          where('number LIKE ?', "%#{search}%")
+                   when "all_fields"
+                           where('customer_name LIKE ? OR mobile_number LIKE ? OR number LIKE ? ', "%#{search}%","%#{search}%","%#{search}%")                                
+          end
+    else
+      scoped
+    end        
+  end
+    
   class_attribute :update_hooks
   self.update_hooks = Set.new
 
