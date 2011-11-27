@@ -25,6 +25,10 @@ class OrderItem < ActiveRecord::Base
   def copy_price
     self.customer_price = variant.customer_price if variant && self.customer_price.nil?
   end
+  
+  def presentation
+    self.product.name + ":" + self.full_price.to_s
+  end  
 
   def process!
     begin

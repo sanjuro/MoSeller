@@ -8,6 +8,7 @@ GIT
 GEM
   remote: http://rubygems.org/
   specs:
+    Ascii85 (1.0.1)
     abstract (1.0.0)
     actionmailer (3.0.9)
       actionpack (= 3.0.9)
@@ -120,7 +121,12 @@ GEM
       activesupport (>= 2.3.2)
       cocaine (>= 0.0.2)
       mime-types
+    pdf-reader (0.10.0)
+      Ascii85 (~> 1.0.0)
     polyglot (0.3.2)
+    prawn (0.12.0)
+      pdf-reader (>= 0.9.0)
+      ttfunk (~> 1.0.2)
     rack (1.2.4)
     rack-mount (0.6.14)
       rack (>= 1.0.0)
@@ -177,6 +183,7 @@ GEM
     treetop (1.4.10)
       polyglot
       polyglot (>= 0.3.1)
+    ttfunk (1.0.2)
     tzinfo (0.3.30)
     warden (1.0.5)
       rack (>= 1.0)
@@ -203,6 +210,7 @@ DEPENDENCIES
   jquery-rails
   mysql2 (= 0.2.11)
   paperclip
+  prawn
   rails (= 3.0.9)
   remail!
   rspec-rails (= 2.6.1)

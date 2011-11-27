@@ -111,7 +111,7 @@ class Invoice < ActiveRecord::Base
   end
   
   def add_invoice_item(order_item)
-    invoice_item = InvoiceItem.new( :total => order_item.customer_price * order_item.quantity, :description => order_item.variant.sku)
+    invoice_item = InvoiceItem.new( :quantity => order_item.quantity, :total => order_item.customer_price * order_item.quantity, :description => order_item.variant.sku)
     invoice_item.invoice = self
     invoice_item.save
   end
@@ -128,6 +128,10 @@ class Invoice < ActiveRecord::Base
   def update_totals
     self.sub_total = invoice_items.map(&:total).sum
     self.total = invoice_items.map(&:total).sum
+  end
+  
+  def invoice_location
+    "#{Rails.root}/pdfs/invoice-#{self.id}.pdf"
   end
   
 end
