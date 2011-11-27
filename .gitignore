@@ -5,3 +5,4 @@ config
 db/*.sqlite3
 log/*.log
 tmp/
+pdfs/*
