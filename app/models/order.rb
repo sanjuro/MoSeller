@@ -1,5 +1,9 @@
 class Order < ActiveRecord::Base
   
+  STATUS_CART = 'cart'
+  STATUS_CONFIRM = 'confirm'
+  STATUS_COMPLETE = 'complete'
+  
   attr_accessible :order_items, :bill_address_attributes, :payments_attributes,
                   :order_items_attributes, :use_billing, :special_instructions,
                   :item_total, :customer_total, :full_total, :state, :payment_total, :payment_state,
@@ -30,6 +34,7 @@ class Order < ActiveRecord::Base
   scope :complete, where("order.completed_at IS NOT NULL")
   scope :incomplete, where("order.completed_at IS NULL")
   scope :paid, where("order.completed_at IS NOT NULL AND order.payment_state = 'paid'")
+  scope :notpaid, where("order.completed_at IS NOT NULL AND order.payment_state != 'paid'")
   scope :unpaid, lambda {|user_id| where("order.completed_at IS NOT NULL AND order.payment_state != 'paid' AND order.user_id = ?", user_id)}
   
   # make_permalink :field => :number  
@@ -136,6 +141,14 @@ class Order < ActiveRecord::Base
     # after_transition :to => 'payment', :do => :create_shipment!
 
   end 
+  
+  def status_tag
+    case self.state
+      when STATUS_CART then :error
+      when STATUS_CONFIRM then :warning
+      when STATUS_COMPLETE then :ok
+    end
+  end  
   
   def pay_order! 
     payment = Payment.new(:source_id => 2, :source_type => "Cash", :amount => self.customer_total)
