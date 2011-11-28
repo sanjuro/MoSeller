@@ -13,6 +13,8 @@
 </div>
 <br>
 <fieldset class="ui-grid-a">
-	<div class="ui-block-a"><button type="submit" data-theme="c"><b><%= t('subtotal') %>: <%= format_price @order.item_total %></b></button></div>
-	<div class="ui-block-b"><button type="submit" data-theme="b"><b><%= t('order_total') %>: <%= format_price @order.customer_total %></b></button></div>	   
+	<div class="ui-block-a"><div class="status plain"><%= t('subtotal') %></div></div>
+	<div class="ui-block-b"><div class="status info"><%= format_price @order.customer_total %></div></div>	  
+	<div class="ui-block-a"><div class="status plain"><%= t('order_total') %></div></div>
+	<div class="ui-block-b"><div class="status info"><%= format_price @order.customer_total %></div></div>	 
 </fieldset>

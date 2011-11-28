@@ -11,9 +11,9 @@
 	  	<h3><%= t('thank_you_for_your_order') %></h3>
 	  <% end %>
 	  <% if @order.is_paid %>
-		   <div class="status success" style="width:100%;">Paid</div>
+		   <div class="status success" style="width:97%;">Paid</div>
       <% else %>
-		    <div class="status error">Balance Due</div>
+		    <div class="status error" style="width:97%;">Balance Due</div>
       <% end %>
 	  <%= render :partial => 'shared/order_details', :locals => {:order => @order} %>
 	</div>
