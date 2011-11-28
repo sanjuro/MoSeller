@@ -3,31 +3,7 @@ class AccountItem < ActiveRecord::Base
   
   belongs_to :user
   
-  has_many :state_events, :as => :stateful  
-  
   scope :by_user, lambda {|user| joins(:users).where("users.id =?", user)}
-  scope :by_user_id, lambda {|user_id| where("account_item.user_id =?", user_id)}
-  
-  # order state machine (see http://github.com/pluginaweek/state_machine/tree/master for details)
-  state_machine :initial => 'created', :use_transactions => false do
-  
-    event :next do
-      transition :from => 'created',  :to => 'unpaid'
-      transition :from => 'unpaid',  :to => 'paid'
-    end
-
-    before_transition :to => 'paid' do |account|
-      # order.process_payments! # process payments
-      order.process_order_items! # fetch products
-    end
-
-    after_transition :to => 'paid' do |invoice|
-      # do account and product stuff here   
-      invoice.mark_as_paid! 
-      
-      # order.billing!
-    end
-
-  end    
+  scope :by_user_id, lambda {|user_id| where("account_item.user_id =?", user_id)}   
 
 end

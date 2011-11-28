@@ -10,12 +10,24 @@
 	  <% if params.has_key? :checkout_complete %>
 	  	<h3><%= t('thank_you_for_your_order') %></h3>
 	  <% end %>
+	  <% if @order.is_paid %>
+		   <div class="status success" style="width:100%;">Paid</div>
+      <% else %>
+		    <div class="status error">Balance Due</div>
+      <% end %>
 	  <%= render :partial => 'shared/order_details', :locals => {:order => @order} %>
 	</div>
-	<br>
-	<%= render :partial => 'shared/package_details', :locals => {:order => @order} %>
- 
-	<h3><%= t(:delivery) %></h3>
-	<%= render :partial => 'shared/delivery_details', :locals => {:order => @order} %> 
-  
+	<br> 		
+	
+	<div data-role="collapsible" data-collapsed="true">
+		<h3>Package Details</h3>
+		<%= render :partial => 'shared/package_details', :locals => {:order => @order} %>
+	</div>
+		
+	<div data-role="collapsible" data-collapsed="true">
+		<h3><%= t(:delivery) %></h3>
+		<%= render :partial => 'shared/delivery_details', :locals => {:order => @order} %> 
+	</div>
+
+	
 </div>

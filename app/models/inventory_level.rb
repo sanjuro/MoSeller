@@ -1,7 +1,7 @@
 class InventoryLevel < ActiveRecord::Base
   belongs_to :product_source
   
-  attr_accessible :product_source, :amount, :clazz  
+  attr_accessible :product_source, :amount, :clazz, :stock_level
   
   @provider = nil
   

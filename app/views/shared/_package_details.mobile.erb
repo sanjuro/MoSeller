@@ -1,12 +1,10 @@
 <% @order.order_items.each do |order_item| %>
-	<h3>
+	<h4>
 		<%= order_item.variant.product.name %>
 		<%= format_price(order_item.variant.full_price) %>
-	</h3>
-	<p>
-		<% order_item.packages.each do |package| %>
+	</h4>
+	<% order_item.packages.each do |package| %>
 		<%= package.payload %>
 		<br>
-		<% end %>
-	</p>
+	<% end %>
 <% end %>

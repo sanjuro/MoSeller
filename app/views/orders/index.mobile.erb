@@ -7,6 +7,7 @@
 <div data-role="content" data-theme="d"> 
 	
 	 <ul data-role="listview" data-filter="true">
+	 <li></li>
 	 <% @orders.each do |order| %>
 	 	<li>
 	 		<h3><%= link_to order.number , order %></h3>
@@ -14,6 +15,8 @@
 	 			<%= order.created_at.strftime('%Y-%m-%d %H:%m') %>
 	 			<br>
 	 			Price: <%= format_price(order.customer_total) %>
+	 			<br>
+	 			Status: <%= order.state %>
 	 		</p>
 	 		
 	 	</li>
