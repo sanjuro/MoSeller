@@ -76,6 +76,16 @@ em{
     text-shadow: 0 2px 2px #39677F;	
 }
 
+.box {
+    background-color: #EEEEEE;
+    border: 1px solid #FFFFFF;
+    border-radius: 10px 10px 10px 10px;
+    box-shadow: 0 0 0 1px #DDDDDD;
+    padding: 5px 20px;
+    margin-bottom: 24px;
+    width: 95%;	
+	}
+
 /* Links */
 a {
   color: #069;
@@ -279,6 +289,29 @@ td span.success {
 .airtime {
 	font-size: 100%;
 	padding: 0px 20px;	
+}
+
+.comment{
+    clear: both;
+    margin-bottom: 40px;
+    margin-top: 10px;
+    max-width: 700px;	
+    padding-bottom: 10px;
+}	
+
+.comment_metadata {
+    color: #767E84;
+    float: left;
+    font-size: 0.9em;
+    width: 130px;              
+}
+
+.comment_author{
+	font-weight: bold;
+}
+
+.comment_body{
+	margin-left: 150px;
 }
 
 

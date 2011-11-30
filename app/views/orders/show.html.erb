@@ -13,14 +13,29 @@
 	<% end %>
 	<%= render :partial => 'shared/order_details', :locals => {:order => @order} %>
   
-	<h1><%= t(:order_packages) %></h1>
-	<%= render :partial => 'shared/package_details', :locals => {:order => @order} %>  
- 
-	<h1><%= t(:delivery) %></h1>
-	<%= render :partial => 'shared/delivery_details', :locals => {:order => @order} %> 
+  	<br>
   
-  	<h1><%= t(:payment) %></h1>
-	<%= render :partial => 'shared/payment_details', :locals => {:order => @order} %> 
+   	<div class="box">
+		<h2><%= t(:order_packages) %></h2>
+		<%= render :partial => 'shared/package_details', :locals => {:order => @order} %>  
+	</div>
+ 
+ 	<div class="box">
+		<h2><%= t(:delivery) %></h2>
+		<%= render :partial => 'shared/delivery_details', :locals => {:order => @order} %> 
+	</div>
+  
+	<div class="box">  
+  		<h2><%= t(:payment) %></h2>
+		<%= render :partial => 'shared/payment_details', :locals => {:order => @order} %> 
+	</div>
+	
+	<div class="box">  	
+	  	<h2><%= t(:comment) %></h2>
+	  	<%= render :partial => 'comments/comments', :locals => {:comments => @comments} %>
+	  	
+		<%= render :partial => 'comments/comment_form', :locals => {:model => @order, :type => 'Order'} %>	
+	</div>
   
 	<p data-hook="links">
 		<%= link_to t('back_to_store'), root_path %>

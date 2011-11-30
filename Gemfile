@@ -30,6 +30,8 @@ gem 'remail', :git => 'git://github.com/maccman/remail.git'
 
 gem 'activeadmin'
 
+gem 'acts_as_commentable', '~> 3.0.1'
+
 # gem "devise", :git => "git://github.com/plataformatec/devise.git" 
 gem 'devise', '1.4.7'
 

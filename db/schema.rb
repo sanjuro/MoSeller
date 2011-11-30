@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111021225800) do
+ActiveRecord::Schema.define(:version => 20111129101312) do
 
   create_table "account_item", :force => true do |t|
     t.integer  "user_id"
@@ -96,6 +96,17 @@ ActiveRecord::Schema.define(:version => 20111021225800) do
     t.string "title"
   end
 
+  create_table "comments", :force => true do |t|
+    t.string   "title",            :limit => 50, :default => ""
+    t.string   "comment",                        :default => ""
+    t.datetime "created_at",                                     :null => false
+    t.integer  "commentable_id",                 :default => 0,  :null => false
+    t.string   "commentable_type", :limit => 15, :default => "", :null => false
+    t.integer  "user_id",                        :default => 0,  :null => false
+  end
+
+  add_index "comments", ["user_id"], :name => "fk_comments_user"
+
   create_table "contact", :force => true do |t|
     t.integer  "client_id"
     t.integer  "contact_type_id"
@@ -167,6 +178,7 @@ ActiveRecord::Schema.define(:version => 20111021225800) do
     t.integer  "invoice_id"
     t.text     "description"
     t.decimal  "total",       :precision => 8, :scale => 2, :default => 0.0, :null => false
+    t.integer  "quantity",                                  :default => 0
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -221,6 +233,7 @@ ActiveRecord::Schema.define(:version => 20111021225800) do
     t.integer  "user_id"
     t.string   "number",           :limit => 15
     t.decimal  "item_total",                     :precision => 8, :scale => 2, :default => 0.0, :null => false
+    t.decimal  "payment_total",                  :precision => 8, :scale => 2, :default => 0.0, :null => false
     t.decimal  "customer_total",                 :precision => 8, :scale => 2, :default => 0.0, :null => false
     t.decimal  "billing_total",                  :precision => 8, :scale => 2, :default => 0.0, :null => false
     t.decimal  "full_total",                     :precision => 8, :scale => 2, :default => 0.0, :null => false

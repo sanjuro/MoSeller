@@ -1,5 +1,6 @@
 class Order < ActiveRecord::Base
-  
+  acts_as_commentable
+   
   STATUS_CART = 'cart'
   STATUS_CONFIRM = 'confirm'
   STATUS_COMPLETE = 'complete'

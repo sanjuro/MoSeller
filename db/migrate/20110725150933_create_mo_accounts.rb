@@ -37,6 +37,7 @@ class CreateMoAccounts < ActiveRecord::Migration
       t.references :invoice
       t.text "description"
       t.decimal :total,                :precision => 8, :scale => 2, :default => 0.0, :null => false
+      t.integer :quantity,             :default => 0
       
       t.timestamps
     end

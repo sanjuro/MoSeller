@@ -45,6 +45,7 @@ GEM
       activemodel (= 3.0.9)
       activesupport (= 3.0.9)
     activesupport (3.0.9)
+    acts_as_commentable (3.0.1)
     acts_as_list (0.1.4)
     akami (1.0.0)
       gyoku (>= 0.4.0)
@@ -200,6 +201,7 @@ PLATFORMS
 
 DEPENDENCIES
   activeadmin
+  acts_as_commentable (~> 3.0.1)
   acts_as_list (>= 0.1.0)
   capistrano
   clickatell

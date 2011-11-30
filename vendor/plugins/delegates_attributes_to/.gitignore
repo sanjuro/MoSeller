@@ -1,6 +1,0 @@
-pkg/*
-*.gem
-.bundle
-Gemfile.lock
-
-spec/app_root/log/*

@@ -1,0 +1,19 @@
+<% if @comments.empty? %>
+	<div class="comment">
+		no comments
+	</div>
+<% else %>
+	<% @comments.each do |comment| %>
+		<div class="comment">
+			<div class="comment_metadata">
+				<div class="comment_author"><%= comment.user.username %></div>
+				<span><%= comment.created_at %></span>
+			</div>
+			<div class="comment_body">
+				<%= comment.comment %>
+				
+				<%= link_to("Remove", comment, :method => :delete, :class => 'action', :confirm => 'Are you sure?') %>
+			</div>
+		</div>
+	<% end %>
+<% end %>	

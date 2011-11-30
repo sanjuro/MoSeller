@@ -39,6 +39,8 @@ class OrdersController < ApplicationController
   
   def show
     @order = Order.find_by_id!(params[:id])
+      
+    @comments = @order.comments.recent.limit(10).all
    
     respond_to do |format|
       format.html # show.html.erb
@@ -71,7 +73,7 @@ class OrdersController < ApplicationController
     if current_user.has_low_cap(@order.billing_total)
       
       flash[:error] = I18n.t(:order_low_cap)
-      gflash :error => I18n.t(:order_low_cap)
+      # gflash :error => I18n.t(:order_low_cap)
       
       respond_to do |format|
         format.mobile { redirect_to contactpage_path }
@@ -132,7 +134,6 @@ class OrdersController < ApplicationController
     end    
   end  
   
-  
   def destroy
     @order = Order.find(params[:id])
     @order.destroy
@@ -143,10 +144,11 @@ class OrdersController < ApplicationController
       format.xml  { head :ok }
     end
   end  
+ 
   
   def show_error(exception)
     flash[:error] = exception.message
-    gflash :error => exception.message
+    # gflash :error => exception.message
     redirect_to homepage_path
   end 
   
