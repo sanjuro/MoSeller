@@ -1,4 +1,8 @@
 class Order < ActiveRecord::Base
+  
+  include ActionView::Helpers::NumberHelper
+  include BaseHelper  
+  
   acts_as_commentable
    
   STATUS_CART = 'cart'
@@ -305,8 +309,57 @@ class Order < ActiveRecord::Base
   def products
     order_items.map{|li| li.variant.product}
   end
+  
+  def order_location
+     "#{Rails.root}/pdfs/order-#{self.id}.pdf"
+  end
+  
+  def generate_pdf
+    
+    i = 1     
+      
+    Prawn::Document.generate(self.order_location, :page_layout => :portrait )  do |pdf|
+        
+      pdf.define_grid(:columns => 2, :rows => 5)
+          
+      self.order_items.each do |order_item|
+     
+        order_item.packages.each do |package|
+        
+          pos = i % 10                    # pos = label's position on the page (0-39)
+             
+          box = pdf.grid(pos / 2, pos % 2)    # lay labels out in 4 columns
+            # (print label in box)         
+        
+          pdf.start_new_page if pos == 0
+        
+          pdf.bounding_box box.top_left, :width => box.width, :height => box.height do     
+           
+            pdf.draw_text order_item.presentation , :at => [40,120], :size => 12, :style => :bold 
+            
+            pdf.draw_text "To recharge, Dial" , :at => [40,100], :size => 7, :style => :bold 
+            
+            pdf.draw_text package.get_voucher, :at => [40,90], :size => 9 
+            
+            pdf.draw_text package.payload, :at => [40,70], :size => 10, :style => :bold 
+            
+            pdf.stroke do
+              pdf.rectangle(pdf.bounds.top_left, box.width, box.height)
+            end   
+          end
+           
+          i += 1
+            
+        end
+          
+      end
+    
+    end
+        
+  end      
 
   private
+  
   def create_client
     self.email = user.email if self.user and not user.anonymous?
     self.user ||= User.anonymous!

@@ -37,7 +37,7 @@ class ProductSource < ActiveRecord::Base
   end
   
   def provider
-    logger.error "CALLING PRODUCTSOURCE PROVIDER"
+    logger.info "CALLING PRODUCTSOURCE PROVIDER"
     # product_source_options = options
     # product_source_options.delete :login if product_source_options.has_key?(:login) and product_source_options[:login].nil?
     # @provider ||= Freepaid.new

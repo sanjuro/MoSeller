@@ -35,6 +35,7 @@ class Freepaid < ProductSource
     logger.error productOut
     
     package = Package.new(:payload => "PIN: " + productOut[:pin])
+    package.clazz = "AirtimePackage"
     package.save
     
     order_item.add_package(package)

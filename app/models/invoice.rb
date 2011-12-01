@@ -1,4 +1,8 @@
 class Invoice < ActiveRecord::Base
+  
+  include ActionView::Helpers::NumberHelper
+  include BaseHelper
+  
   attr_accessible :user_id, :margin, :sub_total, :tax,  
                   :total, :date_paid, :email, :state
 
@@ -157,6 +161,7 @@ class Invoice < ActiveRecord::Base
   
       # Items
       header = ['Qty.', 'Description', 'Amount', 'Total']
+        
       items = self.order.order_items.collect do |order_item|
         [order_item.quantity.to_s, order_item.presentation, format_price(order_item.variant.customer_price), format_price(order_item.quantity * order_item.customer_price)]
       end

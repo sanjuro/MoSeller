@@ -144,7 +144,14 @@ class OrdersController < ApplicationController
       format.xml  { head :ok }
     end
   end  
- 
+  
+  def pdf 
+    @order = Order.find(params[:id])
+    @order.generate_pdf
+    
+    # Send file to user
+    send_file @order.order_location
+  end  
   
   def show_error(exception)
     flash[:error] = exception.message

@@ -1,4 +1,8 @@
 class OrderItem < ActiveRecord::Base
+  
+  include ActionView::Helpers::NumberHelper
+  include BaseHelper  
+  
   before_validation :adjust_quantity
   belongs_to :order
   belongs_to :variant
@@ -27,8 +31,8 @@ class OrderItem < ActiveRecord::Base
   end
   
   def presentation
-    self.product.name + ":" + self.full_price.to_s
-  end  
+    self.product.name + ":" + format_price(self.full_price).to_s
+  end   
 
   def process!
     begin
