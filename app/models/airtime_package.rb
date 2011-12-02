@@ -7,21 +7,34 @@ class AirtimePackage < Package
   AIRTIME_HEITA = 'Heita'   
   
   def get_voucher(voucher_name, payload)
-    logger.info "CALLING AIRTIME GET VOUCHER"
-    
     payload_array = payload.split(" ")
 
     case voucher_name
       when AIRTIME_VODACOM 
-        voucher = "*100*01*" + payload_array[1] + "#"
+        voucher = {
+                :text => "*100*01*" + payload_array[1] + "#", 
+                :image => "#{RAILS_ROOT}/public/images/logos/vodacom_voucher.png"
+              }
       when AIRTIME_MTN 
-        voucher =  "*141*" + payload_array[1] + "#"
+        voucher = {
+                :text => "*141*" + payload_array[1] + "#", 
+                :image => "#{RAILS_ROOT}/public/images/logos/mtn_voucher.png"
+              }
       when AIRTIME_CELLC 
-        voucher =  "*120*" + payload_array[1] + "#"
+        voucher = {
+                :text => "*120*" + payload_array[1] + "#", 
+                :image => "#{RAILS_ROOT}/public/images/logos/cellc_voucher.png"
+              }
       when AIRTIME_VIRGIN 
-        voucher =  "*120*" + payload_array[1] + "#"
+        voucher = {
+                :text => "*120*" + payload_array[1] + "#", 
+                :image => "#{RAILS_ROOT}/public/images/logos/virgin_voucher.png"
+              }
       when AIRTIME_HEITA 
-        voucher =  "*188*" + payload_array[1] + "#"
+        voucher = {
+                :text => "*188*" + payload_array[1] + "#", 
+                :image => "#{RAILS_ROOT}/public/images/logos/heita_voucher.png"
+              }
     end
   end   
   

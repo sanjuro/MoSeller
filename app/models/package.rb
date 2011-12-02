@@ -11,7 +11,6 @@ class Package < ActiveRecord::Base
   end
   
   def provider
-    logger.info "CALLING PACKAGE PROVIDER"
     p = provider_class
     Kernel.const_get(p)
     eval(p)
@@ -19,7 +18,6 @@ class Package < ActiveRecord::Base
   end     
   
   def get_voucher
-    logger.info "CALLING PACKAGE GET VOUCHER"
     provider.get_voucher(self.order_item.variant.product.name, self.payload)
   end  
   

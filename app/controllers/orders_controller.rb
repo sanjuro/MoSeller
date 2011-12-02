@@ -159,7 +159,9 @@ class OrdersController < ApplicationController
     @order.generate_pdf
     
     # Send file to user
-    send_file @order.order_location
+    send_file @order.order_pdf_location
+    # send_data show.render,:filename => @order.order_pdf_location, :type=>"application/pdf"
+
   end  
   
   def show_error(exception)

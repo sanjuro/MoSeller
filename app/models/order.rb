@@ -310,38 +310,42 @@ class Order < ActiveRecord::Base
     order_items.map{|li| li.variant.product}
   end
   
-  def order_location
-     "#{Rails.root}/pdfs/order-#{self.id}.pdf"
+  def order_pdf_location
+     "#{Rails.root}/tmp/order-#{self.id}.pdf"
   end
   
   def generate_pdf
     
-    i = 1     
+    i = 0     
       
-    Prawn::Document.generate(self.order_location, :page_layout => :portrait )  do |pdf|
+    Prawn::Document.generate(self.order_pdf_location, :page_layout => :portrait )  do |pdf|
         
       pdf.define_grid(:columns => 2, :rows => 5)
           
       self.order_items.each do |order_item|
      
         order_item.packages.each do |package|
+          
+          voucher_data = package.get_voucher
         
           pos = i % 10                    # pos = label's position on the page (0-39)
              
           box = pdf.grid(pos / 2, pos % 2)    # lay labels out in 4 columns
             # (print label in box)         
         
-          pdf.start_new_page if pos == 0
+          pdf.start_new_page if pos == 0 && i != 0
         
           pdf.bounding_box box.top_left, :width => box.width, :height => box.height do     
+            
+            pdf.image voucher_data[:image], :width => 110, :height => 80
            
-            pdf.draw_text order_item.presentation , :at => [40,120], :size => 12, :style => :bold 
+            pdf.draw_text order_item.presentation , :at => [120,120], :size => 12, :style => :bold 
             
-            pdf.draw_text "To recharge, Dial" , :at => [40,100], :size => 7, :style => :bold 
+            pdf.draw_text "To recharge, Dial" , :at => [120,100], :size => 7, :style => :bold 
             
-            pdf.draw_text package.get_voucher, :at => [40,90], :size => 9 
+            pdf.draw_text voucher_data[:text], :at => [120,90], :size => 9 
             
-            pdf.draw_text package.payload, :at => [40,70], :size => 10, :style => :bold 
+            pdf.draw_text package.payload, :at => [120,70], :size => 10, :style => :bold 
             
             pdf.stroke do
               pdf.rectangle(pdf.bounds.top_left, box.width, box.height)
