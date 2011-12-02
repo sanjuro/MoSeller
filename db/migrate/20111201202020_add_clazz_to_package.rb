@@ -1,6 +1,6 @@
 class AddClazzToPackage < ActiveRecord::Migration
   def self.up
-    add_column :package, :clazz, :string
+    add_column :package, :clazz, :string, :default => 'AirtimePackage'
   end
 
   def self.down
@@ -8,4 +8,4 @@ class AddClazzToPackage < ActiveRecord::Migration
   end  
 end
 # ALTER TABLE package ADD clazz varchar(80);
-# UPDATE package SET clazz = "AirtimePackage" WHERE clazz IS NULL 
+# UPDATE package SET clazz = "AirtimePackage" WHERE clazz IS NULL;

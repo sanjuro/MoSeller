@@ -99,16 +99,25 @@ class OrdersController < ApplicationController
   # +:products => {product_id => variant_id, product_id => variant_id}}, :quantity => {variant_id => quantity, variant_id => quantity}+
   def populate
     @order = current_order(true)
-    puts params
+    # puts params
     params[:products].each do |product_id, variant_id|
       quantity = params[:quantity].to_i if !params[:quantity].is_a?(Hash)
       quantity = params[:quantity][variant_id.to_i].to_i if params[:quantity].is_a?(Hash)
-      @order.add_variant(Variant.find(variant_id), quantity) if quantity > 0
+      if quantity > 0 && quantity < 6
+        @order.add_variant(Variant.find(variant_id), quantity)
+      else
+        flash[:error] = 'You may only 5 products at a time'
+      end
     end if params[:products]
 
     params[:variants].each do |variant_id, quantity|
       quantity = quantity.to_i
-      @order.add_variant(Variant.find(variant_id), quantity) if quantity > 0
+      # @order.add_variant(Variant.find(variant_id), quantity) if quantity > 0
+      if quantity > 0 && quantity < 6
+        @order.add_variant(Variant.find(variant_id), quantity)
+      else
+        flash[:error] = 'You may only 5 products at a time'
+      end
     end if params[:variants]
 
     # fire_event('moseller.cart.add')
