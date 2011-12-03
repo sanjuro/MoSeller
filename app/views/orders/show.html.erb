@@ -16,7 +16,7 @@
   	<br>
   
    	<div class="box">
-		<h2><%= t(:order_packages) %> <span class="print_pdf_button"><%= link_to "Printable PDF", generate_pdf_order_path(@order) %></span></h2>
+		<h2><%= t(:order_packages) %> <span class="print_pdf_button"><%= link_to "Printable PDF", order_path(@order, :format => 'pdf') %></span></h2>
 		<%= render :partial => 'shared/package_details', :locals => {:order => @order} %>  
 	</div>
  

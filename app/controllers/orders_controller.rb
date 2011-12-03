@@ -46,6 +46,7 @@ class OrdersController < ApplicationController
       format.html # show.html.erb
       format.xml  { render :xml => @order }
       format.json  { render :json => @order }
+      format.pdf  { render :layout => false }
     end
   end
   
@@ -156,12 +157,12 @@ class OrdersController < ApplicationController
   
   def pdf 
     @order = Order.find(params[:id])
-    @order.generate_pdf
+    # @order.generate_pdf
+    output = @order.generate_pdf
     
     # Send file to user
     send_file @order.order_pdf_location
-    # send_data show.render,:filename => @order.order_pdf_location, :type=>"application/pdf"
-
+    # send_data @order.generate_pdf, :filename => @order.order_pdf_location, :type=>"application/pdf"
   end  
   
   def show_error(exception)

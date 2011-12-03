@@ -318,7 +318,7 @@ class Order < ActiveRecord::Base
     
     i = 0     
       
-    Prawn::Document.generate(self.order_pdf_location, :page_layout => :portrait )  do |pdf|
+    document =  Prawn::Document.generate(self.order_pdf_location, :page_layout => :portrait )  do |pdf|
         
       pdf.define_grid(:columns => 2, :rows => 5)
           
@@ -337,14 +337,10 @@ class Order < ActiveRecord::Base
         
           pdf.bounding_box box.top_left, :width => box.width, :height => box.height do     
             
-            pdf.image voucher_data[:image], :width => 110, :height => 80
-           
-            pdf.draw_text order_item.presentation , :at => [120,120], :size => 12, :style => :bold 
-            
-            pdf.draw_text "To recharge, Dial" , :at => [120,100], :size => 7, :style => :bold 
-            
-            pdf.draw_text voucher_data[:text], :at => [120,90], :size => 9 
-            
+            pdf.image voucher_data[:image], :width => 110, :height => 80           
+            pdf.draw_text order_item.presentation , :at => [120,120], :size => 12, :style => :bold            
+            pdf.draw_text "To recharge, Dial" , :at => [120,100], :size => 7, :style => :bold            
+            pdf.draw_text voucher_data[:text], :at => [120,90], :size => 9           
             pdf.draw_text package.payload, :at => [120,70], :size => 10, :style => :bold 
             
             pdf.stroke do

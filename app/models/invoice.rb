@@ -135,7 +135,7 @@ class Invoice < ActiveRecord::Base
   end
   
   def invoice_location
-    "#{Rails.root}/pdfs/invoice-#{self.id}.pdf"
+    "#{Rails.root}/tmp/invoice-#{self.id}.pdf"
   end
   
   def generate_pdf

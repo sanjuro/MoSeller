@@ -41,7 +41,8 @@ gem 'will_paginate', '3.0.pre2'
 gem 'paperclip'
 gem 'clickatell'
 
-gem 'prawn' # Generates PDF files
+# gem 'prawn' # Generates PDF files
+gem 'prawn_rails'
 
 gem 'state_machine'
 
