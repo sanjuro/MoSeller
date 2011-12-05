@@ -108,8 +108,11 @@ ActiveAdmin.register Order do
   
   action_item :only => :show do 
     link_to('Pay Order', pay_admin_orders_path(order))
-    link_to('Pritable PDF', pdf_admin_orders_path(order, :format => 'pdf'))
   end  
+  
+  action_item :only => :show do
+    link_to('Pritable PDF', pdf_admin_orders_path(order, :format => 'pdf'))
+  end
   
   # /admin/users/:id/pay
   member_action :pay do
