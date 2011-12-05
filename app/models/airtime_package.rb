@@ -22,12 +22,12 @@ class AirtimePackage < Package
               }
       when AIRTIME_CELLC 
         voucher = {
-                :text => "*120*" + payload_array[1] + "#", 
+                :text => "*102*" + payload_array[1] + "#", 
                 :image => "#{RAILS_ROOT}/public/images/logos/cellc_voucher.png"
               }
       when AIRTIME_VIRGIN 
         voucher = {
-                :text => "*120*" + payload_array[1] + "#", 
+                :text => "*102*" + payload_array[1] + "#", 
                 :image => "#{RAILS_ROOT}/public/images/logos/virgin_voucher.png"
               }
       when AIRTIME_HEITA 

@@ -23,6 +23,7 @@ ActiveAdmin.register Package do
     f.inputs "Details" do
       f.input :order_item_id
       f.input :payload
+      f.input :is_used
       f.input :created_at
     end
     f.buttons

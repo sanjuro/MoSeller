@@ -108,9 +108,10 @@ ActiveAdmin.register Order do
   
   action_item :only => :show do 
     link_to('Pay Order', pay_admin_orders_path(order))
+    link_to('Pritable PDF', pdf_admin_orders_path(order, :format => 'pdf'))
   end  
   
-  # /admin/users/:id/statement
+  # /admin/users/:id/pay
   member_action :pay do
     @order = Order.find(params[:id])
     @order.pay_order!
@@ -118,5 +119,14 @@ ActiveAdmin.register Order do
     flash[:notice] = "Order Paid successfully!"
     redirect_to :action => :show, :notice => "Order Paid successfully!"
   end  
+  
+  # /admin/users/:id/pdf
+  member_action :generate_pdf do
+    @order = Order.find(params[:id])
+    
+    respond_to do |format|
+      format.pdf  { render :layout => false }
+    end
+  end 
 
 end
