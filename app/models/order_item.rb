@@ -18,7 +18,7 @@ class OrderItem < ActiveRecord::Base
   validates :customer_price, :numericality => true
   # validate :meta_validation_of_quantities
 
-  attr_accessible :id, :quantity
+  attr_accessible :id, :quantity, :customer_price, :billing_price, :full_price
 
   # before_save :update_inventory
   # before_destroy :ensure_not_shipped, :remove_inventory
