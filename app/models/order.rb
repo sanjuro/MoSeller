@@ -310,6 +310,20 @@ class Order < ActiveRecord::Base
     order_items.map{|li| li.variant.product}
   end
   
+  def check_sms
+    message_text = String.new
+    
+    message_text << 'Thank you for shopping at MoSeller.'
+    self.order_items.each do |order_item| 
+      message_text << order_item.variant.product.name + '(' + number_to_currency(order_item.variant.full_price, :unit => "R", :separator => ".", :delimiter => ",") + '):'
+      order_item.packages.each do |package|
+        message_text << package.payload
+      end
+    end
+    logger.info message_text.length
+    message_text.length > 130
+  end
+  
   def order_pdf_location
      "#{Rails.root}/tmp/order-#{self.id}.pdf"
   end

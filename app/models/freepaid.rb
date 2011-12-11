@@ -29,6 +29,7 @@ class Freepaid < ProductSource
     }    
     
     logger.info "CALLING NEWPRODUCT FROM FREEPAID"
+    logger.info transaction_options
       
     # Create a Freepaid Voucher 
     productOut = FreepaidGetVoucher(transaction_options);

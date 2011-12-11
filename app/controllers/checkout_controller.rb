@@ -25,7 +25,14 @@ class CheckoutController < ApplicationController
         @order.customer_name = params[:customer_name]
         @order.email = params[:email]
         @order.mobile_number = params[:mobile_number]
-        @order.save
+        
+        if  @order.check_sms
+          flash[:success] = I18n.t(:order_sms_to_long)
+          respond_with(@order, :location => checkout_state_path('delivery'))
+        else
+          @order.save
+        end
+       
       end
 
       if @order.state == "payment"

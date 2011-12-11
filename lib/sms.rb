@@ -1,13 +1,16 @@
 class SMS
   
   require 'clickatell'
+  require 'logger'
   include ActionView::Helpers
 
   @@SERVICE_USERNAME = AppConfig.instance.clickatell_user
   @@SERVICE_PASSOWRD = AppConfig.instance.clickatell_password
-  @@SERVICE_API_ID = AppConfig.instance.clickatell_api_id  
+  @@SERVICE_API_ID = AppConfig.instance.clickatell_api_id 
   
   def create(recipient, order)
+    
+    logger = Logger.new(STDOUT)
     
     message_text = String.new
     
@@ -19,8 +22,17 @@ class SMS
       end
     end
 
-    if Rails.env == 'production'
-      api.send_message(recipient, message_text)
+    # If the sms message is too long do not allow it to me sms'ed
+    if message_text.length > 130
+      logger.error "MESSAGE TOO LONG NO SMS SENT"
+    else
+      logger.info "CALLING SMS API"
+      if Rails.env == 'production'
+        logger.info "SMS SENT"
+        api.send_message(recipient, message_text)
+      else
+        logger.info "DEV SMS SENT"
+      end
     end
     
   end
