@@ -16,6 +16,7 @@ ActiveAdmin.register Package do
     column :id
     column :order_item_id
     column :payload
+    column("used")  {|package| status_tag(package.state, package.is_used ? :warning : :ok) }
     default_actions
   end
 

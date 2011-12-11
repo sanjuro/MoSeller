@@ -1,6 +1,6 @@
 class AddUsedToPackage < ActiveRecord::Migration
   def self.up
-    add_column :package, :is_used, :boolean, :default => true
+    add_column :package, :is_used, :boolean, :default => false
   end
 
   def self.down

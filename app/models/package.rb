@@ -4,6 +4,9 @@ class Package < ActiveRecord::Base
   
   attr_accessible :order_item_id, :payload, :permalink, :is_used, :clazz, :updated_at, :created_at 
   
+  STATUS_USED = 'used'
+  STATUS_NOT_USED = 'not_used'  
+  
   @provider = nil
   
   def provider_class
@@ -20,5 +23,12 @@ class Package < ActiveRecord::Base
   def get_voucher
     provider.get_voucher(self.order_item.variant.product.name, self.payload)
   end  
+  
+  def state()
+    case self.is_used
+      when true then 'used'
+      when false then 'not used'
+    end
+  end   
   
 end
