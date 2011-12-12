@@ -16,7 +16,7 @@ ActiveAdmin.register Package do
     column :id
     column :order_item_id
     column :payload
-    column("used")  {|package| status_tag(package.state, package.is_used ? :warning : :ok) }
+    column("used")  {|package| status_tag(package.state, package.is_used == 1 ? :warning : :ok) }
     default_actions
   end
 
@@ -24,7 +24,7 @@ ActiveAdmin.register Package do
     f.inputs "Details" do
       f.input :order_item_id
       f.input :payload
-      f.input :is_used
+      f.input :is_used, :as => :boolean
       f.input :created_at
     end
     f.buttons

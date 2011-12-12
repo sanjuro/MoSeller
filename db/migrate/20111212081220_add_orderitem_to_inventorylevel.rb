@@ -11,3 +11,4 @@ class AddOrderitemToInventorlevel < ActiveRecord::Migration
 end
 # ALTER TABLE inventory_level ADD is_current tinyint(1) DEFAULT '0' AFTER stock_level;
 # ALTER TABLE inventory_level ADD order_item_id int(1) AFTER is_current;
+# UPDATE inventory_level is_current = 1 where id = 1 LIMIT 1;

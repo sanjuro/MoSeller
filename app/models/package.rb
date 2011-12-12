@@ -24,10 +24,10 @@ class Package < ActiveRecord::Base
     provider.get_voucher(self.order_item.variant.product.name, self.payload)
   end  
   
-  def state()
+  def state
     case self.is_used
-      when true then 'used'
-      when false then 'not used'
+      when 1 then 'used'
+      when 0 then 'not used'
     end
   end   
   
