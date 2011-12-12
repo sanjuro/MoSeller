@@ -1,9 +1,12 @@
 class InventoryLevel < ActiveRecord::Base
   belongs_to :product_source
+  belongs_to :order_item
   
-  attr_accessible :product_source, :amount, :clazz, :stock_level
+  attr_accessible :product_source_id, :order_item_id, :clazz, :stock_level, :is_current, :created_at
   
   @provider = nil
+  
+  scope :current_level, where("inventory_level.is_current = 1")
   
   def provider_class
     self.clazz
@@ -29,7 +32,7 @@ class InventoryLevel < ActiveRecord::Base
   
   def decrease_level(order_item)
     stock_level = provider.decrease_level(order_item, self.current_stock_level!)
-    update_attribute(:stock_level, stock_level)
+    # update_attribute(:stock_level, stock_level)
   end 
   
 end

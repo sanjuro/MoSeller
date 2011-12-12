@@ -46,6 +46,7 @@ class OrderItem < ActiveRecord::Base
           ret = variant.product_source.new_product(variant, self)
         end
         
+        logger.info 'UPDATE STOCK LEVEL'
         # Update stock level    
         decrease_stock_level
         
@@ -100,7 +101,7 @@ class OrderItem < ActiveRecord::Base
     
     def decrease_stock_level
       product.inventory_level.decrease_level(self)
-    end    
+    end       
 
     def ensure_not_shipped
       if order.try(:inventory_units).to_a.any?{|unit| unit.variant_id == variant_id && unit.shipped?}

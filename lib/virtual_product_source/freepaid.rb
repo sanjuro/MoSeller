@@ -47,6 +47,7 @@ class VirtualProductSource::Freepaid < VirtualProductSource
     logger.error productOut
     
     package = Package.new(:payload => "PIN: " + productOut[:pin] + ", SERIAL: " + productOut[:serial])
+    package.is_used = false
     package.save
     
     order_item.add_package(package)
