@@ -17,6 +17,7 @@ ActiveAdmin.register InventoryLevel do
     column :id
     column :clazz
     column :stock_level
+    column ("is_current") {|inventory_level| status_tag(inventory_level.state, inventory_level.is_current ? :ok : :error) }
     column :created_at, :sortable => :created_at do |inventory_level|
       inventory_level.updated_at
     end

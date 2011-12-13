@@ -35,4 +35,11 @@ class InventoryLevel < ActiveRecord::Base
     # update_attribute(:stock_level, stock_level)
   end 
   
+  def state
+    case self.is_current
+      when true then 'current'
+      when false then 'old'
+    end
+  end 
+  
 end
