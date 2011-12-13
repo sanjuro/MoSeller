@@ -46,6 +46,9 @@ gem 'prawn_rails'
 
 gem 'state_machine'
 
+# resque queue
+gem 'resque'  
+
 # Active Record Plugins
 gem 'acts_as_list', '>= 0.1.0'
 

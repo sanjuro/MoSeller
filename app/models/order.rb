@@ -255,7 +255,9 @@ class Order < ActiveRecord::Base
     # OrderMailer.confirm_email(self).deliver
     
     # Mail products
-    OrderMailer.order_email(self).deliver
+    # OrderMailer.order_email(self).deliver
+    Resque.enqueue(OrderEmailProcessor, self.id) 
+
     logger.info 'MAILING PRODUCTS'
     
     User.current.update_cap(self.customer_total)

@@ -102,15 +102,7 @@ class Invoice < ActiveRecord::Base
   
   def mail!
     
-    InvoiceMailer.invoice_email(self, self.order).deliver
-    
-    self.state_events.create({
-      :order_id       => self.order_id,
-      :previous_state => "processing",
-      :next_state     => "unpaid",
-      :name           => "invoice" ,
-      :user_id        => (User.respond_to?(:current) && User.current.try(:id)) || self.user_id
-    })
+    Resque.enqueue(InvoiceEmailProcessor, self.id, (User.respond_to?(:current) && User.current.try(:id)) || self.user_id)
     
   end
   
