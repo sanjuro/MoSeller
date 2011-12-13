@@ -10,14 +10,14 @@ ActiveAdmin.register InventoryLevel do
   filter :clazz
   # filter :order_items, :as => :select, :collection => lambda{ Order.order_items }
   filter :stock_level
-  filter :update_at
+  filter :created_at
 
   # Customize columns displayed on the index screen in the table
   index do
     column :id
     column :clazz
     column :stock_level
-    column :updated_at, :sortable => :updated_at do |inventory_level|
+    column :created_at, :sortable => :created_at do |inventory_level|
       inventory_level.updated_at
     end
     default_actions
@@ -25,8 +25,11 @@ ActiveAdmin.register InventoryLevel do
   
   form do |f|
     f.inputs "Details" do
+      f.input :product_source
       f.input :clazz
       f.input :stock_level
+      f.input :is_current
+      f.input :created_at
     end
     f.buttons
   end  
