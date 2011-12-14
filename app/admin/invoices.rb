@@ -21,6 +21,7 @@ ActiveAdmin.register Invoice do
     column "Total", :sortable => :total do |invoice|
       format_price invoice.total
     end
+    column :created_at
     default_actions
   end
   

@@ -17,6 +17,7 @@ ActiveAdmin.register Payment do
     column :order_id
     column("state")   {|payment| status_tag(payment.state, payment.is_complete ? :ok : :error) }
     column :amount
+    column :created_at
     default_actions
   end  
   
