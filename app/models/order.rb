@@ -127,15 +127,9 @@ class Order < ActiveRecord::Base
       transition :to => 'resumed', :from => 'canceled', :if => :allow_resume?
     end   
 
-    before_transition :to => 'complete' do |order|
-      # order.process_payments! # process payments
-      order.process_order_items! # fetch products
-      
-      # do account and product stuff here   
-      order.finalize! 
-      
-      # do billing for order this needs to be dynamic as the system might not have MoAccount
-      order.billing!
+    # This creates the orders and all packages
+    before_transition :to => 'complete' do |order|    
+      Resque.enqueue(OrderProcessor, order.id)      
     end
 
     after_transition :to => 'payment' do |order|
@@ -246,7 +240,6 @@ class Order < ActiveRecord::Base
   # Finalizes an in progress order after checkout is complete.
   # Called after transition to complete state when payments will have been processed
   def finalize!
-    logger.info 'FINALIZE ORDER'
     
     update_attribute(:completed_at, Time.now)
     # self.out_of_stock_items = InventoryUnit.assign_opening_inventory(self)
@@ -258,15 +251,13 @@ class Order < ActiveRecord::Base
     # OrderMailer.order_email(self).deliver
     Resque.enqueue(OrderEmailProcessor, self.id) 
 
-    logger.info 'MAILING PRODUCTS'
-    
-    User.current.update_cap(self.customer_total)
-    logger.info 'UPDATE BUYER CAP'
-    
+    # Update users buyer cap
+    current_user = User.find_by_id!(self.user_id)
+    current_user.update_cap(self.customer_total)
+
     # Mail via sms
     if self.mobile_number.empty? == false then
-      sms = SMS.new()
-      sms.create(self.mobile_number, self)
+      Resque.enqueue(SmsProcessor, self.id) 
     end
     
     self.state_events.create({
@@ -274,14 +265,14 @@ class Order < ActiveRecord::Base
       :previous_state => "cart",
       :next_state => "complete",
       :name => "order" ,
-      :user_id => (User.respond_to?(:current) && User.current.try(:id)) || self.user_id
+      :user_id => self.user_id
      })
   end  
   
   def billing!
     logger.info 'START BILLING'
     
-    invoice = Invoice.new(:email => (User.respond_to?(:current) && User.current.try(:email)))
+    invoice = Invoice.new(:email => self.user.email)
     invoice.user = self.user
     invoice.order = self
     invoice.save

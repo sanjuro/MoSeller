@@ -69,21 +69,17 @@ class Invoice < ActiveRecord::Base
     order.order_items.each do |order_item|
       ret = self.add_invoice_item(order_item)
     end
-    
     logger.info 'CREATED INVOICE ITEMS'   
     
-    self.update!
-    
+    self.update! 
     logger.info 'UPDATE INVOICE'    
     
     # mail the invoice and log the state
-    self.mail!
-    
+    self.mail!  
     logger.info 'MAIL INVOICE'
     
     # create the related account item
-    self.add_account_item!
-    
+    self.add_account_item!   
     logger.info 'CREATED ACCOUNT ITEM'    
     
   end 
@@ -101,9 +97,7 @@ class Invoice < ActiveRecord::Base
   end 
   
   def mail!
-    
-    Resque.enqueue(InvoiceEmailProcessor, self.id, (User.respond_to?(:current) && User.current.try(:id)) || self.user_id)
-    
+    Resque.enqueue(InvoiceEmailProcessor, self.id, self.user_id)    
   end
   
   def add_invoice_item(order_item)
