@@ -1,4 +1,4 @@
-class AddOrderitemToInventorlevel < ActiveRecord::Migration
+class AddOrderitemToInventorylevel < ActiveRecord::Migration
   def self.up
     add_column :inventory_level, :order_item_id, :integer
     add_column :inventory_level, :is_current, :boolean, :default => false
