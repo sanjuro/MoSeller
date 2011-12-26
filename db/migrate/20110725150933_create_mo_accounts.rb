@@ -3,6 +3,7 @@ class CreateMoAccounts < ActiveRecord::Migration
     create_table :account_item, :options => "ENGINE=INODB" do |t|
       t.references :user
       t.references :account_item_type
+      t.string :description
       t.decimal :credit,               :precision => 8, :scale => 2, :default => 0.0, :null => false
       t.decimal :debit,                :precision => 8, :scale => 2, :default => 0.0, :null => false
       t.string :account_status_id

@@ -1,5 +1,6 @@
 class AccountItem < ActiveRecord::Base
-  attr_accessible :user_id, :credit, :debit, :account_item_status_id, :created_at, :updated_at
+  attr_accessible :user_id, :credit, :debit, :account_item_status_id, 
+                  :description, :created_at, :updated_at
   
   belongs_to :user
   
