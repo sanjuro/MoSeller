@@ -7,4 +7,4 @@ class AddUsedToPackage < ActiveRecord::Migration
     remove_column :package, :is_used
   end  
 end
-# ALTER TABLE package ADD is_used tinyint(1) DEFAULT '1';
+# ALTER TABLE account_item ADD description varchar(80) after account_item_type_id;
