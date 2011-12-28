@@ -121,7 +121,7 @@ class Invoice < ActiveRecord::Base
   end
   
   def add_account_item!
-    account_item = AccountItem.new( :description => 'Invoice no.: ' + self.id.to_s(),
+    account_item = AccountItem.new( :description => 'Invoice no. ' + self.id.to_s(),
                                     :credit => 0.00, 
                                     :debit => self.total)
     account_item.user = self.user
