@@ -4,6 +4,7 @@ Your Account Statement as of <%= Date.today.to_s %>
 	<table> 
 	<thead>
 		<th width="200px" align="left">Order Number</th>
+		<th width="200px">Status</th>
 		<th width="200px">Customer</th>
 		<th width="200px">Mobile</th>
 		<th width="200px" text-align="right">Price</th>
@@ -13,6 +14,7 @@ Your Account Statement as of <%= Date.today.to_s %>
 	<% @orders.each do |order| %>
 	  <tr>
 	    <td><%= order.number %></td>
+	    <td align="center"><%= order.payment_state %></td>
 	    <td align="center"><%= order.customer_name %></td>
 	    <td align="center"><%= order.mobile_number %></td>
 	    <td align="center"><%= number_to_currency(order.billing_total, :unit => "R ", :separator => ".", :delimiter => ",") %></td>
@@ -20,7 +22,7 @@ Your Account Statement as of <%= Date.today.to_s %>
 	  </tr>
 	<% end %>
 	<tr>
-		<td colspan="3" align="right"><b>Total</b></td>
+		<td colspan="4" align="right"><b>Total</b></td>
 		<td align="center"><b><%= number_to_currency(@order_total, :unit => "R ", :separator => ".", :delimiter => ",") %></b></td>
 		<td></td>
 	</tr>
