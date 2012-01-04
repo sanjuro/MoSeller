@@ -258,7 +258,8 @@ class Order < ActiveRecord::Base
     OrderMailer.order_email(self).deliver
     logger.info 'MAILING PRODUCTS'
     
-    User.current.update_cap(self.customer_total)
+    # User.current.update_cap(self.customer_total)
+    self.user.update_cap(self.customer_total)
     logger.info 'UPDATE BUYER CAP'
     
     # Mail via sms
@@ -268,10 +269,10 @@ class Order < ActiveRecord::Base
     end
     
     self.state_events.create({
-      :order_id       => self.id,
+      :stateful_id       => self.id,
       :previous_state => "cart",
       :next_state => "complete",
-      :name => "order" ,
+      :stateful_type => "order" ,
       :user_id => (User.respond_to?(:current) && User.current.try(:id)) || self.user_id
      })
   end  
@@ -398,10 +399,10 @@ class Order < ActiveRecord::Base
     end
 
     self.state_events.create({
-        :order_id       => self.id,
+        :stateful_id       => self.id,
         :previous_state => "balance_due",
         :next_state => self.payment_state,
-        :name => "payment",
+        :stateful_type => "payment",
         :user_id => (User.respond_to?(:current) && User.current && User.current.id) || self.user_id
       })
 

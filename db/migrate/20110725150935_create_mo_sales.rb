@@ -158,9 +158,9 @@ class CreateMoSales < ActiveRecord::Migration
     end    
     
     create_table "state_events", :force => true do |t|
-      t.integer "order_id"
+      t.integer "stateful_id"
       t.integer "user_id"
-      t.string "name"
+      t.string "stateful_type"
       t.datetime "created_at"
       t.datetime "updated_at"
       t.string "previous_state"
