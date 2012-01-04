@@ -14,7 +14,7 @@ class Invoice < ActiveRecord::Base
   has_many :state_events, :as => :stateful
   has_many :invoice_items, :dependent => :destroy    
   
-  scope :recent, order("invoice.created_at")      
+  scope :recent, order("invoices.created_at")      
                           
   
   # order state machine (see http://github.com/pluginaweek/state_machine/tree/master for details)

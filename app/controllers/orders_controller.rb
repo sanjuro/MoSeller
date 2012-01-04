@@ -13,9 +13,9 @@ class OrdersController < ApplicationController
   def index
     # @orders = Order.by_user_id(current_user.id).order('order.created_at DESC').paginate(:page => params[:page])
 
-    @orders = Order.by_user_id(current_user.id).search(params[:search],params[:fieldtype]).order(sort_column + " " + sort_direction).order('order.created_at DESC').paginate(:per_page => 15, :page => params[:page])
+    @orders = Order.by_user_id(current_user.id).search(params[:search],params[:fieldtype]).order(sort_column + " " + sort_direction).order('orders.created_at DESC').paginate(:per_page => 15, :page => params[:page])
       
-    @orders_all = Order.by_user_id(current_user.id).order('order.created_at DESC')
+    @orders_all = Order.by_user_id(current_user.id).order('orders.created_at DESC')
     @order_customer_value = @orders_all.map(&:customer_total).sum
     @order_full_value = @orders_all.map(&:full_total).sum
     @order_volume = @orders_all.size

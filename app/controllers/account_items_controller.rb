@@ -6,7 +6,7 @@ class AccountItemsController < ApplicationController
   before_filter :authenticate_user!
   
   def index
-    @account_items = AccountItem.by_user_id(current_user.id).order('account_item.created_at DESC').paginate(:page => params[:page])
+    @account_items = AccountItem.by_user_id(current_user.id).order('account_items.created_at DESC').paginate(:page => params[:page])
       
     unformatted_account_items = AccountItem.by_user_id(current_user.id)
     

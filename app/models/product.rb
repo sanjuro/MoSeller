@@ -12,7 +12,7 @@ class Product < ActiveRecord::Base
   
   has_one :master,
     :class_name => 'Variant',
-    :conditions => ["variant.is_master = ? AND variant.deleted_at IS NULL", true]
+    :conditions => ["variants.is_master = ? AND variants.deleted_at IS NULL", true]
      
       
   delegate_belongs_to :master, :sku, :price, :is_master
@@ -23,20 +23,20 @@ class Product < ActiveRecord::Base
   after_save :save_master
 
   has_many :variants,
-    :conditions => ["variant.is_master = ? AND variant.deleted_at IS NULL", false] 
+    :conditions => ["variants.is_master = ? AND variants.deleted_at IS NULL", false] 
   
   has_many :variants_including_master,
     :class_name => 'Variant',
-    :conditions => ["variant.deleted_at IS NULL"],
+    :conditions => ["variants.deleted_at IS NULL"],
     :dependent => :destroy
 
   has_many :variants_with_only_master,
     :class_name => 'Variant',
-    :conditions => ["variant.deleted_at IS NULL AND variant.is_master = ?", true],
+    :conditions => ["variants.deleted_at IS NULL AND variants.is_master = ?", true],
     :dependent => :destroy
     
   def variant_images
-    Image.find_by_sql("SELECT assets.* FROM assets LEFT JOIN variants ON (variant.id = asset.viewable_id) WHERE (variant.product_id = #{self.id})")
+    Image.find_by_sql("SELECT assets.* FROM assets LEFT JOIN variants ON (variants.id = assets.viewable_id) WHERE (variants.product_id = #{self.id})")
   end    
     
   validates :name, :cost_price, :customer_price, :presence => true  

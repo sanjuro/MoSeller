@@ -31,16 +31,16 @@ class Order < ActiveRecord::Base
   # before_create :create_client
   before_create :generate_order_number  
   
-  scope :by_number, lambda {|number| where("order.number = ?", number)}
-  scope :recent, order("order.created_at")
-  scope :between, lambda {|*dates| where("order.created_at between ? and ?", dates.first.to_date, dates.last.to_date)}
+  scope :by_number, lambda {|number| where("orders.number = ?", number)}
+  scope :recent, order("orders.created_at")
+  scope :between, lambda {|*dates| where("orders.created_at between ? and ?", dates.first.to_date, dates.last.to_date)}
   scope :by_customer, lambda {|customer| joins(:clients).where("clients.email =?", customer)}
-  scope :by_user_id, lambda {|user_id| where("order.user_id =?", user_id)}
-  scope :complete, where("order.completed_at IS NOT NULL")
-  scope :incomplete, where("order.completed_at IS NULL")
-  scope :paid, where("order.completed_at IS NOT NULL AND order.payment_state = 'paid'")
-  scope :notpaid, where("order.completed_at IS NOT NULL AND order.payment_state != 'paid'")
-  scope :unpaid, lambda {|user_id| where("order.completed_at IS NOT NULL AND order.payment_state != 'paid' AND order.user_id = ?", user_id)}
+  scope :by_user_id, lambda {|user_id| where("orders.user_id =?", user_id)}
+  scope :complete, where("orders.completed_at IS NOT NULL")
+  scope :incomplete, where("orders.completed_at IS NULL")
+  scope :paid, where("orders.completed_at IS NOT NULL AND orders.payment_state = 'paid'")
+  scope :notpaid, where("orders.completed_at IS NOT NULL AND orders.payment_state != 'paid'")
+  scope :unpaid, lambda {|user_id| where("orders.completed_at IS NOT NULL AND orders.payment_state != 'paid' AND orders.user_id = ?", user_id)}
   
   # make_permalink :field => :number  
   

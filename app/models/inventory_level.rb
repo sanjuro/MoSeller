@@ -6,7 +6,7 @@ class InventoryLevel < ActiveRecord::Base
   
   @provider = nil
   
-  scope :current_level, where("inventory_level.is_current = 1")
+  scope :current_level, where("inventory_levels.is_current = 1")
   
   def provider_class
     self.clazz
