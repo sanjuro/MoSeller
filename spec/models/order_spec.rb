@@ -65,11 +65,28 @@ describe Order do
       order.finalize!
     end
     
+    it "should decrease users cap" do
+      user = Factory(:user)
+      order.user = user
+      order.finalize!
+      user.cap_left.to_i.should == 910
+    end
+    
     it "should log state event" do
       user = Factory(:user)
       order.user = user
       order.state_events.should_receive(:create)
       order.finalize!
+    end
+  end
+  
+  context "#billing!" do
+    it "should create an invoice" do
+      user = Factory(:user)
+      order.user = user
+      order.finalize!
+      order.billing!
+      order.invoice.order_id.should == order.id
     end
   end
   
@@ -85,7 +102,7 @@ describe Order do
       order_items = [ mock_model(OrderItem, :amount => 100.00, :cost => 80.00, :full => 80.00), mock_model(OrderItem, :amount => 50.00, :cost => 40.00, :full => 40.00) ]
       order.stub(:order_items => order_items)
       order.update!
-      order.item_total.should == 150.00
+      order.item_total.should  == 150.00
     end
   end
   
