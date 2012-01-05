@@ -22,7 +22,7 @@ ActiveAdmin::Dashboards.build do
     
   section "Recent Users", :priority => 3  do
       table_for User.order('last_sign_in_at desc').limit(10) do
-        column("User") {|user| link_to(user.name, admin_user_path(user)) + ' ' + 'signed in at' + ' ' + l(user.last_sign_in_at, :format => :long) }
+          column("User") {|user| user.last_sign_in_at? ? link_to(user.name, admin_user_path(user)) + ' ' + 'signed in at' + ' ' + l(user.last_sign_in_at, :format => :long) : ''  }
       end     
   end
 
