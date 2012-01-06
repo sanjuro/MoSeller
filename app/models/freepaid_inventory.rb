@@ -12,11 +12,12 @@ class FreepaidInventory < InventoryLevel
     end
   end
   
-  def current_stock_level(product_source)
-    product_source.inventory_level.stock_level
+  def current_stock_level
+    # product_source.inventory_level.stock_level
+    self.stock_level
   end   
   
-  def decrease_level(order_item, stock_level)
+  def decrease_level(order_item)
     order_item_usage = order_item.quantity * order_item.billing_price
     
     current_inventory_level = InventoryLevel.current_level.find_by_product_source_id!(order_item.product.product_source_id)

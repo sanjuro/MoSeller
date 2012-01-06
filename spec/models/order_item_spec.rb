@@ -2,9 +2,9 @@ require 'spec_helper'
 
 describe OrderItem do
   
-  let(:product) { mock_model(Product, :id => 1, :product_source_id => inventory_level.id, :name => 'Vodacom') }
+  let(:product) { mock_model(Product, :id => 1, :product_source => product_source, :name => 'Vodacom') }
   let(:variant) { mock_model(Variant, :cost_price => 50.62, :customer_price => 52.62, :full_price => 55.00) }
-  let(:order_item) { order_item = OrderItem.new(:product_id => 1, :quantity => 5) }
+  let(:order_item) { order_item = OrderItem.create(:product => Product, :quantity => 5) }
   let(:order) { mock_model(Order, :order_items => [order_item], :completed? => true, :update! => true) }
     
   before { order_item.stub(:order => order, :variant => variant, :new_record? => false) }  
@@ -61,27 +61,6 @@ describe OrderItem do
         OrderItem.should_not_receive(:decrease_stock_level)
         order_item.save
       end
-    end
-    
-  end
-  
-  context "#process!" do
-      
-    it "should set product_id" do
-      OrderItem.stub(:update_attribute)
-      order_item.process!
-    end
-    
-    it "should set decrease the stock level" do
-      OrderItem.stub(:decrease_stock_level)
-      order_item.process!
-    end
-
-    it "should send an inventory low warning email" do
-      mail_message = mock "Mail::Message"
-      InventoryMailer.should_receive(:low_inventory_email).with(variant.product_source).and_return mail_message
-      mail_message.should_receive :deliver
-      order_item.process!
     end
     
   end

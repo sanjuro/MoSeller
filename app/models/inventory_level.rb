@@ -4,6 +4,8 @@ class InventoryLevel < ActiveRecord::Base
   
   attr_accessible :product_source_id, :order_item_id, :clazz, :stock_level, :is_current, :created_at
   
+  validates :clazz, :presence => true
+  
   @provider = nil
   
   scope :current_level, where("inventory_levels.is_current = 1")
@@ -17,7 +19,7 @@ class InventoryLevel < ActiveRecord::Base
     p = provider_class
     Kernel.const_get(p)
     eval(p)
-    @provider = p.constantize.new
+    @provider = p.constantize.new(:stock_level => self.stock_level)
   end  
   
   def check_level(order_item)
@@ -27,12 +29,11 @@ class InventoryLevel < ActiveRecord::Base
   end
     
   def current_stock_level!
-    provider.current_stock_level(product_source)
+    provider.current_stock_level
   end  
   
   def decrease_level(order_item)
-    stock_level = provider.decrease_level(order_item, self.current_stock_level!)
-    # update_attribute(:stock_level, stock_level)
+    stock_level = provider.decrease_level(order_item)
   end 
   
   def state
