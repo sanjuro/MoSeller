@@ -159,7 +159,7 @@ class Order < ActiveRecord::Base
   end  
   
   def pay_order! 
-    payment = Payment.new(:source_id => 2, :source_type => "Cash", :amount => self.customer_total)
+    payment = Payment.new(:source_id => 2, :source_type => "Cash", :amount => self.customer_total- self.payment_total)
     payment.order = self
     payment.state = "completed"
     payment.save
@@ -312,6 +312,10 @@ class Order < ActiveRecord::Base
   
   def products
     order_items.map{|li| li.variant.product}
+  end
+  
+  def unpaid_total
+      total = self.customer_total - self.payment_total
   end
   
   def check_sms
