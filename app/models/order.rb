@@ -13,6 +13,9 @@ class Order < ActiveRecord::Base
                   :order_items_attributes, :use_billing, :special_instructions,
                   :item_total, :customer_total, :billing_total, :full_total, :state, :payment_total, :payment_state,
                   :email, :customer_name, :mobile_number, :completed_at, :updated_at
+                  
+  validates :order_number, :presence => true,
+                                  :uniqueness => true, :on => :create
                  
   belongs_to :client, :foreign_key => "client_id", :class_name => "Client"
   belongs_to :user, :foreign_key => "user_id", :class_name => "User"
