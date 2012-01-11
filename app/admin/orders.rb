@@ -120,14 +120,16 @@ ActiveAdmin.register Order do
   end
   
   # /admin/orders/pay
-  collection_action :pay_multiple, :method => :post do
-    params[:pay][:order_ids].each do |order_id|
+  collection_action :pay_multiple, :method => :get do
+    order_ids = params[:order_ids].split(",")
+
+    order_ids.each do |order_id|
       order = Order.find(order_id)
       order.pay_order!
     end  
     
     flash[:notice] = "Orders Paid successfully!"
-    redirect_to :action => :index, :notice => "Orders Paid successfully!"
+    render :nothing => true
   end
   
   # /admin/orders/:id/pay
