@@ -144,9 +144,9 @@ ActiveAdmin.register Order do
     order = Order.find(params[:id])
       
     if params[:operation] == 'decrease'
-      @updated_total = params[:total_payment].to_f() - order.unpaid_total
+      @updated_total = params[:unused_payment].to_f() - order.unpaid_total
     else
-      @updated_total = params[:total_payment].to_f() + order.unpaid_total
+      @updated_total = params[:unused_payment].to_f() + order.unpaid_total
       end
     
     respond_to do |format|

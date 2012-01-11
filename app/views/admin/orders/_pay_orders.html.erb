@@ -1,0 +1,37 @@
+<%= form_tag pay_multiple_admin_orders_path do %>
+  <%= label_tag(:total_payment, "Payment total:") %>
+  <%= text_field_tag(:total_payment) %>
+  <%= submit_tag("Pay") %>
+    <%= label_tag(:unused_payment, "Unused:") %>
+  <%= text_field_tag(:unused_payment) %>
+<% end %>
+
+<script type="text/javascript">
+$(document).ready(function() { 
+	$("input[type=checkbox]").each(function(){
+      $(this).click(function(){
+       	// Start Ajax to fetch payment price
+       	
+       	if($(this).is(':checked') ){
+			var r = $.ajax({
+							type: 'GET',
+							url: '/admin/orders/'+ $(this).val() +'/update_total',
+							data:  "total_payment=" + $('#total_payment').val() + '&unused_payment=' + $('#unused_payment').val() + '&operation=decrease',
+							success: function(data){
+										$('#unused_payment').val(data);
+									 }
+						  });
+		}else{
+			var r = $.ajax({
+							type: 'GET',
+							url: '/admin/orders/'+ $(this).val() +'/update_total',
+							data:  "total_payment=" + $('#total_payment').val() + '&unused_payment=' + $('#unused_payment').val() + '&operation=increase',
+							success: function(data){
+										$('#unused_payment').val(data);
+									 }
+						  });		  
+		}
+      }); 
+	});
+});
+</script>
