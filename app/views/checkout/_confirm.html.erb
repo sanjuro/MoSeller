@@ -1,6 +1,6 @@
-<div class="box">
+<div class="box"  id="order_details" data-hook>
   <div class="clear"></div>
-  <legend><%= t(@order.state, :scope => :order_state).titleize %></legend>
+  <h2><%= t(@order.state, :scope => :order_state).titleize %></h2>
   <%= render :partial => 'shared/order_details', :locals => {:order => @order} %>
 </div>
 <br>

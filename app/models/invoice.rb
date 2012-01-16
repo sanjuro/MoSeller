@@ -14,7 +14,7 @@ class Invoice < ActiveRecord::Base
   has_many :state_events, :as => :stateful
   has_many :invoice_items, :dependent => :destroy    
   
-  scope :recent, order("invoice.created_at")      
+  scope :recent, order("invoices.created_at")      
                           
   
   # order state machine (see http://github.com/pluginaweek/state_machine/tree/master for details)
@@ -62,7 +62,7 @@ class Invoice < ActiveRecord::Base
     self.state_events.create({
       :previous_state => "created",
       :next_state     => "mailed",
-      :name           => "invoice" ,
+      :stateful_type  => "invoice" ,
       :user_id        => (User.respond_to?(:current) && User.current.try(:id)) || self.user_id
     })
     

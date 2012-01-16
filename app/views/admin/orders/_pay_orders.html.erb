@@ -1,0 +1,64 @@
+<%= form_tag pay_multiple_admin_orders_path do %>
+  <%= label_tag(:total_payment, "Payment total:") %>
+  <%= text_field_tag(:total_payment) %>
+  <input id="pay_button" class="button" type="button" value="Pay">
+  <%= label_tag(:unused_payment, "Unused:") %>
+  <%= text_field_tag(:unused_payment) %>
+<% end %>
+
+<script type="text/javascript">
+$(document).ready(function() { 
+
+	$("input[type=checkbox]").each(function(){
+      $(this).click(function(){
+       	// Start Ajax to fetch payment price
+       	
+       	if($(this).is(':checked') ){
+			var r = $.ajax({
+							type: 'GET',
+							url: '/admin/orders/'+ $(this).val() +'/update_total',
+							data:  "total_payment=" + $('#total_payment').val() + '&unused_payment=' + $('#unused_payment').val() + '&operation=decrease',
+							success: function(data){
+										$('#unused_payment').val(data);
+									 }
+						  });
+		}else{
+			var r = $.ajax({
+							type: 'GET',
+							url: '/admin/orders/'+ $(this).val() +'/update_total',
+							data:  "total_payment=" + $('#total_payment').val() + '&unused_payment=' + $('#unused_payment').val() + '&operation=increase',
+							success: function(data){
+										$('#unused_payment').val(data);
+									 }
+						  });		  
+		}
+      }); 
+	});
+	
+	$('#pay_button').click(function(){
+		
+		var inputs = document.getElementsByTagName("input");
+		var cbs = []; //will contain all checkboxes  
+		var checked = []; //will contain all checked checkboxes  
+		for (var i = 0; i < inputs.length; i++) {  
+		  if (inputs[i].type == "checkbox") {  
+		    cbs.push(inputs[i]);  
+		    if (inputs[i].checked) {  
+		      checked.push(inputs[i].value);  
+		    }  
+		  }  
+		}  
+		var nbCbs = cbs.length; //number of checkboxes  
+		var nbChecked = checked.length; //number of checked checkboxes  
+		
+		var r = $.ajax({
+							type: 'GET',
+							url: '/admin/orders/pay_multiple',
+							data:  "order_ids=" + checked,
+							complete: function(data){
+										window.location = '/admin/orders/'
+									 }
+						  });
+	});
+});
+</script>

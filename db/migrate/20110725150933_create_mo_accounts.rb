@@ -1,6 +1,6 @@
 class CreateMoAccounts < ActiveRecord::Migration
   def self.up
-    create_table :account_item, :options => "ENGINE=INODB" do |t|
+    create_table :account_items, :options => "ENGINE=INODB" do |t|
       t.references :user
       t.references :account_item_type
       t.string :description
@@ -11,11 +11,11 @@ class CreateMoAccounts < ActiveRecord::Migration
       t.timestamps
     end
     
-    create_table :account_item_type, :options => "ENGINE=INODB" do |t|
+    create_table :account_item_types, :options => "ENGINE=INODB" do |t|
       t.string :title
     end
     
-    create_table :invoice, :options => "ENGINE=INODB" do |t|
+    create_table :invoices, :options => "ENGINE=INODB" do |t|
       t.references :user
       t.references :order
       t.decimal :margin,               :precision => 8, :scale => 2, :default => 0.0, :null => false
@@ -30,11 +30,11 @@ class CreateMoAccounts < ActiveRecord::Migration
       t.timestamps
     end
     
-    create_table :invoice_type, :options => "ENGINE=INODB" do |t|
+    create_table :invoice_types, :options => "ENGINE=INODB" do |t|
       t.string :title
     end
     
-    create_table :invoice_item, :options => "ENGINE=INODB" do |t|
+    create_table :invoice_items, :options => "ENGINE=INODB" do |t|
       t.references :invoice
       t.text "description"
       t.decimal :total,                :precision => 8, :scale => 2, :default => 0.0, :null => false

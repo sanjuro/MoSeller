@@ -26,6 +26,11 @@ ActiveAdmin.register User do
       f.input :username
       f.input :password, :type => :password
     end
+    f.inputs "Login" do
+      f.input :sign_in_count
+      f.input :current_sign_in_at
+      f.input :last_sign_in_at
+    end
     f.inputs "Buying" do
       f.input :cap_left
       f.input :cap_limit

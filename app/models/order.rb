@@ -11,9 +11,10 @@ class Order < ActiveRecord::Base
   
   attr_accessible :order_items, :bill_address_attributes, :payments_attributes,
                   :order_items_attributes, :use_billing, :special_instructions,
-                  :item_total, :customer_total, :billing_total, :full_total, :state, 
-                  :payment_total, :payment_state, :email, :customer_name, 
-                  :mobile_number, :completed_at, :updated_at
+                  :item_total, :customer_total, :billing_total, :full_total, :state, :payment_total, :payment_state,
+                  :email, :customer_name, :mobile_number, :completed_at, :updated_at
+                  
+  validates :number, :uniqueness => true, :on => :create
                  
   belongs_to :client, :foreign_key => "client_id", :class_name => "Client"
   belongs_to :user, :foreign_key => "user_id", :class_name => "User"
@@ -32,16 +33,16 @@ class Order < ActiveRecord::Base
   # before_create :create_client
   before_create :generate_order_number  
   
-  scope :by_number, lambda {|number| where("order.number = ?", number)}
-  scope :recent, order("order.created_at")
-  scope :between, lambda {|*dates| where("order.created_at between ? and ?", dates.first.to_date, dates.last.to_date)}
+  scope :by_number, lambda {|number| where("orders.number = ?", number)}
+  scope :recent, order("orders.created_at")
+  scope :between, lambda {|*dates| where("orders.created_at between ? and ?", dates.first.to_date, dates.last.to_date)}
   scope :by_customer, lambda {|customer| joins(:clients).where("clients.email =?", customer)}
-  scope :by_user_id, lambda {|user_id| where("order.user_id =?", user_id)}
-  scope :complete, where("order.completed_at IS NOT NULL")
-  scope :incomplete, where("order.completed_at IS NULL")
-  scope :paid, where("order.completed_at IS NOT NULL AND order.payment_state = 'paid'")
-  scope :notpaid, where("order.completed_at IS NOT NULL AND order.payment_state != 'paid'")
-  scope :unpaid, lambda {|user_id| where("order.completed_at IS NOT NULL AND order.payment_state != 'paid' AND order.user_id = ?", user_id)}
+  scope :by_user_id, lambda {|user_id| where("orders.user_id =?", user_id)}
+  scope :complete, where("orders.completed_at IS NOT NULL")
+  scope :incomplete, where("orders.completed_at IS NULL")
+  scope :paid, where("orders.completed_at IS NOT NULL AND orders.payment_state = 'paid'")
+  scope :notpaid, where("orders.completed_at IS NOT NULL AND orders.payment_state != 'paid'")
+  scope :unpaid, lambda {|user_id| where("orders.completed_at IS NOT NULL AND orders.payment_state != 'paid' AND orders.user_id = ?", user_id)}
   
   # make_permalink :field => :number  
   
@@ -151,7 +152,7 @@ class Order < ActiveRecord::Base
   end  
   
   def pay_order! 
-    payment = Payment.new(:source_id => 2, :source_type => "Cash", :amount => self.customer_total)
+    payment = Payment.new(:source_id => 2, :source_type => "Cash", :amount => self.customer_total- self.payment_total)
     payment.order = self
     payment.state = "completed"
     payment.save
@@ -249,6 +250,7 @@ class Order < ActiveRecord::Base
     # OrderMailer.confirm_email(self).deliver
     
     # Mail products
+<<<<<<< HEAD
     # OrderMailer.order_email(self).deliver
     Resque.enqueue(OrderEmailProcessor, self.id) 
 
@@ -256,17 +258,31 @@ class Order < ActiveRecord::Base
     current_user = User.find_by_id!(self.user_id)
     current_user.update_cap(self.customer_total)
 
+=======
+    OrderMailer.order_email(self).deliver
+    logger.info 'MAILING PRODUCTS'
+    
+    # User.current.update_cap(self.customer_total)
+    self.user.update_cap(self.customer_total)
+    logger.info 'UPDATE BUYER CAP'
+    
+>>>>>>> master
     # Mail via sms
     if self.mobile_number.empty? == false then
       Resque.enqueue(SmsProcessor, self.id) 
     end
     
     self.state_events.create({
-      :order_id       => self.id,
+      :stateful_id       => self.id,
       :previous_state => "cart",
       :next_state => "complete",
+<<<<<<< HEAD
       :name => "order" ,
       :user_id => self.user_id
+=======
+      :stateful_type => "order" ,
+      :user_id => (User.respond_to?(:current) && User.current.try(:id)) || self.user_id
+>>>>>>> master
      })
   end  
   
@@ -302,6 +318,10 @@ class Order < ActiveRecord::Base
   
   def products
     order_items.map{|li| li.variant.product}
+  end
+  
+  def unpaid_total
+      total = self.customer_total - self.payment_total
   end
   
   def check_sms
@@ -392,10 +412,10 @@ class Order < ActiveRecord::Base
     end
 
     self.state_events.create({
-        :order_id       => self.id,
+        :stateful_id       => self.id,
         :previous_state => "balance_due",
         :next_state => self.payment_state,
-        :name => "payment",
+        :stateful_type => "payment",
         :user_id => (User.respond_to?(:current) && User.current && User.current.id) || self.user_id
       })
 

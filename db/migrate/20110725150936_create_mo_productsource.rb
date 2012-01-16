@@ -1,6 +1,6 @@
 class CreateMoProductsource < ActiveRecord::Migration
   def self.up
-    create_table :package, :options => "ENGINE=INODB" do |t|
+    create_table :packages, :options => "ENGINE=INODB" do |t|
       t.integer :order_item_id
       t.string :payload
       t.string :permalink
@@ -8,7 +8,7 @@ class CreateMoProductsource < ActiveRecord::Migration
       t.timestamps
     end     
       
-    create_table :product_source, :options => "ENGINE=INODB" do |t|
+    create_table :product_sources, :options => "ENGINE=INODB" do |t|
       t.references :supplier
       t.string :name
       t.string :description
@@ -18,7 +18,7 @@ class CreateMoProductsource < ActiveRecord::Migration
       t.timestamps
     end
     
-    create_table :supplier, :options => "ENGINE=INODB" do |t|
+    create_table :suppliers, :options => "ENGINE=INODB" do |t|
       t.string   :registered_name
       t.string   :contact_number
       t.string   :email_address

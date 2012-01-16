@@ -28,6 +28,7 @@ ActiveAdmin.register AccountItem do
       f.input :user
       f.input :debit
       f.input :credit
+      f.input :description
       f.input :created_at
       f.input :updated_at
     end

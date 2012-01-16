@@ -21,6 +21,7 @@ ActiveAdmin.register Order do
 
   # Customize columns displayed on the index screen in the table
   index do
+    column("") {|order| check_box_tag "pay[order_ids][]", order.id, false, {:id => "pay_order_ids_#{order.id}"} }
     column :number
     column("state")  {|order| status_tag(order.state) }
     column("payment_state")  {|order| status_tag(order.payment_state, order.is_paid ? :ok : :error) }
@@ -33,6 +34,10 @@ ActiveAdmin.register Order do
     end
     column :created_at
     default_actions
+
+    panel "Pay Orders" do
+      render('/admin/orders/pay_orders')
+    end  
   end
    
   
@@ -114,8 +119,21 @@ ActiveAdmin.register Order do
     link_to('Pritable PDF', pdf_admin_orders_path(order, :format => 'pdf'))
   end
   
-  # /admin/users/:id/pay
-  member_action :pay do
+  # /admin/orders/pay
+  collection_action :pay_multiple, :method => :get do
+    order_ids = params[:order_ids].split(",")
+
+    order_ids.each do |order_id|
+      order = Order.find(order_id)
+      order.pay_order!
+    end  
+    
+    flash[:notice] = "Orders Paid successfully!"
+    render :nothing => true
+  end
+  
+  # /admin/orders/:id/pay
+  member_action :pay, :method => :get do
     @order = Order.find(params[:id])
     @order.pay_order!
     
@@ -123,7 +141,23 @@ ActiveAdmin.register Order do
     redirect_to :action => :show, :notice => "Order Paid successfully!"
   end  
   
-  # /admin/users/:id/pdf
+  # /admin/orders/:id/update_total
+  member_action :update_total, :method => :get do
+    order = Order.find(params[:id])
+      
+    if params[:operation] == 'decrease'
+      @updated_total = params[:unused_payment].to_f() - order.unpaid_total
+    else
+      @updated_total = params[:unused_payment].to_f() + order.unpaid_total
+      end
+    
+    respond_to do |format|
+      format.js { render :layout => false }
+    end
+    
+  end  
+  
+  # /admin/orders/:id/pdf
   member_action :generate_pdf do
     @order = Order.find(params[:id])
     

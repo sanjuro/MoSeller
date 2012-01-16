@@ -4,6 +4,9 @@ class Package < ActiveRecord::Base
   
   attr_accessible :order_item_id, :payload, :permalink, :is_used, :clazz, :updated_at, :created_at 
   
+  validates :order_item, :presence => true
+  validates :clazz, :presence => true
+  
   STATUS_USED = 'used'
   STATUS_NOT_USED = 'not_used'  
   

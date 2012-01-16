@@ -1,6 +1,6 @@
 class CreateMoSales < ActiveRecord::Migration
   def self.up
-    create_table "asset", :force => true do |t|
+    create_table "assets", :force => true do |t|
       t.integer  "viewable_id"
       t.string   "viewable_type", :limit => 50
       t.string   "attachment_content_type"
@@ -13,7 +13,7 @@ class CreateMoSales < ActiveRecord::Migration
       t.integer  "attachment_height"
     end    
     
-    create_table :category, :options => "ENGINE=INODB" do |t|
+    create_table :categories, :options => "ENGINE=INODB" do |t|
       t.string :title
     end    
     
@@ -34,7 +34,7 @@ class CreateMoSales < ActiveRecord::Migration
       t.integer  "address_id"
     end
     
-    create_table :gateway, :force => true do |t|
+    create_table :gateways, :force => true do |t|
       t.string :type
       t.string :name
       t.text :description
@@ -45,14 +45,14 @@ class CreateMoSales < ActiveRecord::Migration
       t.timestamps
     end    
     
-    create_table "option_type", :force => true do |t|
+    create_table "option_types", :force => true do |t|
       t.string "name", :limit => 100
       t.string "presentation", :limit => 100
       t.datetime "created_at"
       t.datetime "updated_at"
     end    
     
-    create_table "option_value", :force => true do |t|
+    create_table "option_values", :force => true do |t|
       t.integer "option_type_id"
       t.string "name"
       t.integer "position"
@@ -61,14 +61,14 @@ class CreateMoSales < ActiveRecord::Migration
       t.datetime "updated_at"
     end
 
-    create_table "option_value_variant", :id => false, :force => true do |t|
+    create_table "option_values_variants", :id => false, :force => true do |t|
       t.integer "variant_id"
       t.integer "option_value_id"
     end
 
-    add_index "option_value_variant", ["variant_id"], :name => "index_option_values_variants_on_variant_id"   
+    add_index "option_values_variants", ["variant_id"], :name => "index_option_values_variants_on_variant_id"   
     
-    create_table "order", :force => true do |t|
+    create_table "orders", :force => true do |t|
       t.references :supplier
       t.references :client      
       t.references "user"
@@ -90,9 +90,9 @@ class CreateMoSales < ActiveRecord::Migration
       t.decimal "credit_total", :precision => 8, :scale => 2, :default => 0.0, :null => false
     end 
     
-    add_index "order", ["number"], :name => "index_orders_on_number"        
+    add_index "orders", ["number"], :name => "index_orders_on_number"        
     
-    create_table "order_item", :force => true do |t|
+    create_table "order_items", :force => true do |t|
       t.references :order
       t.references :product
       t.integer  :variant_id
@@ -104,11 +104,11 @@ class CreateMoSales < ActiveRecord::Migration
       t.timestamps
     end   
     
-    add_index "order_item", ["order_id"], :name => "index_line_items_on_order_id"
-    add_index "order_item", ["variant_id"], :name => "index_line_items_on_variant_id"  
+    add_index "order_items", ["order_id"], :name => "index_line_items_on_order_id"
+    add_index "order_items", ["variant_id"], :name => "index_line_items_on_variant_id"  
             
           
-    create_table "payment", :force => true do |t|
+    create_table "payments", :force => true do |t|
       t.references :source, :polymorphic => true 
       t.string :state
       t.integer :order_id
@@ -118,7 +118,7 @@ class CreateMoSales < ActiveRecord::Migration
       t.decimal "amount", :precision => 8, :scale => 2, :default => 0.0, :null => false
     end     
     
-    create_table :payment_method do |t|
+    create_table :payment_methods do |t|
       t.string :type
       t.string :name
       t.string :display_on, :default => nil
@@ -129,7 +129,7 @@ class CreateMoSales < ActiveRecord::Migration
       t.timestamps
     end 
     
-    create_table "product", :force => true do |t|
+    create_table "products", :force => true do |t|
       t.references :category
       t.references :product_source
       t.string "name", :default => "", :null => false
@@ -144,12 +144,12 @@ class CreateMoSales < ActiveRecord::Migration
       t.timestamps
     end
 
-    add_index "product", ["available_on"], :name => "index_products_on_available_on"
-    add_index "product", ["deleted_at"], :name => "index_products_on_deleted_at"
-    add_index "product", ["name"], :name => "index_products_on_name"
-    add_index "product", ["permalink"], :name => "index_products_on_permalink"    
+    add_index "products", ["available_on"], :name => "index_products_on_available_on"
+    add_index "products", ["deleted_at"], :name => "index_products_on_deleted_at"
+    add_index "products", ["name"], :name => "index_products_on_name"
+    add_index "products", ["permalink"], :name => "index_products_on_permalink"    
     
-    create_table "product_option_type", :force => true do |t|
+    create_table "product_option_types", :force => true do |t|
       t.integer "product_id"
       t.integer "option_type_id"
       t.integer "position"
@@ -157,17 +157,17 @@ class CreateMoSales < ActiveRecord::Migration
       t.datetime "updated_at"
     end    
     
-    create_table "state_event", :force => true do |t|
-      t.integer "order_id"
+    create_table "state_events", :force => true do |t|
+      t.integer "stateful_id"
       t.integer "user_id"
-      t.string "name"
+      t.string "stateful_type"
       t.datetime "created_at"
       t.datetime "updated_at"
       t.string "previous_state"
       t.string "next_state"
     end    
     
-    create_table "variant", :force => true do |t|
+    create_table "variants", :force => true do |t|
       t.integer "product_id"
       t.string "sku", :default => "", :null => false
       t.decimal "cost_price", :precision => 8, :scale => 2, :null => true
@@ -177,7 +177,7 @@ class CreateMoSales < ActiveRecord::Migration
       t.boolean "is_master", :default => false
     end
 
-    add_index "variant", ["product_id"], :name => "index_variants_on_product_id"     
+    add_index "variants", ["product_id"], :name => "index_variants_on_product_id"     
   end
 
   def self.down

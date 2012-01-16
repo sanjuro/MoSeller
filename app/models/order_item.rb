@@ -46,9 +46,9 @@ class OrderItem < ActiveRecord::Base
           ret = variant.product_source.new_product(variant, self)
         end
         
-        logger.info 'UPDATE STOCK LEVEL'
         # Update stock level    
         decrease_stock_level
+        logger.info 'UPDATE STOCK LEVEL'
         
       else
         logger.info 'INVENTORY LEVEL LOW ' + variant.product_source.description
