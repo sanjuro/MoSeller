@@ -250,23 +250,14 @@ class Order < ActiveRecord::Base
     # OrderMailer.confirm_email(self).deliver
     
     # Mail products
-<<<<<<< HEAD
+
     # OrderMailer.order_email(self).deliver
     Resque.enqueue(OrderEmailProcessor, self.id) 
 
-    # Update users buyer cap
-    current_user = User.find_by_id!(self.user_id)
-    current_user.update_cap(self.customer_total)
-
-=======
-    OrderMailer.order_email(self).deliver
-    logger.info 'MAILING PRODUCTS'
-    
     # User.current.update_cap(self.customer_total)
     self.user.update_cap(self.customer_total)
     logger.info 'UPDATE BUYER CAP'
     
->>>>>>> master
     # Mail via sms
     if self.mobile_number.empty? == false then
       Resque.enqueue(SmsProcessor, self.id) 
@@ -276,13 +267,8 @@ class Order < ActiveRecord::Base
       :stateful_id       => self.id,
       :previous_state => "cart",
       :next_state => "complete",
-<<<<<<< HEAD
-      :name => "order" ,
-      :user_id => self.user_id
-=======
       :stateful_type => "order" ,
       :user_id => (User.respond_to?(:current) && User.current.try(:id)) || self.user_id
->>>>>>> master
      })
   end  
   
