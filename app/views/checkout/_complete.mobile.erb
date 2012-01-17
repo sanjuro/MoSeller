@@ -1,2 +1,7 @@
+Your order has been sent for processing and will completed shortly.
+<br>
+<div class="status info" style="width:90%;">
+	<%= link_to "View Order", order_path(@order) %>
+</div>
 <h3><%= t(:order_packages) %></h3>
 <%= render :partial => 'shared/package_details', :locals => {:order => @order} %>

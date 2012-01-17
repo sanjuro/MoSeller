@@ -26,7 +26,7 @@ gem 'capistrano'
 
 gem 'jquery-rails'
 
-gem 'remail', :git => 'git://github.com/maccman/remail.git'
+# gem 'remail', :git => 'git://github.com/maccman/remail.git'
 
 gem 'activeadmin'
 

@@ -4,16 +4,16 @@
 	<%= link_to 'Home', root_path, "class" => "ui-btn-right", "data-icon" => "home" %>
 </div>
 
-<div data-role="content" data-theme="d">
+<div data-role="content">
 
 	<div id="order" data-hook>
 	  <% if params.has_key? :checkout_complete %>
 	  	<h3><%= t('thank_you_for_your_order') %></h3>
 	  <% end %>
 	  <% if @order.is_paid %>
-		   <div class="status success" style="width:97%;">Paid</div>
+		   <div class="status success" style="width:90%;">Paid</div>
       <% else %>
-		    <div class="status error" style="width:97%;">Balance Due</div>
+		    <div class="status error" style="width:90%;">Balance Due</div>
       <% end %>
 	  <%= render :partial => 'shared/order_details', :locals => {:order => @order} %>
 	</div>
