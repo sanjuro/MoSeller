@@ -32,7 +32,7 @@ class Freepaid < ProductSource
     logger.info transaction_options
       
     # Create a Freepaid Voucher 
-    productOut = FreepaidGetVoucher(transaction_options);
+    productOut = get_voucher(transaction_options);
     logger.error productOut
     
     package = Package.new(:payload => "PIN: " + productOut[:pin])
