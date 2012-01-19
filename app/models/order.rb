@@ -107,7 +107,7 @@ class Order < ActiveRecord::Base
     event :next do
       transition :from => 'cart',     :to => 'delivery'
       transition :from => 'delivery', :to => 'confirm'
-      transition :from => 'confirm', :to => 'processing',
+      transition :from => 'confirm', :to => 'complete',
                                       :if => :payment_not_required?    
       transition :from => 'confirm',  :to => 'payment'
       transition :from => 'payment', :to => 'complete'
@@ -130,7 +130,7 @@ class Order < ActiveRecord::Base
     end   
 
     # This creates the orders and all packages
-    before_transition :to => 'processing' do |order|    
+    before_transition :to => 'complete' do |order|    
       Resque.enqueue(OrderProcessor, order.id)      
     end
 
@@ -265,7 +265,7 @@ class Order < ActiveRecord::Base
     
     self.state_events.create({
       :stateful_id       => self.id,
-      :previous_state => "processing",
+      :previous_state => "cart",
       :next_state => "complete",
       :stateful_type => "order" ,
       :user_id => (User.respond_to?(:current) && User.current.try(:id)) || self.user_id

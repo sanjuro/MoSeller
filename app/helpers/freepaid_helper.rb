@@ -4,7 +4,7 @@ module FreepaidHelper
   @@SERVICE_PASSOWRD = AppConfig.instance.freepaid_password
   @@SERVICE_WSDL = AppConfig.instance.freepaid_wsdl
   
-  def get_voucher(transaction_options)
+  def FreepaidGetVoucher(transaction_options)
     
     logger.info "CALLING FREEPAIDGETVOUCHER"
     # Setting up a Savon::Client representing a SOAP service.

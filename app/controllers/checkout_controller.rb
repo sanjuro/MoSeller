@@ -50,7 +50,7 @@ class CheckoutController < ApplicationController
         return
       end
       
-      if @order.state == "processing" || @order.completed?
+      if @order.state == "complete" || @order.completed?
         flash[:success] = "Your order wil be processed shorlty. Please follow the link below to view your order."
         flash[:commerce_tracking] = "Your order number is " + @order.number().to_s()
         respond_with(@order, :location => completion_route)
