@@ -14,8 +14,7 @@ class Order < ActiveRecord::Base
                   :item_total, :customer_total, :billing_total, :full_total, :state, :payment_total, :payment_state,
                   :email, :customer_name, :mobile_number, :completed_at, :updated_at
                   
-  validates :order_number, :presence => true,
-                                  :uniqueness => true, :on => :create
+  validates :number, :uniqueness => true, :on => :create
                  
   belongs_to :client, :foreign_key => "client_id", :class_name => "Client"
   belongs_to :user, :foreign_key => "user_id", :class_name => "User"
@@ -108,7 +107,7 @@ class Order < ActiveRecord::Base
     event :next do
       transition :from => 'cart',     :to => 'delivery'
       transition :from => 'delivery', :to => 'confirm'
-      transition :from => 'confirm', :to => 'processing',
+      transition :from => 'confirm', :to => 'complete',
                                       :if => :payment_not_required?    
       transition :from => 'confirm',  :to => 'payment'
       transition :from => 'payment', :to => 'complete'
@@ -130,9 +129,15 @@ class Order < ActiveRecord::Base
       transition :to => 'resumed', :from => 'canceled', :if => :allow_resume?
     end   
 
-    # This creates the orders and all packages
-    before_transition :to => 'processing' do |order|    
-      Resque.enqueue(OrderProcessor, order.id)      
+    before_transition :to => 'complete' do |order|
+      # order.process_payments! # process payments
+      order.process_order_items! # fetch products
+      
+      # do account and product stuff here   
+      order.finalize! 
+      
+      # do billing for order this needs to be dynamic as the system might not have MoAccount
+      order.billing!
     end
 
     after_transition :to => 'payment' do |order|
@@ -243,6 +248,7 @@ class Order < ActiveRecord::Base
   # Finalizes an in progress order after checkout is complete.
   # Called after transition to complete state when payments will have been processed
   def finalize!
+    logger.info 'FINALIZE ORDER'
     
     update_attribute(:completed_at, Time.now)
     # self.out_of_stock_items = InventoryUnit.assign_opening_inventory(self)
@@ -251,22 +257,22 @@ class Order < ActiveRecord::Base
     # OrderMailer.confirm_email(self).deliver
     
     # Mail products
-
-    # OrderMailer.order_email(self).deliver
-    Resque.enqueue(OrderEmailProcessor, self.id) 
-
+    OrderMailer.order_email(self).deliver
+    logger.info 'MAILING PRODUCTS'
+    
     # User.current.update_cap(self.customer_total)
     self.user.update_cap(self.customer_total)
     logger.info 'UPDATE BUYER CAP'
     
     # Mail via sms
     if self.mobile_number.empty? == false then
-      Resque.enqueue(SmsProcessor, self.id) 
+      sms = SMS.new()
+      sms.create(self.mobile_number, self)
     end
     
     self.state_events.create({
       :stateful_id       => self.id,
-      :previous_state => "processing",
+      :previous_state => "cart",
       :next_state => "complete",
       :stateful_type => "order" ,
       :user_id => (User.respond_to?(:current) && User.current.try(:id)) || self.user_id
@@ -276,7 +282,7 @@ class Order < ActiveRecord::Base
   def billing!
     logger.info 'START BILLING'
     
-    invoice = Invoice.new(:email => self.user.email)
+    invoice = Invoice.new(:email => (User.respond_to?(:current) && User.current.try(:email)))
     invoice.user = self.user
     invoice.order = self
     invoice.save
