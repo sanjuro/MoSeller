@@ -12,15 +12,19 @@
   <link rel="shortcut icon" href="/images/favicon.ico" />
   </head>
   <body>
-	<header>
-		<div id="logo">
-			<%= image_tag "emblem.png" %>
-			<%= link_to('MoSeller', root_path )  %>
+  	<header>
+		<div class="container">
+			<div id="logo">
+				<%= image_tag "emblem.png" %>
+				<%= link_to('MoSeller', root_path )  %>
+			</div>
 		</div>
-        <nav>
-          <%= render "shared/navigation" %>
-        </nav>
 	</header>
+	<nav>
+	   <div class="container">
+       		<%= render "shared/navigation" %>
+       </div>
+	</nav>
     <div class="container">
       <section class="round">
          <% flash.each do |key, value| %>
