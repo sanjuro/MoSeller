@@ -34,7 +34,7 @@ header img {
 
 .container {
 	margin: 0 auto;
- 	width: 900px;
+ 	width: 1000px;
 }
 
 section {
@@ -114,7 +114,7 @@ a:hover {
 
 nav {
 	background: url("../images/nav.jpg") no-repeat center #005b98;
-	border-top: 1px solid #0092d6;
+	border-top: 1px solid #00a3d9;
   	color: white;
   	height: 30px;
   	line-height: 30px;
