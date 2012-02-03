@@ -111,15 +111,17 @@ class OrdersController < ApplicationController
       end
     end if params[:products]
 
-    params[:variants].each do |variant_id, quantity|
-      quantity = quantity.to_i
-      # @order.add_variant(Variant.find(variant_id), quantity) if quantity > 0
-      if quantity > 0 && quantity < 6
-        @order.add_variant(Variant.find(variant_id), quantity)
-      else
-        flash[:error] = 'You may only 5 products at a time'
-      end
-    end if params[:variants]
+    # AddToCartContext.call(current_user.id, @order, params[:products], params[:quantity])
+
+#    params[:variants].each do |variant_id, quantity|
+#      quantity = quantity.to_i
+#      # @order.add_variant(Variant.find(variant_id), quantity) if quantity > 0
+#      if quantity > 0 && quantity < 6
+#        @order.add_variant(Variant.find(variant_id), quantity)
+#      else
+#        flash[:error] = 'You may only 5 products at a time'
+#      end
+#    end if params[:variants]
 
     # fire_event('moseller.cart.add')
     # fire_event('moseller.order.contents_changed')
