@@ -1,27 +1,26 @@
 body {
-    background: #DFEEF6;
-    color: #333333;
+    background: #E9EAEA;
+    color: #494949;
     font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
     font-size: 14px;
-    font-weight: normal;
-    line-height: 20px;
-    padding-top: 40px;
+    line-height: 22px;
+    padding: 0px;
+    margin: 0px;
 }
 h1 {
     border-bottom: 2px solid #EEEEEE;
-	font-size: 30px;
+    color: #007FD8;
+	font-size: 26px;
     margin-bottom: 24px;
     padding-bottom: 19px;	
 }
 header
 {
-    background-color: #008DB8;
-    background-image: -moz-linear-gradient(#00A0D1, #008DB8);
-    background-repeat: no-repeat;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25), 0 -1px 0 rgba(0, 0, 0, 0.1) inset;
+	background: url("../images/mainboxwrapper.png") repeat-x scroll 0 0 #006FD3;
+    border-bottom: 1px solid #007FD8;
     height: 60px;
     left: 0;
-    position: absolute;
+    position: relative;
     top: 0;
     width: 100%;
 }
@@ -36,14 +35,18 @@ header img {
 
 .container {
 	margin: 0 auto;
- 	width: 900px;
+ 	width: 1000px;
 }
 
 section {
-  margin-top: 1em;
-  font-size: 110%;
-  padding: 20px;
-  background: #fff;
+   	background: none repeat scroll 0 0 #FFFFFF;
+    border-radius: 6px 6px 6px 6px;
+    box-shadow: 0 2px 7px rgba(0, 0, 0, 0.3);
+    margin: 30px auto;
+    overflow: auto;
+    padding: 10px 20px;
+    position: relative;
+    width: 980px;
 }
 
 section h1 {
@@ -71,7 +74,6 @@ em{
     font: 900 45px sommet-slab,kulturista-web,"Helvetica Neue",Helvetica,Arial,sans-serif;
     letter-spacing: -1px;
     margin: 0px 0 30px -4px;
-    padding-left: 20px;
     text-decoration: none;
     text-shadow: 0 2px 2px #39677F;	
 }
@@ -98,6 +100,7 @@ a:hover {
 
 #logo a {
 	color: #FFF;
+	text-shadow: 0 1px 1px rgba(0, 0, 0, 0.75);
 }
 
 #logo a:hover {
@@ -107,20 +110,29 @@ a:hover {
 }
 
 /* Navigation */
-nav {
-  float: right;
-}
+
 
 nav {
-  color: white;
-  line-height: 30px;
-  letter-spacing: -1px;
-  text-decoration: none;
-  text-shadow: 0 2px 2px #39677F;	
-  padding: 10px 0.7em;
-  white-space: nowrap;
+	background: url("../images/nav.jpg") no-repeat center #005b98;
+	border-top: 1px solid #00a3d9;
+  	color: white;
+  	height: 30px;
+  	line-height: 30px;
+  	letter-spacing: -1px;
+  	text-decoration: none;
+  	text-shadow: 0 2px 2px #39677F;	
+  	white-space: nowrap;
 }
 
+#navigation {
+	float: right;
+	}
+	
+footer nav {
+	background: none;
+	border: none;
+	}
+	
 nav ul {
   margin: 0;
   padding: 0;

@@ -1,7 +1,4 @@
 <div class="box">
-<h3>
-	<%= t(:order_packages) %>
-	<span class="print_pdf_button"><%= link_to "View Order", order_path(@order) %></span>
-</h3>
-<%= render :partial => 'shared/package_details', :locals => {:order => @order} %>
+	<h2><%= t(:order_packages) %></h2>
+	<%= render :partial => 'shared/package_details', :locals => {:order => @order} %>
 </div>

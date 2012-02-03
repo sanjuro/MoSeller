@@ -3,13 +3,9 @@ class OrderItem < ActiveRecord::Base
   include ActionView::Helpers::NumberHelper
   include BaseHelper  
   
+  attr_accessible :id, :quantity, :customer_price, :billing_price, :full_price
+  
   before_validation :adjust_quantity
-  belongs_to :order
-  belongs_to :variant
-
-  has_one :product, :through => :variant
-  has_many :packages
-
   before_validation :copy_price
 
   validates :variant, :presence => true
@@ -17,8 +13,12 @@ class OrderItem < ActiveRecord::Base
                        :numericality => { :only_integer => { :less_than_or_equal_to => 5 }, :message => I18n.t("validation.must_be_int") }
   validates :customer_price, :numericality => true
   # validate :meta_validation_of_quantities
+  
+  belongs_to :order
+  belongs_to :variant
 
-  attr_accessible :id, :quantity, :customer_price, :billing_price, :full_price
+  has_one :product, :through => :variant
+  has_many :packages
 
   # before_save :update_inventory
   # before_destroy :ensure_not_shipped, :remove_inventory
