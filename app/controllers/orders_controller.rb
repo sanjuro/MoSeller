@@ -101,17 +101,19 @@ class OrdersController < ApplicationController
   def populate
     @order = current_order(true)
     # puts params
-    params[:products].each do |product_id, variant_id|
-      quantity = params[:quantity].to_i if !params[:quantity].is_a?(Hash)
-      quantity = params[:quantity][variant_id.to_i].to_i if params[:quantity].is_a?(Hash)
-      if quantity > 0 && quantity < 6
-        @order.add_variant(Variant.find(variant_id), quantity)
-      else
-        flash[:error] = 'You may only 5 products at a time'
-      end
-    end if params[:products]
-
-    # AddToCartContext.call(current_user.id, @order, params[:products], params[:quantity])
+#    params[:products].each do |product_id, variant_id|
+#      quantity = params[:quantity].to_i if !params[:quantity].is_a?(Hash)
+#      quantity = params[:quantity][variant_id.to_i].to_i if params[:quantity].is_a?(Hash)
+#      if quantity > 0 && quantity < 6
+#        @order.add_variant(Variant.find(variant_id), quantity)
+#      else
+#        flash[:error] = 'You may only 5 products at a time'
+#      end
+#    end if params[:products]
+    p params[:products]
+    variant_id = params[:products].values.first
+    quantity = params[:quantity]
+    AddToCartContext.call(current_user.id, @order, variant_id, quantity)
 
 #    params[:variants].each do |variant_id, quantity|
 #      quantity = quantity.to_i

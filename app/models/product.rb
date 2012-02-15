@@ -23,8 +23,9 @@ class Product < ActiveRecord::Base
   after_save :save_master
 
   has_many :variants,
-    :conditions => ["variants.is_master = ? AND variants.deleted_at IS NULL", false] 
-  
+    # :conditions => ["variants.is_master = ? AND variants.deleted_at IS NULL", false] 
+    :conditions => ["variants.deleted_at IS NULL", false]
+    
   has_many :variants_including_master,
     :class_name => 'Variant',
     :conditions => ["variants.deleted_at IS NULL"],
