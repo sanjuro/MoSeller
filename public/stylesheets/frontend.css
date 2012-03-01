@@ -80,7 +80,8 @@ em{
 
 .box {
     background-color: #EEEEEE;
-    border: 1px solid #FFFFFF;
+    border: 1px dotted #FFFFFF;
+    box-shadow: 0 3px 4px rgba(0, 0, 0, 0.1);
     border-radius: 10px 10px 10px 10px;
     box-shadow: 0 0 0 1px #DDDDDD;
     padding: 5px 20px;
