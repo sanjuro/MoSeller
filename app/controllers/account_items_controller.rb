@@ -24,6 +24,7 @@ class AccountItemsController < ApplicationController
     end
   end
   
+  #test
   def show
     @account_items = AccountItem.find_all_by_user_id(current_user.id).paginate(:page => params[:page])
     
