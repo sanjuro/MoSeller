@@ -34,6 +34,8 @@ class Freepaid < ProductSource
     # Create a Freepaid Voucher 
     productOut = get_voucher(transaction_options);
     logger.error productOut
+
+    logger.info "PIN: " + productOut[:pin]
     
     package = Package.new(:payload => "PIN: " + productOut[:pin])
     package.clazz = "AirtimePackage"
@@ -41,7 +43,7 @@ class Freepaid < ProductSource
     
     order_item.add_package(package)
     
-    logger.info "CREATE NEW PACKACGE"
+    logger.info "CREATE NEW PACKAGE"
      
     return productOut
   end
