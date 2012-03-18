@@ -8,20 +8,23 @@
 <script type="text/javascript" charset="utf-8">
 $(function () {
   new Highcharts.Chart({
-    chart: { renderTo: 'orders_by_month_chart' },
+    chart: { 
+    	renderTo: 'orders_by_month_chart',
+    	type: 'column' 
+    },
     title: { text: 'Sales Volume by Month' },
     xAxis: { 
     	title: { text: 'Month' },
-    	categories: ['October 2011', 'November 2011', 'December 2011', 'January 2012', 'Febuary 2012', 'March 2012'] },
+    	categories: ['October 2011', 'November 2011', 'December 2011', 'January 2012', 'Febuary 2012', 'March 2012', 'April 2012'] },
     yAxis: {
       title: { text: 'Orders Count' }
     },
     tooltip: {
-      formatter: function () {
-        return Highcharts.dateFormat("%B %e %Y", this.x) + ': ' +
-          Highcharts.numberFormat(this.y, 0);
-      }
-    }, 
+    	formatter: function() {
+            return '<b>'+ this.x +'</b><br/>'+
+            	'Orders: '+ Highcharts.numberFormat(this.y, 1);
+        }
+    },
 	series: [{
 	  data: <%= @orders_by_month %>
 	 }]
