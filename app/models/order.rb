@@ -44,6 +44,13 @@ class Order < ActiveRecord::Base
   scope :notpaid, where("orders.completed_at IS NOT NULL AND orders.payment_state != 'paid'")
   scope :unpaid, lambda {|user_id| where("orders.completed_at IS NOT NULL AND orders.payment_state != 'paid' AND orders.user_id = ?", user_id)}
   
+  def self.count_per_day(date)
+    where("date(created_at) = ?", date).count(:id)
+  end
+
+  def self.count_per_month(date)
+    where("date(created_at) >= ?", date).where("date(created_at) < ?", date + 1.month).count(:id)
+  end
   # make_permalink :field => :number  
   
   def self.search(search,type)

@@ -119,6 +119,19 @@ ActiveAdmin.register Order do
     link_to('Pritable PDF', pdf_admin_orders_path(order, :format => 'pdf'))
   end
   
+  # /admin/orders/reports
+  collection_action :reports, :method => :get do 
+     months = ["2011-10-01 00:00:00", 
+               "2011-11-01 00:00:00", 
+               "2011-12-01 00:00:00", 
+               "2012-01-01 00:00:00", 
+               "2012-02-01 00:00:00", 
+               "2012-03-01 00:00:00"]
+     @orders_by_month = (months).map { |month| Order.count_per_month(Date.parse(month)).to_f}.inspect
+
+     @orders_by_day = (10.weeks.ago.to_date..Date.today).map { |date| Order.count_per_day(date).to_f}.inspect 
+  end
+
   # /admin/orders/pay
   collection_action :pay_multiple, :method => :get do
     order_ids = params[:order_ids].split(",")
