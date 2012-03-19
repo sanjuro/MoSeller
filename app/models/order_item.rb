@@ -3,7 +3,7 @@ class OrderItem < ActiveRecord::Base
   include ActionView::Helpers::NumberHelper
   include BaseHelper  
   
-  attr_accessible :id, :quantity, :customer_price, :billing_price, :full_price
+  attr_accessible :id, :order_id, :quantity, :customer_price, :billing_price, :full_price
   
   before_validation :adjust_quantity
   before_validation :copy_price

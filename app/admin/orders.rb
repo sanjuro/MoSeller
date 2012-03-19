@@ -110,6 +110,10 @@ ActiveAdmin.register Order do
     f.inputs :name => 'Order Item #%i', :for => :order_items
     f.buttons
   end  
+
+  action_item :only => :index do 
+    link_to('Reports', reports_admin_orders_path())
+  end  
   
   action_item :only => :show do 
     link_to('Pay Order', pay_admin_orders_path(order))
