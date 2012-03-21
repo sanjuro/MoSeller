@@ -131,7 +131,9 @@ ActiveAdmin.register Order do
                "2012-01-01 00:00:00", 
                "2012-02-01 00:00:00", 
                "2012-03-01 00:00:00",
-               "2012-04-01 00:00:00"]
+               "2012-04-01 00:00:00",
+               "2012-05-01 00:00:00",
+               "2012-06-01 00:00:00"]
      @orders_by_month = (months).map { |month| Order.count_per_month(Date.parse(month)).to_f}.inspect
 
      @orders_by_day = (10.weeks.ago.to_date..Date.today).map { |date| Order.count_per_day(date).to_f}.inspect 

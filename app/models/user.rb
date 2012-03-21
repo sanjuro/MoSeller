@@ -26,6 +26,7 @@ class User < ActiveRecord::Base
   
   has_many :orders
   has_many :invoices
+  has_and_belongs_to_many :categories 
   
   scope :recent_by_sign_in, order("users.last_sign_in_at")   
   

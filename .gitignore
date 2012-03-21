@@ -3,6 +3,7 @@ db/moseller_live.sql
 db/stats.sql
 config
 db/*.sqlite3
+db/scripts/
 log/*.log
 tmp/
 pdfs/*
