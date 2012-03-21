@@ -27,7 +27,7 @@ class Imb < ProductSource
       :order_id => order.id,
       :ref_no => order.number,
       :network => product.name.downcase!,
-      :sell_value => Integer(variant.full_price)
+      :sell_value => Integer(variant.cost_price)
     }    
     
     logger.info "CALLING NEWPRODUCT FROM IMB"
