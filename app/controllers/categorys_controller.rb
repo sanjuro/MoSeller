@@ -5,7 +5,6 @@ class CategorysController < ApplicationController
 
     if user_signed_in?
       @user = User.find(current_user.id)
-       p @user.categories.empty?
       @categorys = @user.categories
     else
       @categorys = Category.all
