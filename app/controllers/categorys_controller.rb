@@ -7,7 +7,7 @@ class CategorysController < ApplicationController
       @user = User.find(current_user.id)
       @categorys = @user.categories
     else
-      @categorys = Category.find(1)
+      @categorys = Category.where('id = 1')
     end
    
     respond_to do |format|
