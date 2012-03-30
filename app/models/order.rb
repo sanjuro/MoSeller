@@ -51,6 +51,10 @@ class Order < ActiveRecord::Base
   def self.count_per_month(date)
     where("date(created_at) >= ?", date).where("date(created_at) < ?", date + 1.month).count(:id)
   end
+
+  def self.value_per_month(date)
+    where("date(created_at) >= ?", date).where("date(created_at) < ?", date + 1.month).sum(:customer_total)
+  end
   # make_permalink :field => :number  
   
   def self.search(search,type)
