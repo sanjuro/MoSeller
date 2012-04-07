@@ -36,6 +36,7 @@ class Freepaid < ProductSource
     logger.error productOut
 
     logger.info "PIN: " + productOut[:pin]
+    PAYLOAD_LOG.debug productOut
     
     package = Package.new(:payload => "PIN: " + productOut[:pin])
     package.clazz = "AirtimePackage"
