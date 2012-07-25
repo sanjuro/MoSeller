@@ -100,18 +100,17 @@ class Invoice < ActiveRecord::Base
 
   end 
   
-  def mail!
+  def mail!    
+    # InvoiceMailer.invoice_email(self, self.order).deliver
     
-    InvoiceMailer.invoice_email(self, self.order).deliver
-    
-    self.state_events.create({
-      :stateful_id    => self.order_id,
-      :previous_state => "processing",
-      :next_state     => "unpaid",
-      :stateful_type  => "invoice" ,
-      :user_id        => (User.respond_to?(:current) && User.current.try(:id)) || self.user_id
-    })
-    
+    # self.state_events.create({
+    #   :stateful_id    => self.order_id,
+    #   :previous_state => "processing",
+    #   :next_state     => "unpaid",
+    #   :stateful_type  => "invoice" ,
+    #   :user_id        => (User.respond_to?(:current) && User.current.try(:id)) || self.user_id
+    # })
+    Resque.enqueue(InvoiceEmailProcessor, self.id, self.user_id)   
   end
   
   def add_invoice_item(order_item)

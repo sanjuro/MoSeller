@@ -16,7 +16,7 @@
   	<br>
   
    	<div class="box">
-		<h2><%= t(:order_packages) %> <span class="print_pdf_button"><%= link_to "Printable PDF", order_path(@order, :format => 'pdf') %></span></h2>
+		<h2><%= t(:order_packages) %></h2>
 		<%= render :partial => 'shared/package_details', :locals => {:order => @order} %>  
 	</div>
  
@@ -38,6 +38,7 @@
 	</div>
   
 	<p data-hook="links">
-		<%= link_to t('back_to_store'), root_path %>
+		<%= link_to t('back_to_store'), root_path %> |
+		<%= link_to "Printable PDF", order_path(@order, :format => 'pdf') %>
 	</p>
 </div>

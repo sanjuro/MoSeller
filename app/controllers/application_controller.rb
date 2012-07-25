@@ -28,15 +28,16 @@ class ApplicationController < ActionController::Base
   end    
     
   def mobile_device?
-    if session[:mobile_param]
-      session[:mobile_param] == "1"
-    else
-      agent = request.headers["HTTP_USER_AGENT"].downcase
-      MOBILE_BROWSERS.each do |m|
-        return "mobile" if agent.match(m)
-      end
-    end
-    return false
+    # if session[:mobile_param]
+    #   session[:mobile_param] == "1"
+    # else
+    #   agent = request.headers["HTTP_USER_AGENT"].downcase
+    #   MOBILE_BROWSERS.each do |m|
+    #     return "mobile" if agent.match(m)
+    #   end
+    # end
+    # return false
+    return "mobile"
   end
   helper_method :mobile_device?
   

@@ -51,9 +51,9 @@ class CheckoutController < ApplicationController
       end
       
       if @order.state == "complete" || @order.completed?
-        flash[:success] = I18n.t(:order_processed_successfully)
-        # gflash :success => I18n.t(:order_processed_successfully)
-        flash[:commerce_tracking] = "Your order number is " + @order.number().to_s()
+        # flash[:success] = I18n.t(:order_processed_successfully)
+        flash[:success] = "Your order wil be processed shorlty. Please follow the link below to view your order."
+        flash[:notice] = "Your order number is " + @order.number().to_s()
         respond_with(@order, :location => completion_route)
       else
         respond_with(@order, :location => checkout_state_path(@order.state))

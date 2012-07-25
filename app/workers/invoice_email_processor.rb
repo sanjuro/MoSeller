@@ -8,7 +8,7 @@ class InvoiceEmailProcessor
     InvoiceMailer.invoice_email(invoice, invoice.order).deliver
     
     invoice.state_events.create({
-      :order_id       => invoice.order_id,
+      :order_id       => invoice.order.id,
       :previous_state => "processing",
       :next_state     => "unpaid",
       :name           => "invoice",

@@ -140,15 +140,18 @@ class Order < ActiveRecord::Base
       transition :to => 'resumed', :from => 'canceled', :if => :allow_resume?
     end   
 
-    before_transition :to => 'complete' do |order|
-      # order.process_payments! # process payments
-      order.process_order_items! # fetch products
+    # before_transition :to => 'complete' do |order|
+    #   # order.process_payments! # process payments
+    #   order.process_order_items! # fetch products
       
-      # do account and product stuff here   
-      order.finalize! 
+    #   # do account and product stuff here   
+    #   order.finalize! 
       
-      # do billing for order this needs to be dynamic as the system might not have MoAccount
-      order.billing!
+    #   # do billing for order this needs to be dynamic as the system might not have MoAccount
+    #   order.billing!
+    # end
+    before_transition :to => 'complete' do |order|    
+      Resque.enqueue(OrderProcessor, order.id)      
     end
 
     after_transition :to => 'payment' do |order|
@@ -268,7 +271,8 @@ class Order < ActiveRecord::Base
     # OrderMailer.confirm_email(self).deliver
     
     # Mail products
-    OrderMailer.order_email(self).deliver
+    # OrderMailer.order_email(self).deliver
+    Resque.enqueue(OrderEmailProcessor, self.id) 
     logger.info 'MAILING PRODUCTS'
     
     # User.current.update_cap(self.customer_total)
@@ -277,8 +281,9 @@ class Order < ActiveRecord::Base
     
     # Mail via sms
     if self.mobile_number.empty? == false then
-      sms = SMS.new()
-      sms.create(self.mobile_number, self)
+      # sms = SMS.new()
+      # sms.create(self.mobile_number, self)
+      Resque.enqueue(SmsProcessor, self.id)      
     end
     
     self.state_events.create({

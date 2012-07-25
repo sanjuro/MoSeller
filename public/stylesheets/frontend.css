@@ -200,7 +200,7 @@ input.continue {
     background-color: #F79923;
     background-image: -moz-linear-gradient(center top , #F79923, #F27016);
     border: 1px solid #925B33;
-    border-radius: 10px 10px 10px 10px;
+    border-radius: 3px;
     box-shadow: 0 1px 0 rgba(255, 255, 255, 0.4), 0 1px 0 #F9BC69 inset;
     color: #FFFFFF;
     font: 700 18px sommet-slab,kulturista-web,"Helvetica Neue",Helvetica,Arial,sans-serif;

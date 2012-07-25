@@ -24,7 +24,7 @@
             <button type="submit" class="large primary" id="update-button">
               <%= t('update') %>
             </button>
-            <%= link_to image_tag('icons/checkout.png') + t("checkout"), checkout_path, :class => 'button checkout primary', :id => 'checkout-link' %>
+            <%= link_to t("checkout"), checkout_path, :class => 'button checkout primary', :id => 'checkout-link' %>
           </div>
         </div>
 
@@ -36,7 +36,7 @@
     <p id="clear_cart_link" data-hook>
 
       <button type="submit" class="large primary" id="empty-button">
-              <%= image_tag('icons/delete.png') + t('Empty Cart') %>
+              <%=  t('Empty Cart') %>
       </button>
       <%= (:or) %>
       <%=link_to t("continue_shopping"), categorys_path, :class => 'continue' %>
