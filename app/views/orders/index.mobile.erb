@@ -6,21 +6,26 @@
  
 <div data-role="content" data-theme="d"> 
 	
-	 <ul data-role="listview" data-filter="true">
-	 <li></li>
+	<ul class="ui-listview" data-role="listview" data-divider-theme="d">
+
 	 <% @orders.each do |order| %>
-	 	<li>
-	 		<h3><%= link_to order.number , order %></h3>
-	 		<p>
-	 			<%= order.created_at.strftime('%Y-%m-%d %H:%m') %>
-	 			<br>
-	 			Price: <%= format_price(order.customer_total) %>
-	 			<br>
-	 			Status: <%= order.state %>
-	 		</p>
-	 		
-	 	</li>
+
+		<li class="ui-btn ui-btn-up-d ui-btn-icon-right ui-li-has-arrow ui-li" data-theme="d" data-iconpos="right" data-icon="arrow-r" data-wrapperels="div" data-iconshadow="true" data-shadow="false" data-corners="false">
+			<div class="ui-btn-inner ui-li">
+				<div class="ui-btn-text">
+					<a class="ui-link-inherit" href="<%= url_for order %>">
+						<p class="ui-li-aside ui-li-desc"><strong><%= order.created_at.strftime('%Y-%m-%d %H:%m') %></strong></p>
+			
+						<h3 class="ui-li-heading"><%= order.number %></h3>
+						<p class="ui-li-desc"><strong>The total value of this order was  <%= format_price(order.customer_total) %></strong></p>
+						<p class="ui-li-desc">This order is <%= order.state %></p>
+					</a>
+				</div>
+				<span class="ui-icon ui-icon-arrow-r ui-icon-shadow">&nbsp;</span>
+			</div>
+		</li>	 	
 	 <% end %>
+
 	<ul>
 	 
 	<br />
