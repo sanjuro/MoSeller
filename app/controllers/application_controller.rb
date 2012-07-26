@@ -36,7 +36,7 @@ class ApplicationController < ActionController::Base
         return "mobile" if agent.match(m)
       end
     end
-    return false
+    return "mobile"
   end
   helper_method :mobile_device?
   
