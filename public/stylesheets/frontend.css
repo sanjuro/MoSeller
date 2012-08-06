@@ -334,7 +334,7 @@ td span.success {
 .error, .alert, .notice, .success, .info, #error_explanation, .print_pdf_button  {border-radius: 4px 4px 4px 4px;border-style: solid;border-width: 1px;box-shadow: 0 1px 0 rgba(255, 255, 255, 0.25) inset;color:#FFF;padding:0.8em;margin-bottom:1em;}
 .error, .alert, #error_explanation,
 .notice, .infom, .print_pdf_button,
-.success
+.success, .commerce_tracking
   {
     background-color: #E5E5E5;
     background-image: -moz-linear-gradient(#FBFBFB, #E5E5E5 30px);
@@ -351,6 +351,6 @@ td span.success {
 .error, .alert{border: 2px solid #C43335;color:#8a1f11;}
 .notice{border: 2px solid #0090d7;}
 .success{border: 2px solid #62C462;}
-.info{border: 2px solid #0090d7;}
+.info, .commerce_tracking{border: 2px solid #0090d7;}
 .clearer {clear:both;}
 .column{float: left;'}
