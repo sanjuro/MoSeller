@@ -12,7 +12,7 @@ class Order < ActiveRecord::Base
   attr_accessible :order_items, :bill_address_attributes, :payments_attributes, :invoice_attributes, :number,
                   :order_items_attributes, :use_billing, :special_instructions, :user_id,
                   :item_total, :customer_total, :billing_total, :full_total, :state, :payment_total, :payment_state,
-                  :email, :customer_name, :mobile_number, :completed_at, :updated_at
+                  :email, :customer_name, :mobile_number, :created_at, :completed_at, :updated_at
                   
   validates :number, :uniqueness => true, :on => :create
                  
