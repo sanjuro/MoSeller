@@ -25,6 +25,7 @@ ActiveAdmin.register Package do
     f.inputs "Details" do
       f.input :order_item_id
       f.input :payload
+      f.input :clazz
       f.input :is_used, :as => :boolean
       f.input :created_at
     end

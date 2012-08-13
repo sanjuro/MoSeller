@@ -10,7 +10,7 @@ class Order < ActiveRecord::Base
   STATUS_COMPLETE = 'complete'
   
   attr_accessible :order_items, :bill_address_attributes, :payments_attributes, :number,
-                  :order_items_attributes, :use_billing, :special_instructions,
+                  :order_items_attributes, :use_billing, :special_instructions, :user_id,
                   :item_total, :customer_total, :billing_total, :full_total, :state, :payment_total, :payment_state,
                   :email, :customer_name, :mobile_number, :completed_at, :updated_at
                   
@@ -28,7 +28,8 @@ class Order < ActiveRecord::Base
   # has_many :packages, :dependent => :destroy
 
   accepts_nested_attributes_for :order_items
-  # accepts_nested_attributes_for :payments
+  accepts_nested_attributes_for :invoice
+  accepts_nested_attributes_for :payments
   
   # before_create :create_client
   before_create :generate_order_number  

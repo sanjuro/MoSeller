@@ -1,6 +1,7 @@
 <table class="index" data-hook="order_details" style="width:100%;">
   <tbody id='line-items' data-hook>
     <tr data-hook="order_details_order_items_headers">
+      <th><%= t('id') %></th>
       <th><%= t('item_description') %></th>
       <th class="price"><%= t('price') %></th>
       <th class="qty"><%= t('qty') %></th>
@@ -9,6 +10,7 @@
   <tr><td></td></tr> 
     <% @order.order_items.each do |item| %>
       <tr data-hook="order_details_line_item_row">
+        <td><%=item.id%></td>
         <td width="300"><%=item.variant.product.name%> <%= "(" + variant_options(item.variant) + ")" unless item.variant .option_values.empty? %></td>
         <td align="center" class="price"><%= format_price item.customer_price %></td>
         <td align="center" class="qty"><%=item.quantity%></td>

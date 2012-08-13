@@ -6,9 +6,8 @@ ActiveAdmin.register Payment do
 
   # Filterable attributes on the index screen
   filter :id
-  
   # filter :order_items, :as => :select, :collection => lambda{ Order.order_items }
-  filter :order_id
+  filter :order_id, :as => :numeric
   filter :created_at
 
   # Customize columns displayed on the index screen in the table

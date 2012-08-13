@@ -1,11 +1,12 @@
 class Payment < ActiveRecord::Base
+  
+  attr_accessible :source_id, :source_type, :order_id, :state, :amount
+
   belongs_to :order
   belongs_to :source, :polymorphic => true
 
   has_many :offsets, :class_name => 'Payment', :foreign_key => 'source_id', :conditions => "source_type = 'Payment' AND amount < 0 AND state = 'completed'"
   has_many :log_entries, :as => :source
-  
-  attr_accessible :source_id, :source_type, :order_id, :state, :amount
 
   # after_save :create_payment_profile, :if => :profiles_supported?
 
