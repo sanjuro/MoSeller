@@ -9,7 +9,7 @@ class Order < ActiveRecord::Base
   STATUS_CONFIRM = 'confirm'
   STATUS_COMPLETE = 'complete'
   
-  attr_accessible :order_items, :bill_address_attributes, :payments_attributes, :number,
+  attr_accessible :order_items, :bill_address_attributes, :payments_attributes, :invoice_attributes, :number,
                   :order_items_attributes, :use_billing, :special_instructions, :user_id,
                   :item_total, :customer_total, :billing_total, :full_total, :state, :payment_total, :payment_state,
                   :email, :customer_name, :mobile_number, :completed_at, :updated_at

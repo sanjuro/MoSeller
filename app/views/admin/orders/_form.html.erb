@@ -26,11 +26,11 @@
 
   <% if @order.invoice.nil? %>
     <%= f.semantic_fields_for :invoice, Invoice.new  do |invoice| %>
-      <%= invoice.inputs :sub_total, :tax, :total %>
+      <%= invoice.inputs :user, :email, :state, :sub_total, :tax, :total %>
     <% end %>
   <% else %>
     <%= f.semantic_fields_for :invoice  do |invoice| %>
-      <%= invoice.inputs :sub_total, :tax, :total %>
+      <%= invoice.inputs :user, :email, :state, :sub_total, :tax, :total %>
     <% end %>
   <% end %>
 
