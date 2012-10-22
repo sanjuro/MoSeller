@@ -67,8 +67,8 @@ class Order < ActiveRecord::Base
                           where('mobile_number LIKE ?', "%#{search}%")
                   when "number"
                           where('number LIKE ?', "%#{search}%")
-                   when "all_fields"
-                           where('customer_name LIKE ? OR mobile_number LIKE ? OR number LIKE ? ', "%#{search}%","%#{search}%","%#{search}%")                                
+                  when "all_fields"
+                          where('customer_name LIKE ? OR mobile_number LIKE ? OR number LIKE ? ', "%#{search}%","%#{search}%","%#{search}%")                                
           end
     else
       scoped
