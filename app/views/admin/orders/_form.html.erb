@@ -38,6 +38,7 @@
     <table>
       <tr>
         <th>Variant</th>
+        <th>Product</th>
         <th>Quantity</th>
         <th>Customer Price</th>
         <th>Billing Price</th>
@@ -48,6 +49,7 @@
         <%= f.semantic_fields_for :order_items do |b| %>
         <tr>
           <td><%= b.input :variant_id, :label => false, :as => :select, :collection => Hash[Variant.all.map{|v| [v.sku,v.id]}] %></td>
+          <td><%= b.input :product_id, :label => false, :as => :select, :collection => Hash[Product.all.map{|p| [p.name,p.id]}] %></td>
           <td><%= b.input :quantity, :label => false %></td>
           <td><%= b.input :customer_price, :label => false %></td>
           <td><%= b.input :billing_price, :label => false %></td>
@@ -65,6 +67,7 @@ $(this).closest('tr').remove(); return false;
         <%= f.semantic_fields_for :order_items, OrderItem.new do |b| %>
         <tr>
           <td><%= b.input :variant_id, :label => false, :as => :select, :collection => Hash[Variant.all.map{|v| [v.sku,v.id]}] %></td>
+          <td><%= b.input :product_id, :label => false, :as => :select, :collection => Hash[Product.all.map{|p| [p.name,p.id]}] %></td>
           <td><%= b.input :quantity, :label => false %></td>
           <td><%= b.input :customer_price, :label => false %></td>
           <td><%= b.input :billing_price, :label => false %></td>
