@@ -3,7 +3,7 @@ class Invoice < ActiveRecord::Base
   include ActionView::Helpers::NumberHelper
   include BaseHelper
   
-  attr_accessible :user_id, :margin, :sub_total, :tax,  
+  attr_accessible :user_id, :order_id, :margin, :sub_total, :tax,  
                   :total, :date_paid, :email, :state
 
   belongs_to :user     

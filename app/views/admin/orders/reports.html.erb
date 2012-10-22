@@ -1,0 +1,79 @@
+<p>
+	<div id="orders_volume_by_month_chart" style="width: 100%; height: 300px;"></div>
+</p>
+<p>
+  <div id="orders_value_by_month_chart" style="width: 100%; height: 300px;"></div>
+</p>
+<p>
+	<div id="orders_by_day_chart" style="width: 100%; height: 300px;"></div>
+</p>
+
+<script type="text/javascript" charset="utf-8">
+$(function () {
+  new Highcharts.Chart({
+    chart: { 
+    	renderTo: 'orders_volume_by_month_chart',
+    	type: 'column' 
+    },
+    title: { text: 'Sales Volume by Month' },
+    xAxis: { 
+    	title: { text: 'Month' },
+    	categories: ['October 2011', 'November 2011', 'December 2011', 'January 2012', 'Febuary 2012', 'March 2012', 'April 2012', 'May 2012', 'June 2012', 'July 2012', 'August 2012', 'September 2012', 'October 2012', 'November 2012', 'December 2012'] },
+    yAxis: {
+      title: { text: 'Orders Count' }
+    },
+    tooltip: {
+    	formatter: function() {
+            return '<b>'+ this.x +'</b><br/>'+
+            	'Orders: '+ Highcharts.numberFormat(this.y, 1);
+        }
+    },
+	series: [{
+	  data: <%= @orders_volume_by_month %>
+	 }]
+  });
+
+  new Highcharts.Chart({
+    chart: { 
+      renderTo: 'orders_value_by_month_chart',
+      type: 'column' 
+    },
+    title: { text: 'Sales Value by Month' },
+    xAxis: { 
+      title: { text: 'Month' },
+      categories: ['October 2011', 'November 2011', 'December 2011', 'January 2012', 'Febuary 2012', 'March 2012', 'April 2012', 'May 2012', 'June 2012', 'July 2012', 'August 2012', 'September 2012', 'October 2012', 'November 2012', 'December 2012'] },
+    yAxis: {
+      title: { text: 'Orders Count' }
+    },
+    tooltip: {
+      formatter: function() {
+            return '<b>'+ this.x +'</b><br/>'+
+              'Orders: '+ Highcharts.numberFormat(this.y, 1);
+        }
+    },
+  series: [{
+    data: <%= @orders_value_by_month %>
+   }]
+  });
+
+  new Highcharts.Chart({
+    chart: { renderTo: 'orders_by_day_chart' },
+    title: { text: 'Sales Volume by Day' },
+    xAxis: { type: 'datetime' },
+    yAxis: {
+      title: { text: 'Orders Count' }
+    },
+    tooltip: {
+      formatter: function () {
+        return Highcharts.dateFormat("%B %e %Y", this.x) + ': ' +
+          Highcharts.numberFormat(this.y, 0);
+      }
+    }, 
+	series: [{
+      pointInterval: <%= 1.day * 1000 %>,
+	  pointStart: <%= 10.weeks.ago.at_midnight.to_i * 1000 %>,
+	  data: <%= @orders_by_day %>
+	 }]
+  });
+});
+</script>

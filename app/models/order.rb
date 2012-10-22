@@ -9,10 +9,10 @@ class Order < ActiveRecord::Base
   STATUS_CONFIRM = 'confirm'
   STATUS_COMPLETE = 'complete'
   
-  attr_accessible :order_items, :bill_address_attributes, :payments_attributes,
-                  :order_items_attributes, :use_billing, :special_instructions,
+  attr_accessible :order_items, :bill_address_attributes, :payments_attributes, :invoice_attributes, :number,
+                  :order_items_attributes, :use_billing, :special_instructions, :user_id,
                   :item_total, :customer_total, :billing_total, :full_total, :state, :payment_total, :payment_state,
-                  :email, :customer_name, :mobile_number, :completed_at, :updated_at
+                  :email, :customer_name, :mobile_number, :created_at, :completed_at, :updated_at
                   
   validates :number, :uniqueness => true, :on => :create
                  
@@ -28,7 +28,8 @@ class Order < ActiveRecord::Base
   # has_many :packages, :dependent => :destroy
 
   accepts_nested_attributes_for :order_items
-  # accepts_nested_attributes_for :payments
+  accepts_nested_attributes_for :invoice
+  accepts_nested_attributes_for :payments
   
   # before_create :create_client
   before_create :generate_order_number  
@@ -44,6 +45,17 @@ class Order < ActiveRecord::Base
   scope :notpaid, where("orders.completed_at IS NOT NULL AND orders.payment_state != 'paid'")
   scope :unpaid, lambda {|user_id| where("orders.completed_at IS NOT NULL AND orders.payment_state != 'paid' AND orders.user_id = ?", user_id)}
   
+  def self.count_per_day(date)
+    where("date(created_at) = ?", date).count(:id)
+  end
+
+  def self.count_per_month(date)
+    where("date(created_at) >= ?", date).where("date(created_at) < ?", date + 1.month).count(:id)
+  end
+
+  def self.value_per_month(date)
+    where("date(created_at) >= ?", date).where("date(created_at) < ?", date + 1.month).sum(:customer_total)
+  end
   # make_permalink :field => :number  
   
   def self.search(search,type)
@@ -57,6 +69,7 @@ class Order < ActiveRecord::Base
                           where('number LIKE ?', "%#{search}%")
                   when "all_fields"
                            where('customer_name LIKE ? OR mobile_number LIKE ? OR number LIKE ? ', "%#{search}%","%#{search}%","%#{search}%")                                
+
           end
     else
       scoped

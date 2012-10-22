@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+  </head>
+  <body>
+    <h1>New Order for electricity: <%= @order.number %></h1>
+
+    <table>
+    <% @order.order_items.each do |order_item| %>
+      <tr data-hook="package_details_line_item_row">
+      	<td width="100">
+      		<%= order_item.quantity %> X <%= order_item.variant.product.name %> (<%= number_to_currency(order_item.variant.cost_price, :unit => "R", :separator => ".", :delimiter => ",") %>)
+      		<%= order_item.attribute_note %>
+      	</td>   		
+      </tr>
+      <tr><td></td></tr>
+    <% end %>
+    </table>    
+    
+  </body>
+</html>

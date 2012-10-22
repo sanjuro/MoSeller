@@ -5,4 +5,6 @@
 <br>
 <%= item_form.text_field :quantity, :size => 3, :class => "line_item_quantity" %>
 <br>
+<%= item_form.text_field :attribute_note, :size => 10, :class => "line_item_quantity" %>
+<br>
 <%= format_price(order_item.customer_price * order_item.quantity) unless order_item.quantity.nil? %>

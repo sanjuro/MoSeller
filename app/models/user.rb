@@ -9,7 +9,7 @@
 class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :token_authenticatable, :encryptable, :confirmable, :lockable, :timeoutable and :omniauthable
-  devise :database_authenticatable, 
+  devise :database_authenticatable, :token_authenticatable,
          :recoverable, :rememberable, :trackable, :validatable
 
   # To facilitate username or email login
@@ -26,6 +26,7 @@ class User < ActiveRecord::Base
   
   has_many :orders
   has_many :invoices
+  has_and_belongs_to_many :categories 
   
   scope :recent_by_sign_in, order("users.last_sign_in_at")   
   

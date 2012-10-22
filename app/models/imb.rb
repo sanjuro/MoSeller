@@ -1,5 +1,5 @@
-class Freepaid < ProductSource
-  include FreepaidHelper # Get Freepaid Interface
+class Imb < ProductSource
+  include ImbHelper # Get Freepaid Interface
   
   def provider_class
     self.class
@@ -21,36 +21,24 @@ class Freepaid < ProductSource
     order = order_item.order
     product = Product.find_by_id!(variant.product_id)
     
-    # Build Transaction options for the call to the Licensing server
+    # Build Transaction options for the call to the Imb Server
     transaction_options = {
+      :meter_number => order_item.attribute_note,
+      :order_id => order.id,
       :ref_no => order.number,
       :network => product.name.downcase!,
-      :sell_value => Integer(variant.full_price)
+      :sell_value => Integer(variant.cost_price)
     }    
     
-    logger.info "CALLING NEWPRODUCT FROM FREEPAID"
+    logger.info "CALLING NEWPRODUCT FROM IMB"
     logger.info transaction_options
       
     # Create a Freepaid Voucher 
     productOut = get_voucher(transaction_options);
-    logger.error productOut
-
-    logger.info "PIN: " + productOut[:pin]
-    PAYLOAD_LOG.debug productOut
-    
-    package = Package.new(:payload => "PIN: " + productOut[:pin])
-    package.clazz = "AirtimePackage"
-    package.save
-    
-    order_item.add_package(package)
     
     logger.info "CREATE NEW PACKAGE"
      
-    return productOut
-  end
-  
-  def show_product
-    
+    return true
   end
   
 end

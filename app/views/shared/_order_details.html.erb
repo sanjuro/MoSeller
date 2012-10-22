@@ -4,6 +4,7 @@
       <th><%= t('item_description') %></th>
       <th class="price"><%= t('price') %></th>
       <th class="qty"><%= t('qty') %></th>
+      <th class="qty"><%= t('note') %></th>
       <th class="total"><span><%= t('total') %></span></th>
     </tr>
   <tr><td></td></tr> 
@@ -12,6 +13,7 @@
         <td width="300"><%=item.variant.product.name%> <%= "(" + variant_options(item.variant) + ")" unless item.variant .option_values.empty? %></td>
         <td align="center" class="price"><%= format_price item.customer_price %></td>
         <td align="center" class="qty"><%=item.quantity%></td>
+        <td align="center" class="qty"><%=item.attribute_note%></td>
         <td align="right" class="total"><span><%= format_price (item.customer_price * item.quantity)%></span></td>
       </tr>
     <% end %>

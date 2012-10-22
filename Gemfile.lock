@@ -104,7 +104,7 @@ GEM
       arel (~> 2.0.2)
     mime-types (1.17.2)
     multi_json (1.0.4)
-    mysql2 (0.2.11)
+    mysql2 (0.2.6)
     net-scp (1.0.4)
       net-ssh (>= 1.99.1)
     net-sftp (2.0.5)
@@ -228,7 +228,7 @@ DEPENDENCIES
   gravatar_image_tag (= 1.0.0.pre2)
   gritter (= 0.6.2)
   jquery-rails
-  mysql2 (= 0.2.11)
+  mysql2 (= 0.2.6)
   paperclip
   prawn_rails
   rails (= 3.0.9)

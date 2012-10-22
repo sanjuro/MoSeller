@@ -2,7 +2,13 @@ class CategorysController < ApplicationController
   helper :base
   
   def index
-    @categorys = Category.all
+
+    if user_signed_in?
+      @user = User.find(current_user.id)
+      @categorys = @user.categories
+    else
+      @categorys = Category.where('id = 1')
+    end
    
     respond_to do |format|
       format.html { render :layout => true } # index.html.erb

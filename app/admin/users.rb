@@ -73,7 +73,12 @@ ActiveAdmin.register User do
   member_action :statement do
     @user = User.find(params[:id])
     @orders = Order.unpaid(@user.id)
-    @order_total = Order.unpaid(@user.id).sum("billing_total")
+    # @order_total = Order.unpaid(@user.id).sum("billing_total")
+    credit_total = AccountItem.where("user_id =?", @user.id).sum("credit")
+    debit_total = AccountItem.where("user_id =?", @user.id).sum("debit")
+    p debit_total
+    @order_total = debit_total - credit_total
+
     OrderMailer.statement_email(@user, @orders, @order_total).deliver
     flash[:notice] = "Statement sent successfully!"
     redirect_to :action => :show, :notice => "Statement sent successfully!"

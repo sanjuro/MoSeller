@@ -5,6 +5,6 @@ class AccountItem < ActiveRecord::Base
   belongs_to :user
   
   scope :by_user, lambda {|user| joins(:users).where("users.id =?", user)}
-  scope :by_user_id, lambda {|user_id| where("account_items.user_id =?", user_id)}  
+  scope :by_user_id, lambda {|user_id| where("account_items.user_id =?", user_id)} 
 
 end
